@@ -26,6 +26,7 @@ end
 
 #               Prefix Verb   URI Pattern                                           Controller#Action
 #                 root GET    /                                                        welcome#index
+#              sign_in POST   /sign_in(.:format)                                      sessions#create
 #       user_dashboard GET    /users/:user_id/dashboard(.:format)               user/dashboard#show
 #         user_tattoos GET    /users/:user_id/tattoos(.:format)                        tattoos#index
 #    user_appointments GET    /users/:user_id/appointments(.:format)              appointments#index
