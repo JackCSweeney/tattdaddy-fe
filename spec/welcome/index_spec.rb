@@ -11,11 +11,11 @@ RSpec.describe 'Welcome Index Page', type: :feature do
         expect(page).to have_content("Welcome to\nTattDaddy")
       end
     end
-    
+
     describe "Sign In form with" do
       it "email and password fields" do
         within ".sign_in" do
-          expect(page).to have_field('Username')
+          expect(page).to have_field('Email')
           expect(page).to have_field('Password')
         end
       end
@@ -37,11 +37,11 @@ RSpec.describe 'Welcome Index Page', type: :feature do
 
     describe "option to Create Account as" do
       it "a user" do
-        expect(page).to have_button("Create a User Account")
+        expect(page).to have_link("Create User Account")
       end
 
       it "an artist" do
-        expect(page).to have_button("Create a Artist Account")
+        expect(page).to have_link("Create Artist Account")
       end
     end
   end

@@ -1,0 +1,23 @@
+<center>
+<h1>Welcome to</h1>
+<h1>TattDaddy</h1>
+</center>
+
+<center>
+<section class="sign_in">
+  <%= form_with url: sign_in_path, local: true, data: {turbo: false} do |form|%>
+    <%= form.email_field :email, placeholder: "Email" %><br>
+    <%= form.password_field :password, placeholder: "Password" %><br>
+    <%= form.submit "Sign In as User"%>
+    <%= form.submit "Sign In as Artist"%>
+  <% end %>
+</section>
+</center>
+
+<center>
+<section>
+<br>
+<%= link_to 'Create User Account', new_user_path %>
+<%= link_to 'Create Artist Account', new_artist_path %>
+</section>
+</center>
