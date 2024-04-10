@@ -3,19 +3,20 @@ require "rails_helper"
 RSpec.describe "Dashboard Page", type: :feature do
   describe "As a logged-in user" do
     before do
-      json_response_1 = File.read("/spec/fixtures/user/user.json")
-      json_response_2 = File.read("/spec/fixtures/user/dashboard_tattoos.json")
+      json_response_1 = File.read("spec/fixtures/user/user.json")
+      json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 200, body: json_response_1)
       stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
-        .to_return(status: 200, body: json_response_1)
+        .to_return(status: 200, body: json_response_2)
 
       user_dashboard_path(user_id: 25)
     end
 
     describe "displays links to" do
       it "view 'My Profile'" do
+        save_and_open_page
         expect(page).to have_link("My Profile")
         click on "My Profile"
 
