@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe UserService do
-  describe ".user_date(user_id)" do
+  describe ".user_data(user_id)" do
     it "returns a user's data given the user's id" do
       json_response = File.read("spec/fixtures/user/user.json")
 

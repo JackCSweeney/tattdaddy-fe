@@ -3,10 +3,10 @@
     "id": "25",
     "type": "user",
     "attributes": {
-      "name": "user",
+      "name": "Ruby",
       "location": "9705 Fishers District Dr, Fishers, IN 46037",
-      "email": "[tatart@gmail.com](mailto:tatart@gmail.com)",
-      "Identity_preference": "LGBTQ+ Friendly",
+      "email": "tatart@gmail.com",
+      "identity_preference": "LGBTQ+ Friendly",
       "radius": "25",
       "password_digest": "unreadable hash"
     }
