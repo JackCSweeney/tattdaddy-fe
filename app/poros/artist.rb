@@ -1,3 +1,5 @@
+require 'bcrypt'
+
 class Artist
   attr_reader :id,
               :name,
@@ -12,6 +14,10 @@ class Artist
     @location = data[:location]
     @email = data[:email]
     @identity = data[:identity]
-    @password_digest = data[:password_digest]
+    @password_digest = BCrypt::Password.create(data[:password_digest])
+  end
+
+  def authenticate(input_password)
+    BCrypt::Password.new(password_digest) == input_password
   end
 end
