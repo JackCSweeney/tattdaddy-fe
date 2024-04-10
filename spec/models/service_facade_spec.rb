@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ServiceFacade do
   describe "Instance method" do
     before do
-      allow_any_instance_of(ArtistService).to receive(:find_artists).and_return(
+      allow_any_instance_of(SearchService).to receive(:find_artists).and_return(
         {
           data: [
             {

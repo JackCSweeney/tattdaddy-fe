@@ -1,4 +1,4 @@
-class ArtistService
+class SearchService
   def connection
     Faraday.new(url: "http://localhost:3000/api/v0")
   end

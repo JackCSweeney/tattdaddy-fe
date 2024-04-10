@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe ArtistService do
+RSpec.describe SearchService do
   describe "Instance methods" do
     before do
       @uri = "artists"
-      allow_any_instance_of(ArtistService).to receive(:get_url).with(@uri).and_return(
+      allow_any_instance_of(SearchService).to receive(:get_url).with(@uri).and_return(
         {
           data: [
             {
@@ -36,11 +36,11 @@ RSpec.describe ArtistService do
 
     it "stablishes a connection" do
       connection = Faraday.new(url: "http://localhost:3000/api/v0")
-      allow_any_instance_of(ArtistService).to receive(:connection).and_return(connection)
+      allow_any_instance_of(SearchService).to receive(:connection).and_return(connection)
     end
     
     it "returns a Faraday connection object" do
-      connection = ArtistService.new.connection
+      connection = SearchService.new.connection
       
       expect(connection).to be_a(Faraday::Connection)
       expect(connection.url_prefix.to_s).to eq("http://localhost:3000/api/v0")
@@ -48,7 +48,7 @@ RSpec.describe ArtistService do
     
 
     it "gets URL, populating API records into JSON" do
-      parsed_artists = ArtistService.new.get_url(@uri)
+      parsed_artists = SearchService.new.get_url(@uri)
 
       expect(parsed_artists[:data]).to be_an(Array)
       expect(parsed_artists[:data].first).to be_a(Hash)
@@ -58,7 +58,7 @@ RSpec.describe ArtistService do
     end
 
     it "finds all of the artists" do
-      parsed_artists = ArtistService.new.find_artists
+      parsed_artists = SearchService.new.find_artists
 
       expect(parsed_artists[:data].first[:type]).to eq("artist")
       expect(parsed_artists[:data].first[:attributes]).to be_a(Hash)

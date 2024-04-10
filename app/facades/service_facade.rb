@@ -1,7 +1,7 @@
 class ServiceFacade
 
   def artists
-    service = ArtistService.new
+    service = SearchService.new
     json = service.find_artists
     json[:data].map do |json_data|
       data = artist_data(json_data)
