@@ -28,6 +28,3 @@ closes #
 - [ ] Yeah, see additional words below
 
 *Description of problem(s)*
-
-## Any Fun Facts or Gifs You Want to Add to This PR?
-
