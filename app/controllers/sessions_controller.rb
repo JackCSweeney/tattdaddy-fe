@@ -4,7 +4,7 @@ class SessionsController <ApplicationController
       user = User.find_by(email: params[:email])
       authenticate_user(user)
     elsif params[:commit] == "Sign In as Artist"
-      artist = Artist.find_by(email: params[:email])
+      artist = ServiceFacade.new.artists.find { |artist|artist.email == params[:email] }
       authenticate_artist(artist)
     end
   end
@@ -15,6 +15,7 @@ class SessionsController <ApplicationController
       redirect_to user_dashboard_path(user)
     else
       redirect_to root_path
+      flash[:error] = "Incorrect credentials"
     end
   end
 
@@ -23,6 +24,7 @@ class SessionsController <ApplicationController
       redirect_to artist_dashboard_path(artist)
     else
       redirect_to root_path
+      flash[:error] = "Incorrect credentials"
     end
   end
 end
