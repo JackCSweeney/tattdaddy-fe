@@ -7,7 +7,7 @@ RSpec.describe 'Welcome Index Page', type: :feature do
     end
 
     describe "page heading" do
-      it "'Welcome to TattDaddy" do
+      it "Welcome to TattDaddy" do
         expect(page).to have_content("Welcome to\nTattDaddy")
       end
     end
