@@ -6,10 +6,10 @@
 <center>
 <section class="sign_in">
   <%= form_with url: sign_in_path, local: true, data: {turbo: false} do |form|%>
-    <%= form.email_field :email, placeholder: "Email" %><br>
-    <%= form.password_field :password, placeholder: "Password" %><br>
-    <%= form.submit "Sign In as User"%>
-    <%= form.submit "Sign In as Artist"%>
+    <%= form.email_field :email, placeholder: "Email", name: "sign_in[email]" %><br>
+    <%= form.password_field :password, placeholder: "Password", name: "sign_in[password]" %><br>
+    <%= form.submit "Sign In as User", name: "sign_in[type]" %>
+    <%= form.submit "Sign In as Artist", name: "sign_in[type]" %>
   <% end %>
 </section>
 </center>
