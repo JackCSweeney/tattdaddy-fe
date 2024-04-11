@@ -62,5 +62,16 @@ RSpec.describe ArtistFacade do
       expect(artists).to be_an(Array)
       artists.each { |artist| expect(artist).to be_an(Artist)}
     end
+
+    it "find_artist returns an artist object with the given id" do
+      json_response_1 = File.read("spec/fixtures/artist/artist.json")
+
+      stub_request(:get, "http://localhost:3000/api/v0/artists/5")
+        .to_return(status: 200, body: json_response_1)
+
+      artist = ArtistFacade.new.find_artist("5")
+
+      expect(artist).to be_an(Artist)
+    end
   end
 end
