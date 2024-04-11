@@ -4,13 +4,13 @@ class SessionsController <ApplicationController
       user = User.find_by(email: params[:sign_in][:email])
       authenticate_user(user)
     elsif params[:sign_in][:type] == "Sign In as Artist"
-      artist = ServiceFacade.new.artists.find { |artist|artist.email == params[:sign_in][:email] }
+      artist = ArtistFacade.new.artists.find { |artist|artist.email == params[:sign_in][:email] }
       authenticate_artist(artist)
     end
   end
 
   def destroy
-    # request BE to delete session here
+    session.destroy
     redirect_to root_path
   end
 
