@@ -1,0 +1,65 @@
+<center>
+<h1> <%= @artist.name %>'s Dashboard </h1>
+</center>
+
+<nav>
+  <%= link_to "My Profile", artist_path(id: @artist.id) %>
+  <!%= link_to 'Liked Tattoos', artist_tattoos_path(id: @artist.id) %>
+  <%= link_to 'Appointments', artist_appointments_path(id: @artist.id) %>
+  <%= link_to 'Sign Out', sign_out_path, method: :delete %>
+</nav>
+
+<section class="artist_dashboard_tattoos">
+  <center>
+    <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :new %>
+  </center>
+  
+  <% @tattoos.each do |tattoo| %>
+    <div id="tattoo-<%= tattoo.id %>" class="tattoo_option" >
+      <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
+
+      <table>
+        <tr>
+          <th>Price:</th>
+          <td><%= tattoo.price %></td>
+        </tr>
+        <tr>
+          <th>Duration:</th>
+          <td><%= tattoo.time_estimate %> min</td>
+        </tr>
+        <tr>
+          <%= link_to 'Edit', edit_artist_tattoo_path(id: @artist.id), method: :patch %>
+        </tr>
+        <tr>
+          <%= link_to 'Delete', artist_tattoo_path(id: @artist.id), method: :delete %>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+</section>
+
+<style>
+.artist_dashboard_tattoos{
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+  grid-gap: 20px;
+}
+
+.tattoo_option {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+
+.tattoo_option p {
+  margin: 2px;
+}
+
+th {
+  text-align: right;
+}
+
+td {
+  text-align: left;
+}
+</style>
