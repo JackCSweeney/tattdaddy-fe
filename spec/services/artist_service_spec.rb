@@ -45,7 +45,6 @@ RSpec.describe ArtistService do
       expect(connection).to be_a(Faraday::Connection)
       expect(connection.url_prefix.to_s).to eq("http://localhost:3000/")
     end
-    
 
     it "gets URL, populating API records into JSON" do
       parsed_artists = ArtistService.new.get_url(@uri)
@@ -67,6 +66,25 @@ RSpec.describe ArtistService do
       expect(parsed_artists[:data].first[:attributes][:email]).to eq("tatart@gmail.com")
       expect(parsed_artists[:data].first[:attributes][:Identity]).to eq("LGBTQ+ Friendly")
       expect(parsed_artists[:data].first[:attributes][:password_digest]).to eq("unreadable hash")
+    end
+
+    it "finds the artist of the given id" do
+      json_response_1 = File.read("spec/fixtures/artist/artist.json")
+
+      allow_any_instance_of(ArtistService).to receive(:get_url).with("/api/v0/artists/5")
+        .and_return(status: 200, body: json_response_1)
+
+      parsed_artist = ArtistService.new.find_artist("5")
+      expect(parsed_artist[:body]).to eq(json_response_1)
+    end
+
+    it "finds the tattoos of the artist of the given id" do
+      json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
+      allow_any_instance_of(ArtistService).to receive(:get_url).with("/api/v0/artists/5/tattoos")
+        .and_return(status: 200, body: json_response_2)
+
+      parsed_artist = ArtistService.new.artist_tattoos("5")
+      expect(parsed_artist[:body]).to eq(json_response_2)
     end
   end
 end
