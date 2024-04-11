@@ -102,6 +102,9 @@ GEM
       rexml
     crass (1.0.6)
     date (3.3.4)
+    debug (1.9.2)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     diff-lcs (1.5.1)
     docile (1.4.0)
     drb (2.2.1)
@@ -293,6 +296,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   capybara
+  debug
   factory_bot_rails
   faker
   faraday

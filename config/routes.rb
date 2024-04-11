@@ -10,15 +10,16 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   post "/sign_in", to: "sessions#create"
+  delete "/sign_out", to: "sessions#destroy"
 
   resources :users, except: :index do
-    get "/dashboard", to: "user/dashboard#show"
+    get "/dashboard", to: "users/dashboard#show"
     resources :tattoos, only: :index
     resources :appointments, only: [:index]
   end
 
   resources :artists, except: :index do
-    get "/dashboard", to: "artist/dashboard#show"
+    get "/dashboard", to: "artists/dashboard#show"
     resources :tattoos, except: [:show, :index]
     resources :appointments, only: :index
   end
@@ -27,7 +28,8 @@ end
 #               Prefix Verb   URI Pattern                                           Controller#Action
 #                 root GET    /                                                        welcome#index
 #              sign_in POST   /sign_in(.:format)                                      sessions#create
-#       user_dashboard GET    /users/:user_id/dashboard(.:format)               user/dashboard#show
+#             sign_out DELETE /sign_out(.:format)                                     sessions#destroy
+#       user_dashboard GET    /users/:user_id/dashboard(.:format)              users/dashboard#show
 #         user_tattoos GET    /users/:user_id/tattoos(.:format)                        tattoos#index
 #    user_appointments GET    /users/:user_id/appointments(.:format)              appointments#index
 #                users POST   /users(.:format)                                           users#create
@@ -37,7 +39,10 @@ end
 #                      PATCH  /users/:id(.:format)                                       users#update
 #                      PUT    /users/:id(.:format)                                       users#update
 #                      DELETE /users/:id(.:format)                                       users#destroy
-#     artist_dashboard GET    /artists/:artist_id/dashboard(.:format)         artist/dashboard#show
+
+
+#               Prefix Verb   URI Pattern                                           Controller#Action
+#     artist_dashboard GET    /artists/:artist_id/dashboard(.:format)        artists/dashboard#show
 #       artist_tattoos POST   /artists/:artist_id/tattoos(.:format)                    tattoos#create
 #    new_artist_tattoo GET    /artists/:artist_id/tattoos/new(.:format)                tattoos#new
 #   edit_artist_tattoo GET    /artists/:artist_id/tattoos/:id/edit(.:format)           tattoos#edit

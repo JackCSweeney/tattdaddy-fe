@@ -9,6 +9,11 @@ class SessionsController <ApplicationController
     end
   end
 
+  def destroy
+    # request BE to delete session here
+    redirect_to root_path
+  end
+
   private
   def authenticate_user(user)
     if user && user.authenticate(params[:sign_in][:password])
