@@ -29,7 +29,7 @@ RSpec.describe UserService do
       expect(user_dashboard_tattoos[:data]).to be_an(Array)
       expect(user_dashboard_tattoos[:data].size).to eq(15)
       expect(user_dashboard_tattoos[:data]).to all(be_a(Hash))
-      expect(user_dashboard_tattoos[:data]).to all(include(type: "tattoo"))
+      expect(user_dashboard_tattoos[:data]).to all(include(type: "tattoos"))
     end
   end
 end
