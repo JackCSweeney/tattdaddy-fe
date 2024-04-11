@@ -1,0 +1,13 @@
+{
+  "data": {
+    "id": "25",
+    "type": "user",
+    "attributes": {
+      "name": "Ruby Gem",
+      "location": "9705 Fishers District Dr, Fishers, IN 46037",
+      "email": "jesusa@spinka.test",
+      "search_radius": 25,
+      "password": null
+    }
+  }
+}
