@@ -11,35 +11,34 @@ RSpec.describe "Dashboard Page", type: :feature do
       stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
         .to_return(status: 200, body: json_response_2)
 
-      user_dashboard_path(user_id: 25)
+      visit user_dashboard_path(user_id: 25)
     end
 
     describe "displays links to" do
       it "view 'My Profile'" do
-        save_and_open_page
         expect(page).to have_link("My Profile")
-        click on "My Profile"
+        click_on "My Profile"
 
         expect(current_path).to eq(user_path(id: 25))
       end
 
       it "view 'Liked Tattoos'" do
         expect(page).to have_link("Liked Tattoos")
-        click on "Liked Tattoos"
+        click_on "Liked Tattoos"
         
-        expect(current_path).to eq(user_tattoos_path(id: 25))
+        expect(current_path).to eq(user_tattoos_path(user_id: 25))
       end
 
       it "view 'Appointments'" do
         expect(page).to have_link("Appointments")
-        click on "Appointments"
+        click_on "Appointments"
 
-        expect(current_path).to eq(user_appointments_path(id: 25))
+        expect(current_path).to eq(user_appointments_path(user_id: 25))
       end
 
       it "view 'Sign Out'" do
         expect(page).to have_link("Sign Out")
-        click on "Sign Out"
+        click_on "Sign Out"
 
         expect(current_path).to eq(root_path)
       end

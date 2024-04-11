@@ -1,6 +1,8 @@
-class User::DashboardController < ApplicationController
+class Users::DashboardController < ApplicationController
   def show
-    @user = UserFacade.user_data(params[:user_id])
-    @tattoos = UserFacade.dashboard_tattoos(params[:user_id])
+    user_id = params[:user_id]
+    @user = UserFacade.user_data(user_id)
+    @tattoos = UserFacade.dashboard_tattoos(user_id)
+    render 'users/dashboard'
   end
 end
