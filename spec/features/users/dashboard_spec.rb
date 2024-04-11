@@ -46,28 +46,28 @@ RSpec.describe "Dashboard Page", type: :feature do
 
     describe "displays tattoos based on user's preferences" do
       it "with each tattoo's info" do
-        within ".user_tattoo_options" do
+        within ".user_dashboard_tattoos" do
           expect(page).to have_css("img", count: 15)
           expect(page).to have_content("Cost:", count: 15)
-          expect(page).to have_content("Time:", count: 15)
+          expect(page).to have_content("Duration:", count: 15)
           expect(page).to have_content("Distance:", count: 15)
         end
       end
 
       it "with the option to 'dislike' a tattoo" do
-        within ".user_tattoo_options" do
+        within ".user_dashboard_tattoos" do
           expect(page).to have_button("Like", count: 15)
         end
       end
 
       it "with the option to 'like' a tattoo" do
-        within ".user_tattoo_options" do
+        within ".user_dashboard_tattoos" do
           expect(page).to have_button("Dislike", count: 15)
         end
       end
 
       it "with the option to schedule an apointment for a tattoo" do
-        within ".user_tattoo_options" do
+        within ".user_dashboard_tattoos" do
           expect(page).to have_button("Schedule Appointment", count: 15)
         end
       end
@@ -75,7 +75,7 @@ RSpec.describe "Dashboard Page", type: :feature do
 
     describe "displays forms to update" do
       it "user's location" do
-        expect(page).to have_field("Location")
+        expect(page).to have_field("Current Location")
       end
 
       it "search radius" do

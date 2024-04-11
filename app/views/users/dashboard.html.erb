@@ -1,5 +1,85 @@
+<center>
+<h1> <%= @user.name %>'s Dashboard </h1>
+</center>
 
-<%= link_to "My Profile", user_path(id: @user.id) %>
-<%= link_to 'Liked Tattoos', user_tattoos_path(id: @user.id) %>
-<%= link_to 'Appointments', user_appointments_path(id: @user.id) %>
-<%= link_to 'Sign Out', sign_out_path, method: :delete %>
+<nav>
+  <%= link_to "My Profile", user_path(id: @user.id) %>
+  <%= link_to 'Liked Tattoos', user_tattoos_path(id: @user.id) %>
+  <%= link_to 'Appointments', user_appointments_path(id: @user.id) %>
+  <%= link_to 'Sign Out', sign_out_path, method: :delete %>
+</nav>
+
+<section>
+<%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form|%>
+  <%= form.label :location, "Current Location" %>
+  <%= form.text_field :location, value: @user.location %>
+  <%= form.submit "Update" %>
+<% end %>
+
+<%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form|%>
+  <%= form.label :search_radius, "Search Radius" %>
+  <%= form.text_field :search_radius, value: @user.search_radius %>
+  <%= form.submit "Update"%>
+<% end %>
+</section>
+
+<section class="user_dashboard_tattoos">
+  <% @tattoos.each do |tattoo| %>
+    <div class="tattoo_option" >
+      <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
+
+      <div class="like_and_dislike_buttons">
+      <%= button_to "Dislike", user_dashboard_path(user_id: @user.id), method: :get %>
+      <%= button_to "Like", user_tattoos_path(user_id: @user.id), method: :post %><br>
+      </div>
+
+      <table>
+        <tr>
+          <th>Cost:</th>
+          <td><%= tattoo.price %></td>
+        </tr>
+        <tr>
+          <th>Duration:</th>
+          <td><%= tattoo.time_estimate %> min</td>
+        </tr>
+        <tr>
+          <th>Distance:</th>
+          <td>Later Feature</td>
+        </tr>
+      </table>
+
+      <p><%= button_to "Schedule Appointment" %></p>
+    </div>
+  <% end %>
+</section>
+
+<style>
+.user_dashboard_tattoos{
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+  grid-gap: 20px;
+}
+
+.tattoo_option {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+
+.like_and_dislike_buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.tattoo_option p {
+  margin: 2px;
+}
+
+th {
+  text-align: right;
+}
+
+td {
+  text-align: left;
+}
+</style>
