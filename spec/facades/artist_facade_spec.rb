@@ -31,6 +31,15 @@ RSpec.describe ArtistFacade do
           ]
         }
       )
+
+      json_response_1 = File.read("spec/fixtures/artist/artist.json")
+
+      json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
+
+      stub_request(:get, "http://localhost:3000/api/v0/artists/5")
+        .to_return(status: 200, body: json_response_1)
+      stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
+        .to_return(status: 200, body: json_response_2)
     end
 
     it "artist_data returns a hash in the desired format" do
@@ -64,14 +73,16 @@ RSpec.describe ArtistFacade do
     end
 
     it "find_artist returns an artist object with the given id" do
-      json_response_1 = File.read("spec/fixtures/artist/artist.json")
-
-      stub_request(:get, "http://localhost:3000/api/v0/artists/5")
-        .to_return(status: 200, body: json_response_1)
-
       artist = ArtistFacade.new.find_artist("5")
 
       expect(artist).to be_an(Artist)
+    end
+
+    it "find_artist_tattoos returns an array of tattoos uploaded from the artist of the given id" do
+      tattoos = ArtistFacade.new.find_artist_tattoos("5")
+
+      expect(tattoos).to be_an(Array)
+      tattoos.each { |tattoo| expect(tattoo).to be_a(Tattoo)}
     end
   end
 end
