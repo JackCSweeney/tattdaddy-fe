@@ -11,4 +11,12 @@ class SearchService
   def find_artists
     get_url("artists")
   end
+
+  def verify_artist_sign_in(params)
+    response = connection.post("sign_in") do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = params.to_json
+    end
+    JSON.parse(response.body, symbolize_names: true)
+  end
 end
