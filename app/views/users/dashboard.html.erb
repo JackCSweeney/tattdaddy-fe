@@ -7,7 +7,7 @@
 <section>
 <%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form|%>
   <%= form.label :location, "Current Location" %>
-  <%= form.text_field :location, value: @user.location %>
+  <%= form.text_field :location, value: @user.location, size: 50  %>
   <%= form.submit "Update" %>
 <% end %>
 

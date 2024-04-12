@@ -19,6 +19,7 @@ RSpec.describe "Edit User Account Page", type: :feature do
 
     describe "shows a form to update user's" do
       it "name" do
+        save_and_open_page
         expect(page).to have_field("Name", with: "Ruby Gem")
       end
 
