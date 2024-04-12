@@ -12,7 +12,7 @@ RSpec.describe "User's My Profile Page", type: :feature do
         .to_return(status: 200, body: json_response_1)
       stub_request(:get, "http://localhost:3000/api/v0/users/25/identities")
         .to_return(status: 200, body: json_response_2)
-      
+
       visit user_path(id: 25)
     end
 

@@ -17,7 +17,7 @@ RSpec.describe "Dashboard Page", type: :feature do
     describe "displays links to" do
       it "view 'My Profile'" do
         json_response_2 = File.read("spec/fixtures/user/identity_prefs.json")
-  
+
         stub_request(:get, "http://localhost:3000/api/v0/users/25/identities")
           .to_return(status: 200, body: json_response_2)
 
