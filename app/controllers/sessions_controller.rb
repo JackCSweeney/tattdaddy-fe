@@ -1,35 +1,32 @@
 class SessionsController <ApplicationController
   def create
-    if params[:sign_in][:type] == "Sign In as User"
-      user = User.find_by(email: params[:sign_in][:email])
-      authenticate_user(user)
-    elsif params[:sign_in][:type] == "Sign In as Artist"
-      artist = ArtistFacade.new.artists.find { |artist|artist.email == params[:sign_in][:email] }
-      authenticate_artist(artist)
+    response = SessionService.authenticate(sign_in_params)
+
+    return invalid_credentials_error if response.key?(:error)
+
+    if response[:data][:type] == "user"
+      user_id = response[:data][:id]
+      session[:user_id] = user_id
+      redirect_to user_dashboard_path(user_id: user_id)
+    else
+      artist_id = response[:data][:id]
+      session[:artist_id] =  artist_id
+      redirect_to artist_dashboard_path(artist_id:  artist_id)
     end
   end
 
   def destroy
-    # request BE to delete session here
+    #SessionService.sign_out#(current_user)
     redirect_to root_path
   end
 
   private
-  def authenticate_user(user)
-    if user && user.authenticate(params[:sign_in][:password])
-      redirect_to user_dashboard_path(user)
-    else
-      redirect_to root_path
-      flash[:error] = "Incorrect credentials"
-    end
+  def invalid_credentials_error
+    redirect_to root_path
+    flash[:error] = 'Invalid email/password combination'
   end
 
-  def authenticate_artist(artist)
-    if artist && artist.authenticate(params[:sign_in][:password])
-      redirect_to artist_dashboard_path(artist)
-    else
-      redirect_to root_path
-      flash[:error] = "Incorrect credentials"
-    end
+  def sign_in_params
+    params.require(:sign_in).permit(:email, :password, :type)
   end
 end

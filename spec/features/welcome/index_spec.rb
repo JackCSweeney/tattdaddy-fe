@@ -21,15 +21,81 @@ RSpec.describe 'Welcome Index Page', type: :feature do
       end
 
       describe "option to sign in as" do
-        it "as a user" do
-          within ".sign_in" do
-            expect(page).to have_button("Sign In as User")
+        describe "a user" do
+          scenario "valid credentials" do
+            json_resonse = File.read("spec/fixtures/sessions/successful_user_sign_in.json")
+            json_response_1 = File.read("spec/fixtures/user/user.json")
+            json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
+
+            stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+              .to_return(status: 200, body: json_resonse)
+              stub_request(:get, "http://localhost:3000/api/v0/users/25")
+                .to_return(status: 200, body: json_response_1)
+              stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
+                .to_return(status: 200, body: json_response_2)
+
+              within ".sign_in" do
+                expect(page).to have_button("Sign In as User")
+                fill_in "Email", with: "jesusa@spinka.test"
+                fill_in "Password", with: "123Password"
+                click_on "Sign In as User"
+              end
+              expect(current_path).to eq(user_dashboard_path(user_id: 25))
+          end
+
+          scenario "invalid credentials" do
+            stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+              .to_return(status: 422, body: '{"error": "Invalid Parameters for Sign In"}')
+
+              within ".sign_in" do
+                expect(page).to have_button("Sign In as User")
+                fill_in "Email", with: "jesusa@spinka.test"
+                fill_in "Password", with: "wrong_password"
+                click_on "Sign In as User"
+              end
+
+              expect(current_path).to eq(root_path)
+              expect(page).to have_content('Invalid email/password combination')
           end
         end
 
-        it "as an artist" do
-          within ".sign_in" do
-            expect(page).to have_button("Sign In as Artist")
+        describe "an artist" do
+          scenario "valid credentials" do
+            json_resonse = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+            json_response_1 = File.read("spec/fixtures/artist/artist.json")
+            json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
+            # any other stubs needed for artist dashboard?
+
+            stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+              .to_return(status: 200, body: json_resonse)
+              stub_request(:get, "http://localhost:3000/api/v0/artists/1")
+                .to_return(status: 200, body: json_response_1)
+              stub_request(:get, "http://localhost:3000/api/v0/artists/1/tattoos")
+                .to_return(status: 200, body: json_response_2)
+
+              within ".sign_in" do
+                expect(page).to have_button("Sign In as Artist")
+                fill_in "Email", with: "darci@waters-mills.example"
+                fill_in "Password", with: "123Password"
+                click_on "Sign In as Artist"
+              end
+
+            expect(current_path).to eq(artist_dashboard_path(artist_id: 1))
+          end
+
+          scenario "invalid credentials" do
+            stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+              .to_return(status: 422, body: '{"error": "Invalid Parameters for Sign In"}')
+
+              within ".sign_in" do
+                expect(page).to have_button("Sign In as Artist")
+                fill_in "Email", with: "darci@waters-mills.example"
+                fill_in "Password", with: "wrong_password"
+                click_on "Sign In as Artist"
+              end
+
+              expect(current_path).to eq(root_path)
+              expect(page).to have_content('Invalid email/password combination')
           end
         end
       end
@@ -42,87 +108,6 @@ RSpec.describe 'Welcome Index Page', type: :feature do
 
       it "an artist" do
         expect(page).to have_link("Create Artist Account")
-      end
-    end
-  end
-
-  describe 'As an artist' do
-    before do
-      allow_any_instance_of(SearchService).to receive(:get_url).with("artists").and_return(
-        {
-          data: [
-            {
-              id: "322458",
-              type: "artist",
-              attributes: {
-                name: "Tattoo artists",
-                location: "1400 U Street NW",
-                email: "tatart@gmail.com",
-                Identity: "LGBTQ+ Friendly",
-                password_digest: "c9wkrdrXdi/tpSPYNb+S3TIHQC+NnaTU/suyBCoxFjlBbRN30gL/WnC7k/L3nrSapm+vGpA0euRTry0Pnl5kUv02ro4ITg==--OQ456WGGpCuAf8ss--LnGEQSJGWhidXOH2nDQgWw=="
-              }
-            },
-            {
-              id: "322459",
-              type: "artist",
-              attributes: {
-                name: "Tattoo Pot",
-                location: "54541 Street CO",
-                email: "tatpot@gmail.com",
-                Identity: "LGBTQ+ Friendly",
-                password_digest: "4Fry+l2HrBRdpJveWE5iApnMxeJXXkuqSRwbN40/oyDe5bIvSvC+nqXGee2zGFeCZm8JDiOVowNq0u/+yUWqkRcLnrI=--nUQTxqVuqxfE1jJ3--j1oYhY/+evkKCyU8udWhkQ=="
-              }
-            }
-          ]
-        }
-      )
-      data = {
-            id: "322458",
-            name: "Tattoo artists",
-            location: "1400 U Street NW",
-            email: "tatart@gmail.com",
-            identity: "LGBTQ+ Friendly",
-            password_digest: "123"
-            }
-      @artist_1 = Artist.new(data)
-      
-      visit root_path
-    end
-
-    describe "when credentials are a correct combination" do
-      xit "allows to sign in and takes the artist to its dashboard page" do
-        within ".sign_in" do
-          fill_in('Email', with: "tatart@gmail.com")
-          fill_in('Password', with: "123")
-          click_button("Sign In as Artist")
-          expect(current_path).to eq(artist_dashboard_path(@artist_1))
-        end
-      end
-    end
-
-    describe "when credentials or input values are not correct" do
-      describe "when password is incorrect" do
-        xit "does not allow an artist to sign in, flashes a detailed message and refreshes the welcome page" do
-          within ".sign_in" do
-            fill_in('Email', with: "tatart@gmail.com")
-            fill_in('Password', with: "053")
-            click_button("Sign In as Artist")
-            expect(current_path).to eq(root_path)
-            expect(page).to have_content("Incorrect credentials")
-          end
-        end
-      end
-
-      describe "when email is incorrect" do
-        xit "does not allow an artist to sign in, flashes a detailed message and refreshes the welcome page" do
-          within ".sign_in" do
-            fill_in('Email', with: "tatartuu@gmail.com")
-            fill_in('Password', with: "123")
-            click_button("Sign In as Artist")
-            expect(current_path).to eq(root_path)
-            expect(page).to have_content("Incorrect credentials")
-          end
-        end
       end
     end
   end
