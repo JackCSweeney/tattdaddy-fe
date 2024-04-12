@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": "1",
+    "type": "artist",
+    "attributes": {
+      "name": "Freeman Carroll",
+      "email": "darci@waters-mills.example",
+      "password": null,
+      "location": "Suite 528 2439 Rogahn Freeway, Russchester, IL 26115-2661"
+    }
+  }
+}
