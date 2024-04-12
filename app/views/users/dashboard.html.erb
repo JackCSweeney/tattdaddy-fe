@@ -2,12 +2,9 @@
 <h1> <%= @user.name %>'s Dashboard </h1>
 </center>
 
-<nav>
-  <%= link_to "My Profile", user_path(id: @user.id) %>
-  <%= link_to 'Liked Tattoos', user_tattoos_path(id: @user.id) %>
-  <%= link_to 'Appointments', user_appointments_path(id: @user.id) %>
-  <%= link_to 'Sign Out', sign_out_path, method: :delete %>
-</nav>
+<%= render partial: "shared/nav_user"%>
+
+
 
 <section>
 <%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form|%>

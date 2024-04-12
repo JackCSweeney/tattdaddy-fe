@@ -2,12 +2,7 @@
 <h1> <%= @artist.name %>'s Dashboard </h1>
 </center>
 
-<nav>
-  <%= link_to "My Profile", artist_path(id: @artist.id) %>
-  <!%= link_to 'Liked Tattoos', artist_tattoos_path(id: @artist.id) %>
-  <%= link_to 'Appointments', artist_appointments_path(id: @artist.id) %>
-  <%= link_to 'Sign Out', sign_out_path, method: :delete %>
-</nav>
+<%= render partial: "shared/nav_artist"%>
 
 <section class="artist_dashboard_tattoos">
   <center>
