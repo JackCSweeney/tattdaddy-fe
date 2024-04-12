@@ -4,7 +4,6 @@
 
 <nav>
   <%= link_to "My Profile", artist_path(id: @artist.id) %>
-  <!%= link_to 'Liked Tattoos', artist_tattoos_path(id: @artist.id) %>
   <%= link_to 'Appointments', artist_appointments_path(id: @artist.id) %>
   <%= link_to 'Sign Out', sign_out_path, method: :delete %>
 </nav>
@@ -14,6 +13,7 @@
     <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get %>
   </center>
   
+  <h3>Your Available Tattoos</h3>
   <% @tattoos.each do |tattoo| %>
     <div id="tattoo-<%= tattoo.id %>" class="tattoo_option" >
       <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
