@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "id": "11",
+      "type": "tattoos",
+      "attributes": {
+        "image_url": "https://gist.github.com/assets/149989113/379ece3d-6f4e-40d6-b7c4-47920d62ddfa",
+        "price": 315,
+        "time_estimate": 85,
+        "artist_id": 0
+      }
+    },
+    {
+      "id": "12",
+      "type": "tattoos",
+      "attributes": {
+        "image_url": "https://gist.github.com/assets/149989113/66a957cb-a6ef-4967-b049-dc6694022cf2",
+        "price": 350,
+        "time_estimate": 60,
+        "artist_id": 5
+      }
+    },
+    {
+      "id": "13",
+      "type": "tattoos",
+      "attributes": {
+        "image_url": "https://gist.github.com/assets/149989113/ad31388d-2480-49c3-b270-f4adcf6b7f9d",
+        "price": 280,
+        "time_estimate": 12,
+        "artist_id": 8
+      }
+    },
+    {
+      "id": "14",
+      "type": "tattoos",
+      "attributes": {
+        "image_url": "https://gist.github.com/assets/149989113/176b3ee5-22d9-4561-818b-e80c0fd36307",
+        "price": 335,
+        "time_estimate": 80,
+        "artist_id": 8
+      }
+    },
+    {
+      "id": "15",
+      "type": "tattoos",
+      "attributes": {
+        "image_url": "https://gist.github.com/assets/149989113/51cbb0a7-7d92-4835-b180-5ed250d2e815",
+        "price": 245,
+        "time_estimate": 75,
+        "artist_id": 8
+      }
+    }
+  ]
+}
