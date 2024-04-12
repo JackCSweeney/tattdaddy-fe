@@ -11,4 +11,12 @@ class ArtistService
   def find_artists
     get_url("/api/v0/artists")
   end
+
+  def find_artist(id)
+    get_url("/api/v0/artists/#{id}")
+  end
+
+  def artist_tattoos(id)
+    get_url("/api/v0/artists/#{id}/tattoos")
+  end
 end
