@@ -7,6 +7,10 @@ class UserService
     get_url("/api/v0/tattoos?user=#{user_id}")
   end
 
+  def self.get_artist_identity_pref(user_id)
+    get_url("/api/v0/users/25/identities")
+  end
+
   def self.get_liked_tattoos(user_id)
     get_url("/api/v0/users/#{user_id}/tattoos")
   end

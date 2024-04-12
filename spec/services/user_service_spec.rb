@@ -49,4 +49,21 @@ RSpec.describe UserService do
       expect(liked_tattoos[:data]).to all(include(type: "tattoos"))
     end
   end
+
+  describe ".get_artist_identity_pref(user_id)" do
+    it "returns all tattoos that a user has 'liked'" do
+      json_response = File.read("spec/fixtures/user/identity_prefs.json")
+
+      stub_request(:get, "http://localhost:3000/api/v0/users/25/identities")
+        .to_return(status: 200, body: json_response)
+
+      identities = UserService.get_artist_identity_pref(25)
+
+      expect(identities).to be_a(Hash)
+      expect(identities[:data]).to be_an(Array)
+      expect(identities[:data].size).to eq(2)
+      expect(identities[:data]).to all(be_a(Hash))
+      expect(identities[:data]).to all(include(type: "identity"))
+    end
+  end
 end

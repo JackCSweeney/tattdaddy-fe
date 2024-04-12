@@ -5,7 +5,8 @@ RSpec.describe "User's My Profile Page", type: :feature do
 
     before do
       json_response_1 = File.read("spec/fixtures/user/user.json")
-      json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
+      json_response_2 = File.read("spec/fixtures/user/identity_prefs.json")
+      # json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 200, body: json_response_1)
@@ -22,7 +23,7 @@ RSpec.describe "User's My Profile Page", type: :feature do
       expect(page).to have_content("Search Radius: 25 miles")
 
       within ".identity_pref" do
-        expect(page).to have_content("I want to support artists who are:")
+        expect(page).to have_content("I would like to support artists who are:")
         expect(page).to have_content("Female")
         expect(page).to have_content("Asian")
         expect(page).to_not have_content("None")
@@ -54,8 +55,8 @@ RSpec.describe "User's My Profile Page", type: :feature do
       end
     end
 
-    it "'Edit Profile' button to "  do
-      expect(page).to have_link("Edit Profile")
+    it "'Edit Profile' button to update account"  do
+      expect(page).to have_button("Edit Profile")
       click_on "Edit Profile"
 
       expect(current_path).to eq(edit_user_path(id: 25))
