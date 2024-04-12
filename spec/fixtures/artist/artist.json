@@ -4,10 +4,9 @@
     "type": "artist",
     "attributes": {
       "name": "Tattoo artists",
-      "location": "1400 U Street NW",
       "email": "tatart@gmail.com",
-      "identity": "LGBTQ+ Friendly",
-      "password_digest": "12345"
+      "password": null,
+      "location": "1400 U Street NW, Washington, DC 20009"
     }
   }
 }
