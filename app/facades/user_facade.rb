@@ -1,6 +1,6 @@
 class UserFacade
   def self.user_data(user_id)
-    json = UserService.user_data(user_id)
+    json = UserService.get_user_data(user_id)
     User.new(json[:data])
   end
 

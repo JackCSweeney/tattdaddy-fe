@@ -1,5 +1,5 @@
 class UserService
-  def self.user_data(user_id)
+  def self.get_user_data(user_id)
     get_url("/api/v0/users/#{user_id}")
   end
 
