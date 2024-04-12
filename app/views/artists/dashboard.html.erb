@@ -11,7 +11,7 @@
 
 <section class="artist_dashboard_tattoos">
   <center>
-    <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :new %>
+    <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get %>
   </center>
   
   <% @tattoos.each do |tattoo| %>
