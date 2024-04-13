@@ -6,7 +6,6 @@ RSpec.describe "User's My Profile Page", type: :feature do
     before do
       json_response_1 = File.read("spec/fixtures/user/user.json")
       json_response_2 = File.read("spec/fixtures/user/identity_prefs.json")
-      # json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 200, body: json_response_1)
@@ -47,6 +46,9 @@ RSpec.describe "User's My Profile Page", type: :feature do
       end
 
       it "delete user's account" do
+        stub_request(:delete, "http://localhost:3000/api/v0/users/25")
+        .to_return(status: 204)
+        
         expect(page).to have_link("Delete Account")
         click_on "Delete Account"
 

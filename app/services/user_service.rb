@@ -15,9 +15,17 @@ class UserService
     get_url("/api/v0/users/#{user_id}/tattoos")
   end
 
+  def self.delete_user(user_id)
+    delete_url("/api/v0/users/#{user_id}")
+  end
+
   def self.get_url(url)
     response = conn.get(url)
     JSON.parse(response.body, symbolize_names: true)
+  end
+
+  def self.delete_url(url)
+    response = conn.delete(url)
   end
 
   def self.conn

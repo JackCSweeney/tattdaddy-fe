@@ -66,4 +66,14 @@ RSpec.describe UserService do
       expect(identities[:data]).to all(include(type: "identity"))
     end
   end
+
+  describe ".delete_user(user_id)" do
+    it "deletes user account" do
+      stub_request(:delete, "http://localhost:3000/api/v0/users/25")
+        .to_return(status: 204)
+
+      response = UserService.delete_user(25)
+      expect(response.status).to eq(204)
+    end
+  end
 end

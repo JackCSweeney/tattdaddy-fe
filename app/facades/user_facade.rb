@@ -17,4 +17,8 @@ class UserFacade
       Identity.new(identity_data)
     end
   end
+
+  def self.delete_user(user_id)
+    UserService.delete_user(user_id)
+  end
 end
