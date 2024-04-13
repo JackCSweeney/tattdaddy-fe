@@ -21,7 +21,12 @@
     <legend>I want to support artists who are:</legend>
 
     <% @identities.each do |identity| %>
-      <%= check_box_tag "identities[]", identity.id, @user_identities.include?(identity.id), id: "identity_#{identity.id}", multiple: true %>
+      <%= check_box_tag "identities[]", identity.id, @user_identities.any? {|user_identity| user_identity.id == identity.id}, id: "identity_#{identity.id}", multiple: true %>
+      <%= label_tag "identity_#{identity.id}", identity.label %><br>
+    <% end %>
+  </fieldset>
+    <% @identities.each do |identity| %>
+      <%= check_box_tag "identities[]", identity.id, @user_identities.any? {|ident| ident.id == identity.id}, id: "identity_#{identity.id}", multiple: true %>
       <%= label_tag "identity_#{identity.id}", identity.label %><br>
     <% end %>
   </fieldset>

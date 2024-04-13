@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    user_id = params[:id]
+    UserFacade.delete_user(user_id)
     redirect_to root_path
     flash[:alert] = "User account successfully deleted"
   end

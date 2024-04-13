@@ -17,9 +17,8 @@ RSpec.describe "Edit User Account Page", type: :feature do
       visit edit_user_path(id: 25)
     end
 
-    describe "shows a form to update user's" do
+    describe "shows a update profile form prefilled with user's" do
       it "name" do
-        save_and_open_page
         expect(page).to have_field("Name", with: "Ruby Gem")
       end
 
@@ -39,6 +38,10 @@ RSpec.describe "Edit User Account Page", type: :feature do
         within "fieldset" do
           expect(page).to have_content("I want to support artists who are")
           expect(page).to have_selector("input[type='checkbox']", count: 7)
+          expect(find_field("Female")).to be_checked
+          expect(find_field("Asian")).to be_checked
+          expect(find_field("None")).to_not be_checked
+          expect(find_field("LGBTQ+")).to_not be_checked
         end
       end
     end
