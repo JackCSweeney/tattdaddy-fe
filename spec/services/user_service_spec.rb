@@ -67,6 +67,48 @@ RSpec.describe UserService do
     end
   end
 
+  describe ".update_user_data(user_id, updated_data)" do
+    it "patch request to update a user's information" do
+      json_response = File.read("spec/fixtures/user/user.json")
+      stub_request(:patch, "http://localhost:3000/api/v0/users/25")
+      .to_return(status: 200, body: json_response)
+
+      updated_user = UserService.update_user_data("25", {user: {name: "Ruby Gem", search_radiu: 25}})
+      expect(updated_user).to be_a(Hash)
+      expect(updated_user[:data]).to be_a(Hash)
+      expect(updated_user[:data][:type]).to eq("user")
+    end
+  end
+
+  describe ".create_user_identity(user_and_identity_ids)" do
+    it "create a new user_identity" do
+      stub_request(:post, "http://localhost:3000/api/v0/user_identities")
+        .to_return(status: 200, body: '{"message": "Identity successfully added to User"}')
+      
+      user_and_identity_ids = {
+        "user_identity": {
+            "user_id": "25",
+            "identity_id": "2"
+        }
+      }
+
+      response = UserService.create_user_identity(user_and_identity_ids)
+      expect(response[:message]).to eq("Identity successfully added to User")
+    end
+  end
+
+  describe ".delete_user_identity(user_and_identity_ids)" do
+    it "delete user_identity" do
+      stub_request(:delete, "http://localhost:3000/api/v0/user_identities")
+        .with( body: {"{\"user_identity\":{\"user_id\":\"25\",\"identity_id\":\"2\"}}"=>nil})
+        .to_return(status: 204)
+
+      user_and_identity_ids = {"user_identity"=>{"user_id"=>"25", "identity_id"=>"2"}}
+      response = UserService.delete_user_identity(user_and_identity_ids)
+      expect(response.status).to eq(204)
+    end
+  end
+
   describe ".delete_user(user_id)" do
     it "deletes user account" do
       stub_request(:delete, "http://localhost:3000/api/v0/users/25")
