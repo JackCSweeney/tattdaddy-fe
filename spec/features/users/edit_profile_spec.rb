@@ -13,6 +13,11 @@ RSpec.describe "Edit User Account Page", type: :feature do
         .to_return(status: 200, body: json_response_2)
       stub_request(:get, "http://localhost:3000/api/v0/identities")
         .to_return(status: 200, body: json_response_3)
+      stub_request(:patch, "http://localhost:3000/api/v0/users/25")
+        .to_return(status: 200, body: json_response_1)
+      stub_request(:post, "http://localhost:3000/api/v0/user_identities")
+        .to_return(status: 200, body: '{"message": "Identity successfully added to User"}')
+
 
       visit edit_user_path(id: 25)
     end
@@ -43,6 +48,39 @@ RSpec.describe "Edit User Account Page", type: :feature do
           expect(find_field("None")).to_not be_checked
           expect(find_field("LGBTQ+")).to_not be_checked
         end
+      end
+    end
+
+    describe "redirects submitted update form to My Profile" do
+      before do
+        stub_request(:delete, "http://localhost:3000/api/v0/user_identities")
+          .with( body: {"{\"user_identity\":{\"user_id\":\"25\",\"identity_id\":\"6\"}}"=>nil})
+          .to_return(status: 204)
+
+      end
+      it "updated info appears on My Profile" do
+        fill_in :name, with: "Going to the Gem"
+        fill_in :email, with: "wonder@wall.com"
+        fill_in "Location", with: "412 Delaware St, Kansas City, MO 64105"
+        page.check("Latino")
+        page.uncheck("Asian")
+        click_on "Save Changes"
+
+        expect(current_path).to eq(user_path(id: 25))
+        expect(page).to have_content("Profile updated successfully")
+      end
+
+      xit "all fields must be completed" do
+        fill_in "Name", with: ""
+        fill_in "Email", with: ""
+        fill_in "Location", with: ""
+        fill_in "Search Radius", with: ""
+        uncheck "LGBTQ+"
+        uncheck "Asian"
+        click_on "Save Changes"
+
+        expect(current_path).to eq(edit_user_path(id: 25))
+        expect(page).to have_content("All fields must be completed")
       end
     end
   end

@@ -49,7 +49,7 @@ RSpec.describe "User's My Profile Page", type: :feature do
         stub_request(:delete, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 204)
         
-        expect(page).to have_link("Delete Account")
+        expect(page).to have_button("Delete Account")
         click_on "Delete Account"
 
         expect(current_path).to eq(root_path)
@@ -58,6 +58,10 @@ RSpec.describe "User's My Profile Page", type: :feature do
     end
 
     it "'Edit Profile' button to update account"  do
+      json_response_3 = File.read("spec/fixtures/identities_list.json")
+      stub_request(:get, "http://localhost:3000/api/v0/identities")
+        .to_return(status: 200, body: json_response_3)
+
       expect(page).to have_button("Edit Profile")
       click_on "Edit Profile"
 

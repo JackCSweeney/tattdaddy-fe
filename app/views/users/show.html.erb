@@ -1,6 +1,10 @@
+<center>
+<h1> <%= @user.name %>'s Profile </h1>
+</center>
+
 <%= render partial: "shared/nav_user"%>
 
-<%= button_to "Edit Profile", edit_user_path(id: @user.id), method: :patch %>
+<%= button_to "Edit Profile", edit_user_path(id: @user.id), method: :get %>
 <section>
 <p>Name: <%= @user.name %></p>
 <p>Email: <%= @user.email %></p>
@@ -17,4 +21,4 @@
   </ul>
 </section>
 
-<%= link_to 'Delete Account', user_path(id: @user.id), method: :delete %>
+<%= button_to 'Delete Account', user_path(id: @user.id), method: :delete %>
