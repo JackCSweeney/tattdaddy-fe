@@ -16,6 +16,7 @@ class UserService
   end
 
   def self.update_user_data(user_id, updated_data)
+    # params = JSON.generate(updated_data)
     update_url("/api/v0/users/#{user_id}", updated_data)
   end
 

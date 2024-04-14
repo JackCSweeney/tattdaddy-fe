@@ -28,7 +28,7 @@ RSpec.describe UserFacade do
     end
   end
 
-  describe ".get_artist_identity_pref(user_id)" do
+  describe ".identity_preferences(user_id)" do
     it "returns user's preferences for artists' identities" do
       json_response = File.read("spec/fixtures/user/identity_prefs.json")
 
@@ -39,6 +39,58 @@ RSpec.describe UserFacade do
       
       expect(identities).to be_an(Array)
       expect(identities).to all(be_an(Identity))
+    end
+  end
+
+  describe ".update_data_and_identities(user_id, updated_user_data, identity_changes)" do
+    it "passes data to update data and update identity methods" do
+      user_id = 25
+      updated_user_data = {name: "Sean", location: "Canada"}
+      identity_changes = {post: ["1", "2"], delete: ["3"]}
+
+      expect(UserFacade).to receive(:update_user_data).with(25, {name: "Sean", location: "Canada"})
+      expect(UserFacade).to receive(:update_user_identities).with(25, {post: ["1", "2"], delete: ["3"]})
+      UserFacade.update_data_and_identities(user_id, updated_user_data, identity_changes)
+    end
+  end
+
+  describe ".update_user_data(user_id, user_params)" do
+    it "updates a user's information" do
+      json_response = File.read("spec/fixtures/user/user.json")
+      stub_request(:patch, "http://localhost:3000/api/v0/users/25")
+        .to_return(status: 200, body: json_response)
+
+      updated_user = UserFacade.update_user_data("25", {:name=>"Ruby Gem"})
+      expect(updated_user).to be_a(Hash)
+      expect(updated_user[:data][:type]).to eq("user")
+      expect(updated_user[:data][:attributes][:name]).to eq("Ruby Gem")
+    end
+  end
+
+  describe ".update_user_identities(user_id, identity_changes)" do
+    it "adds or removes user/identity relationships" do
+      stub_request(:post, "http://localhost:3000/api/v0/user_identities")
+        .to_return(status: 200, body: '{"message": "Identity successfully added to User"}')
+
+      stub_request(:delete, "http://localhost:3000/api/v0/user_identities")
+        .with( body: {"{\"user_identity\":{\"user_id\":\"25\",\"identity_id\":\"1\"}}"=>nil})
+        .to_return(status: 204)
+
+      identity_changes = {post: ["2", "3"], delete: ["1"]}
+      UserFacade.update_user_identities("25", identity_changes)
+
+      expect(WebMock).to have_requested(:post, "http://localhost:3000/api/v0/user_identities").twice
+      expect(WebMock).to have_requested(:delete, "http://localhost:3000/api/v0/user_identities").once
+    end
+  end
+
+  describe ".delete_user(user_id)" do
+    it "deletes a user's account" do
+      stub_request(:delete, "http://localhost:3000/api/v0/users/25")
+        .to_return(status: 204)
+
+      response = UserFacade.delete_user(25)
+      expect(response.status).to eq(204)
     end
   end
 end

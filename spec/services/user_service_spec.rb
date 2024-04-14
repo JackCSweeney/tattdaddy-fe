@@ -73,7 +73,7 @@ RSpec.describe UserService do
       stub_request(:patch, "http://localhost:3000/api/v0/users/25")
       .to_return(status: 200, body: json_response)
 
-      updated_user = UserService.update_user_data("25", {user: {name: "Ruby Gem", search_radiu: 25}})
+      updated_user = UserService.update_user_data("25", {user: {name: "Ruby Gem", search_radius: 25}})
       expect(updated_user).to be_a(Hash)
       expect(updated_user[:data]).to be_a(Hash)
       expect(updated_user[:data][:type]).to eq("user")
