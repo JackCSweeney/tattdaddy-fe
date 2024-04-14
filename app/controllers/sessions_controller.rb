@@ -15,6 +15,28 @@ class SessionsController <ApplicationController
     end
   end
 
+  def google_oauth2
+    redirect_to "/auth/google_oauth2/callback" # Redirect to Google's authorization URL
+  end
+
+  def google_oauth2_callback
+    # Handle Google OAuth callback
+    authorization_code = params[:code]
+    
+    # Make a POST request to your backend API to exchange authorization code for access token
+    response = Faraday.post("http://localhost3000.com/auth/google_oauth2/callback", { code: authorization_code })
+    
+     # Handle response from backend
+     if response.status == 200
+      # Successful authentication
+      session[:access_token] = JSON.parse(response.body)['access_token'] # Store access token in session
+      redirect_to dashboard_path # Redirect to dashboard
+    else
+      # Handle authentication failure
+      redirect_to root_path, alert: "Authentication failed"
+    end
+  end
+
   def destroy
     #SessionService.sign_out#(current_user)
     redirect_to root_path
