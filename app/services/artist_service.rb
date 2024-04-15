@@ -8,6 +8,13 @@ class ArtistService
     JSON.parse(response.body, symbolize_names: true)
   end
 
+  def post_url(uri, attributes)
+    response = connection.post(uri)do |req|
+      req.body = attributes
+    end
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
   def find_artists
     get_url("/api/v0/artists")
   end
@@ -18,5 +25,9 @@ class ArtistService
 
   def artist_tattoos(id)
     get_url("/api/v0/artists/#{id}/tattoos")
+  end
+  
+  def send_new_artist_tattoo(attributes)
+    post_url("/api/v0/tattoos", attributes)
   end
 end
