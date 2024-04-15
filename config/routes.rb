@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :users, except: :index do
     get "/dashboard", to: "users/dashboard#show"
-    resources :tattoos, only: :index
+    resources :tattoos, only: [:index, :create, :destroy], controller: "users/tattoos"
     resources :appointments, only: [:index]
   end
 
@@ -25,20 +25,23 @@ Rails.application.routes.draw do
   end
 end
 
-#               Prefix Verb   URI Pattern                                           Controller#Action
-#                 root GET    /                                                        welcome#index
-#              sign_in POST   /sign_in(.:format)                                      sessions#create
-#             sign_out DELETE /sign_out(.:format)                                     sessions#destroy
-#       user_dashboard GET    /users/:user_id/dashboard(.:format)              users/dashboard#show
-#         user_tattoos GET    /users/:user_id/tattoos(.:format)                        tattoos#index
-#    user_appointments GET    /users/:user_id/appointments(.:format)              appointments#index
-#                users POST   /users(.:format)                                           users#create
-#             new_user GET    /users/new(.:format)                                       users#new
-#            edit_user GET    /users/:id/edit(.:format)                                  users#edit
-#                user GET     /users/:id(.:format)                                       users#show
-#                      PATCH  /users/:id(.:format)                                       users#update
-#                      PUT    /users/:id(.:format)                                       users#update
-#                      DELETE /users/:id(.:format)                                       users#destroy
+  #             Prefix Verb   URI Pattern                                           Controller#Action
+  #               root GET    /                                                        welcome#index
+  #            sign_in POST   /sign_in(.:format)                                      sessions#create
+  #           sign_out DELETE /sign_out(.:format)                                     sessions#destroy
+  #     user_dashboard GET    /users/:user_id/dashboard(.:format)              users/dashboard#show
+  #       user_tattoos GET    /users/:user_id/tattoos(.:format)                  users/tattoos#index
+  #                    POST   /users/:user_id/tattoos(.:format)                  users/tattoos#create
+  #        user_tattoo DELETE /users/:user_id/tattoos/:id(.:format)               users/tattoos#destroy
+  #       user_tattoos GET    /users/:user_id/tattoos(.:format)                        tattoos#index
+  #  user_appointments GET    /users/:user_id/appointments(.:format)              appointments#index
+  #              users POST   /users(.:format)                                           users#create
+  #           new_user GET    /users/new(.:format)                                       users#new
+  #          edit_user GET    /users/:id/edit(.:format)                                  users#edit
+  #              user GET     /users/:id(.:format)                                       users#show
+  #                    PATCH  /users/:id(.:format)                                       users#update
+  #                    PUT    /users/:id(.:format)                                       users#update
+  #                    DELETE /users/:id(.:format)                                       users#destroy
 
 
 #               Prefix Verb   URI Pattern                                           Controller#Action

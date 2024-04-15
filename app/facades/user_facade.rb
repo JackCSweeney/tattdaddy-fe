@@ -11,6 +11,13 @@ class UserFacade
     end
   end
 
+  def self.liked_tattoos(user_id)
+    json = UserService.get_liked_tattoos(user_id)
+    json[:data].map do |tattoo_data|
+      Tattoo.new(tattoo_data)
+    end
+  end
+
   def self.identity_preferences(user_id)
     json = UserService.get_artist_identity_pref(user_id)
     json[:data].map do |identity_data|
@@ -36,6 +43,15 @@ class UserFacade
         UserService.delete_user_identity(params) if key == :delete
       end
     end
+  end
+
+  def self.create_user_tattoo(user_tattoo_data)
+    UserService.create_user_tattoo(user_tattoo_data)
+  end
+
+  def self.delete_user_tattoo(user_id, tattoo_id)
+    user_and_tattoo_ids = { user_tattoo: { user_id: user_id, tattoo_id: tattoo_id}}
+    UserService.delete_user_tattoo(user_and_tattoo_ids)
   end
 
   def self.delete_user(user_id)
