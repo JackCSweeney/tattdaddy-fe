@@ -33,6 +33,10 @@ class UserService
     delete_url_with_body("/api/v0/user_identities", user_and_identity_ids)
   end
 
+  def self.delete_user_tattoo(user_and_tattoo_ids)
+    delete_url_with_body("/api/v0/user_tattoos", user_and_tattoo_ids)
+  end
+
   def self.delete_user(user_id)
     delete_url("/api/v0/users/#{user_id}")
   end

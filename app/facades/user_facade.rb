@@ -42,6 +42,10 @@ class UserFacade
     UserService.create_user_tattoo(user_tattoo_data)
   end
 
+  def self.delete_user_tattoo(user_and_tattoo_ids)
+    UserService.delete_user_tattoo(user_and_tattoo_ids)
+  end
+
   def self.delete_user(user_id)
     UserService.delete_user(user_id)
   end

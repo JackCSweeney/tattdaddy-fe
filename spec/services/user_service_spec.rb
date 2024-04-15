@@ -114,13 +114,33 @@ RSpec.describe UserService do
   end
 
   describe ".delete_user_identity(user_and_identity_ids)" do
-    it "delete user_identity" do
+    it "deletes user_identity" do
       stub_request(:delete, "http://localhost:3000/api/v0/user_identities")
-        .with( body: {"{\"user_identity\":{\"user_id\":\"25\",\"identity_id\":\"2\"}}"=>nil})
         .to_return(status: 204)
 
-      user_and_identity_ids = {"user_identity"=>{"user_id"=>"25", "identity_id"=>"2"}}
+      user_and_identity_ids = {
+        "user_identity": {
+          "user_id": "25", 
+          "identity_id": "2"
+        }
+      }
       response = UserService.delete_user_identity(user_and_identity_ids)
+      expect(response.status).to eq(204)
+    end
+  end
+
+  describe ".delete_user_tatto(user_and_tattoo_ids)" do
+    it "deletes user_tattoo" do
+      stub_request(:delete, "http://localhost:3000/api/v0/user_tattoos")
+        .to_return(status: 204)
+      
+      user_and_tattoo_ids = {
+        "user_tattoo": {
+          "user_id": "25",
+          "tattoo_id": "2"
+        }
+      }
+      response = UserService.delete_user_tattoo(user_and_tattoo_ids)
       expect(response.status).to eq(204)
     end
   end

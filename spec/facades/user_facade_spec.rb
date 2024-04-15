@@ -100,6 +100,22 @@ RSpec.describe UserFacade do
     end
   end
 
+  describe ".delete_user_tattoo" do
+    it "deletes user_tattoo if user 'removes' a liked tattoo" do
+      stub_request(:delete, "http://localhost:3000/api/v0/user_tattoos")
+        .to_return(status: 204)
+    
+      user_and_tattoo_ids = {
+        "user_tattoo": {
+          "user_id": "25",
+          "tattoo_id": "2"
+        }
+      }
+      response = UserFacade.delete_user_tattoo(user_and_tattoo_ids)
+      expect(response.status).to eq(204)
+    end
+  end
+
   describe ".delete_user(user_id)" do
     it "deletes a user's account" do
       stub_request(:delete, "http://localhost:3000/api/v0/users/25")
