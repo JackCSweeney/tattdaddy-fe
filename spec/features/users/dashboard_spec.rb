@@ -28,6 +28,11 @@ RSpec.describe "Dashboard Page", type: :feature do
       end
 
       it "view 'Liked Tattoos'" do
+        json_response = File.read("spec/fixtures/user/liked_tattoos.json")
+      
+        stub_request(:get, "http://localhost:3000/api/v0/users/25/tattoos")
+          .to_return(status: 200, body: json_response)
+
         expect(page).to have_link("Liked Tattoos")
         click_on "Liked Tattoos"
         
