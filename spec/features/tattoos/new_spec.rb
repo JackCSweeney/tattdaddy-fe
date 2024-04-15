@@ -11,6 +11,14 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
         .to_return(status: 200, body: json_response_2)
 
+        attributes = {artist_id: "5", image_url: "app/assets/images/bronto.jpeg", price: "50", time_estimate: "2"}
+      
+        allow_any_instance_of(ActiveStorage::Blob).to receive(:url)
+        .and_return("app/assets/images/bronto.jpeg")
+
+        allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+          .and_return(status: 200, body: "")
+
       visit new_artist_tattoo_path(artist_id: 5)
     end
 
@@ -38,13 +46,23 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       end
 
       it "when I fill the form correctly, upload an image and submit it takes me to the artist dashboard" do
-        fill_in "Price", with: 50
-        fill_in "Time estimate", with: 2
-        attach_file "Img file", Rails.root.join('app/assets/images/', 'bronto.jpeg')
+        fill_in "Price", with: "50"
+        fill_in "Time estimate", with: "2"
+        attach_file "Img file", 'app/assets/images/bronto.jpeg'
         click_button "Save"
 
         expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
         expect(page).to have_text("Tattoo created successfully")
+      end
+
+      it "handles sad path on form fields and sends back to new form" do
+        fill_in "Price", with: "a"
+        fill_in "Time estimate", with: 2
+        attach_file "Img file", Rails.root.join('app/assets/images/', 'bronto.jpeg')
+        click_button "Save"
+
+        expect(current_path).to eq(new_artist_tattoo_path(artist_id: 5))
+        expect(page).to have_text("Tattoo could not be uploaded")
       end
     end
   end
