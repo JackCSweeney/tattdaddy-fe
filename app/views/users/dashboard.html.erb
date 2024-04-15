@@ -24,8 +24,8 @@
       <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
 
       <div class="like_and_dislike_buttons">
-      <%= button_to "Dislike", user_dashboard_path(user_id: @user.id), method: :get %>
-      <%= button_to "Like", user_tattoos_path(user_id: @user.id), method: :post %><br>
+      <%= button_to "Dislike", user_tattoos_path(user_id: @user.id), method: :post, params: { type: "dislike", tattoo_id: tattoo.id } %>
+      <%= button_to "Like", user_tattoos_path(user_id: @user.id), method: :post, params: { type: "like", tattoo_id: tattoo.id }  %><br>
       </div>
 
       <table>

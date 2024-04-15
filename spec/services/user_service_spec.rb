@@ -97,6 +97,22 @@ RSpec.describe UserService do
     end
   end
 
+  describe ".create_user_tattoo(user_tattoo_data)" do
+    it "create a new user_tattoo" do
+      stub_request(:post, "http://localhost:3000/api/v0/user_tattoos")
+        .to_return(status: 200, body: '{"message": "Tattoo successfully added to User"}')
+      
+      user_tattoo_data = {
+        user_id: "25",
+        tattoo_id: "2",
+        type: "like"
+      }
+
+      response = UserService.create_user_tattoo(user_tattoo_data)
+      expect(response[:message]).to eq("Tattoo successfully added to User")
+    end
+  end
+
   describe ".delete_user_identity(user_and_identity_ids)" do
     it "delete user_identity" do
       stub_request(:delete, "http://localhost:3000/api/v0/user_identities")

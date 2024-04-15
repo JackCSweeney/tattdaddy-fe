@@ -84,6 +84,22 @@ RSpec.describe UserFacade do
     end
   end
 
+  describe ".create_user_tattoo(user_tattoo_data)" do
+    it "user_tattoo created from user liking or disliking a tattoo" do
+      stub_request(:post, "http://localhost:3000/api/v0/user_tattoos")
+        .to_return(status: 200, body: '{"message": "Tattoo successfully added to User"}')
+      
+      user_tattoo_data = {
+        user_id: "25",
+        tattoo_id: "2",
+        type: "like"
+      }
+
+      response = UserFacade.create_user_tattoo(user_tattoo_data)
+      expect(response[:message]).to eq("Tattoo successfully added to User")
+    end
+  end
+
   describe ".delete_user(user_id)" do
     it "deletes a user's account" do
       stub_request(:delete, "http://localhost:3000/api/v0/users/25")

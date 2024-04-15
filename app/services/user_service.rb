@@ -16,13 +16,17 @@ class UserService
   end
 
   def self.update_user_data(user_id, updated_data)
-    # params = JSON.generate(updated_data)
     update_url("/api/v0/users/#{user_id}", updated_data)
   end
 
   def self.create_user_identity(user_and_identity_ids)
     body = JSON.generate(user_and_identity_ids)
     post_url("/api/v0/user_identities", body)
+  end
+
+  def self.create_user_tattoo(user_tattoo_data)
+    body = JSON.generate(user_tattoo_data)
+    post_url("/api/v0/user_tattoos", body)
   end
 
   def self.delete_user_identity(user_and_identity_ids)

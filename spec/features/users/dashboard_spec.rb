@@ -60,14 +60,24 @@ RSpec.describe "Dashboard Page", type: :feature do
       end
 
       it "with the option to 'dislike' a tattoo" do
+        stub_request(:post, "http://localhost:3000/api/v0/user_tattoos")
+          .to_return(status: 200, body: '{"message": "Tattoo successfully added to User"}')
+
         within ".user_dashboard_tattoos" do
           expect(page).to have_button("Like", count: 15)
+          click_on "Like", match: :first
+          expect(current_path).to eq(user_dashboard_path(user_id: 25))
         end
       end
 
       it "with the option to 'like' a tattoo" do
+        stub_request(:post, "http://localhost:3000/api/v0/user_tattoos")
+          .to_return(status: 200, body: '{"message": "Tattoo successfully added to User"}')
+
         within ".user_dashboard_tattoos" do
           expect(page).to have_button("Dislike", count: 15)
+          click_on "Dislike", match: :first
+          expect(current_path).to eq(user_dashboard_path(user_id: 25))
         end
       end
 
