@@ -30,4 +30,8 @@ class ArtistService
   def send_new_artist_tattoo(attributes)
     post_url("/api/v0/tattoos", attributes)
   end
+
+  def find_tattoo(id)
+    get_url("/api/v0/tattoos/#{id}")
+  end
 end
