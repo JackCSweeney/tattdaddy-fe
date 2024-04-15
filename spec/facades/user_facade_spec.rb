@@ -27,6 +27,20 @@ RSpec.describe UserFacade do
       expect(tattoos).to all(be_a(Tattoo))
     end
   end
+  
+  describe ".liked_tattoos(user_id)" do
+    it "returns all tattos a user has 'liked'" do
+      json_response = File.read("spec/fixtures/user/liked_tattoos.json")
+      
+      stub_request(:get, "http://localhost:3000/api/v0/users/25/tattoos")
+      .to_return(status: 200, body: json_response)
+      
+      liked_tattoos = UserFacade.liked_tattoos(25)
+      
+      expect(liked_tattoos).to be_an(Array)
+      expect(liked_tattoos).to all(be_a(Tattoo))
+    end
+  end
 
   describe ".identity_preferences(user_id)" do
     it "returns user's preferences for artists' identities" do

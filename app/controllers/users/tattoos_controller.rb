@@ -1,6 +1,7 @@
 class Users::TattoosController < ApplicationController
   def index
-    # GET /api/v0/users/:user_id/tattoos
+    UserFacade.liked_tattoos(user_id: params[:user_id])
+    render "users/liked_tattoos"
   end
 
   def create
@@ -9,7 +10,9 @@ class Users::TattoosController < ApplicationController
   end
 
   def destroy
-    # DELETE /api/v0/user_tattoos
+    require 'pry'; binding.pry
+    UserFacade.delete_user_tattoo(user_tattoo_params)
+    redirect_to user_tattoos(user_id: params[:user_id])
   end
 
   private
