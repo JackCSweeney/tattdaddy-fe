@@ -57,4 +57,8 @@ class UserFacade
   def self.delete_user(user_id)
     UserService.delete_user(user_id)
   end
+
+  def self.create_new_user(user_attributes)
+    UserService.create_user(user_attributes)
+  end
 end
