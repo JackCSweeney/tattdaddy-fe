@@ -154,4 +154,26 @@ RSpec.describe UserService do
       expect(response.status).to eq(204)
     end
   end
+
+  describe ".create_user(user_attributes)" do
+    it "creates a new user" do
+      user_attributes = {name: "Ruby Gem", location: "9705 Fishers District Dr, Fishers, IN 46037", email: "jesusa@spinka.test", password: "password"}
+
+      json_response = File.read("spec/fixtures/user/user.json")
+
+      stub_request(:post, "http://localhost:3000/api/v0/users")
+        .to_return(status: 200, body: json_response)
+
+      response = UserService.create_user(user_attributes)
+
+      expect(response).to have_key(:data)
+      expect(response[:data]).to have_key(:attributes)
+      
+      attributes = response[:data][:attributes]
+
+      expect(attributes[:name]).to eq("Ruby Gem")
+      expect(attributes[:location]).to eq("9705 Fishers District Dr, Fishers, IN 46037")
+      expect(attributes[:email]).to eq("jesusa@spinka.test")
+    end
+  end
 end
