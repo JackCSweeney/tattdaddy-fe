@@ -23,7 +23,7 @@ class TattoosController < ApplicationController
   end
 
   def edit
-    @artist_id = params[:artist_id]
+    @artist = ArtistFacade.new.find_artist(params[:artist_id])
     @tattoo = ArtistFacade.new.find_tattoo(params[:id])
   end
 
@@ -34,12 +34,12 @@ class TattoosController < ApplicationController
     
     tattoo = ArtistFacade.new.update_tattoo(tattoo_attributes)
 
-    if tattoo.valid?
+    if tattoo
       redirect_to artist_dashboard_path(params[:artist_id])
       flash[:success] = "Tattoo updated successfully"
     else
       redirect_to edit_artist_tattoo_path(params[:artist_id])
-      flash[:error] = "Tattoo could not be uploaded"
+      flash[:error] = "Tattoo could not be updated"
     end
   end
 
