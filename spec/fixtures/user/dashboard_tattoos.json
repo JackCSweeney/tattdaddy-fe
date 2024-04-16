@@ -35,9 +35,9 @@
       "type": "tattoos",
       "attributes": {
         "image_url": "https://gist.github.com/assets/149989113/faa4aa31-75bf-4f8e-b7a8-77ad75856549",
-          "price": 275,
-          "time_estimate": 80,
-          "artist_id": 7
+        "price": 275,
+        "time_estimate": 80,
+        "artist_id": 7
       }
     },
     {
@@ -45,9 +45,9 @@
       "type": "tattoos",
       "attributes": {
         "image_url": "https://gist.github.com/assets/149989113/331f0aef-ab8e-4360-b9b7-fc991b12976f",
-          "price": 325,
-          "time_estimate": 85,
-          "artist_id": 8
+        "price": 325,
+        "time_estimate": 85,
+        "artist_id": 8
       }
     },
     {
@@ -105,9 +105,9 @@
       "type": "tattoos",
       "attributes": {
         "image_url": "https://gist.github.com/assets/149989113/379ece3d-6f4e-40d6-b7c4-47920d62ddfa",
-          "price": 315,
-          "time_estimate": 85,
-          "artist_id": 0
+        "price": 315,
+        "time_estimate": 85,
+        "artist_id": 0
       }
     },
     {

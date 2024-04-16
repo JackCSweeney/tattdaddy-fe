@@ -13,6 +13,9 @@ class ArtistService
       req.body = { tattoo: attributes }
     end
     JSON.parse(response.body, symbolize_names: true)
+
+  def delete_url(uri)
+    connection.delete(uri)
   end
 
   def find_artists
@@ -40,5 +43,12 @@ class ArtistService
       req.body = { tattoo: attributes }
     end
     JSON.parse(response.body, symbolize_names: true)
+
+  def artist_identities(id)
+    get_url("/api/v0/artists/#{id}/identities")
+  end
+
+  def delete_artist(id)
+    delete_url("/api/v0/artists/#{id}")
   end
 end

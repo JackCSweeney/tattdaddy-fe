@@ -23,6 +23,10 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
       end
 
       it "view 'My Profile'" do
+        json_response = File.read("spec/fixtures/artist/identities.json")
+        stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
+          .to_return(status: 200, body: json_response)
+        
         expect(page).to have_link("My Profile")
         click_on "My Profile"
 
@@ -32,10 +36,10 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
       it "view 'Appointments'" do
         expect(page).to have_link("Appointments")
         click_on "Appointments"
-        
+
         expect(current_path).to eq(artist_appointments_path(artist_id: 5))
       end
-      
+
       it "view 'Add a new Tattoo'" do
         within ".artist_dashboard_tattoos" do
           expect(page).to have_button("Add New Tattoo")

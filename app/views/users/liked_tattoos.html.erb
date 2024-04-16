@@ -1,23 +1,21 @@
 <center>
-<h1> <%= @artist.name %>'s Dashboard </h1>
+<h1> <%= @user.name %>'s Liked Tattoos </h1>
 </center>
 
-<%= render partial: "shared/nav_artist"%>
+<%= render partial: "shared/nav_user"%>
 
-
-<section class="artist_dashboard_tattoos">
-  <center>
-    <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get %>
-  </center>
-  
-  <h3>Your Available Tattoos</h3>
+<section class="user_liked_tattoos">
   <% @tattoos.each do |tattoo| %>
-    <div id="tattoo-<%= tattoo.id %>" class="tattoo_option" >
+    <div class="liked_tattoo" >
       <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
+
+      <div class="remove_button">
+      <%= button_to "Remove", user_tattoo_path(user_id: @user.id, id: tattoo.id), method: :delete %>
+      </div>
 
       <table>
         <tr>
-          <th>Price:</th>
+          <th>Cost:</th>
           <td><%= tattoo.price %></td>
         </tr>
         <tr>
@@ -25,30 +23,35 @@
           <td><%= tattoo.time_estimate %> min</td>
         </tr>
         <tr>
-          <%= link_to 'Edit', edit_artist_tattoo_path(id: @artist.id), method: :patch %>
-        </tr>
-        <tr>
-          <%= link_to 'Delete', artist_tattoo_path(id: @artist.id), method: :delete %>
+          <th>Distance:</th>
+          <td>Later Feature</td>
         </tr>
       </table>
+
+      <p><%= button_to "Schedule Appointment" %></p>
     </div>
   <% end %>
 </section>
 
 <style>
-.artist_dashboard_tattoos{
+.user_liked_tattoos{
   display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
   grid-gap: 20px;
 }
 
-.tattoo_option {
+.liked_tattoo {
   display: flex; 
   flex-direction: column; 
   align-items: center;
 }
 
-.tattoo_option p {
+.remove_buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.liked_tattoo p {
   margin: 2px;
 }
 

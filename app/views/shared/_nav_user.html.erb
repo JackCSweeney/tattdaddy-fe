@@ -1,0 +1,32 @@
+<nav class="top-nav-bar">
+  <div class="top-nav-links">
+    <%= link_to "Dashboard",  user_dashboard_path(user_id: @user.id) %>
+    <%= link_to "My Profile", user_path(id: @user.id) %>
+    <%= link_to 'Liked Tattoos', user_tattoos_path(user_id: @user.id) %>
+    <%= link_to 'Appointments', user_appointments_path(user_id: @user.id) %>
+    <%= link_to 'Sign Out', sign_out_path, method: :delete %>
+  </div>
+</nav>
+
+<style>
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  float: left;
+  }
+
+nav a:active {
+  background-color: #04AA6D;
+}
+
+nav a:hover {
+  background-color: #555;
+}
+</style>

@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "5",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Female"
+      }
+    },
+    {
+      "id": "6",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Asian"
+      }
+    }
+  ]
+}

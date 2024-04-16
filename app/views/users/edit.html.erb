@@ -1,0 +1,34 @@
+<center>
+<h1> Edit My Profile </h1>
+</center>
+
+<%= render partial: "shared/nav_user"%>
+
+<%= form_with url: user_path(id: @user.id), method: :patch do |form|%>
+
+  <%= form.hidden_field :original_user_data, value: {name: @user.name, email: @user.email, location: @user.location, search_radius: @user.search_radius.to_s}.to_json %>
+  <%= form.hidden_field :original_user_identities, value: @user_identities.map {|user_identity| user_identity.id} %>
+
+  <%= form.label :name %>
+  <%= form.text_field :name, value: @user.name%><br>
+
+  <%= form.label :email %>
+  <%= form.email_field :email, value: @user.email%><br>
+
+  <%= form.label :location %>
+  <%= form.text_field :location, value: @user.location, size: 50 %><br>
+
+  <%= form.label :search_radius, "Search Radius (miles)" %>
+  <%= form.number_field :search_radius, value: @user.search_radius%><br>
+
+  <fieldset>
+    <legend>I want to support artists who are:</legend>
+
+    <% @identities.each do |identity| %>
+      <%= check_box_tag "identities[]", identity.id, @user_identities.any? {|user_identity| user_identity.id == identity.id}, id: "identity_#{identity.id}", multiple: true %>
+      <%= label_tag "identity_#{identity.id}", identity.label %><br>
+    <% end %>
+  </fieldset>
+
+  <%= form.submit "Save Changes"%>
+<% end %>
