@@ -1,0 +1,21 @@
+<%= form_with url: "/artists", method: :post, local: true, data: {turbo: false} do |form|%>
+  <%= form.label :name, "Name:" %>
+  <%= form.text_field :name %><br>
+  <%= form.label :email, "Email:" %>
+  <%= form.text_field :email %><br>
+  <%= form.label :email_confirmation, "Email Confirmation:" %>
+  <%= form.text_field :email_confirmation %><br>
+  <%= form.label :password, "Password:" %>
+  <%= form.text_field :password %><br>
+  <%= form.label :password_confirmation, "Password Confirmation:" %>
+  <%= form.text_field :password_confirmation %><br>
+  <%= form.label :location, "Address:" %>
+  <%= form.text_field :location %><br>
+
+  <% @identities.each do |identity| %>
+      <%= check_box_tag "identities[]", identity.id, id: "identity_#{identity.id}", multiple: true %>
+      <%= label_tag "identity_#{identity.id}", identity.label %><br>
+    <% end %>
+
+  <%= form.submit "Create New Account" %>
+<% end %>
