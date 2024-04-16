@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = UserFacade.create_new_user(user_params)
+    user = UserFacade.create_new_user(new_user_params)
     UserFacade.create_user_identities(user_identities, user[:data][:id])
     redirect_to user_dashboard_path(user[:data][:id])
   end
@@ -68,5 +68,9 @@ class UsersController < ApplicationController
 
   def user_identities
     params[:identities]
+  end
+
+  def new_user_params
+    params.permit(:name, :email, :password, :search_radius, :location)
   end
 end
