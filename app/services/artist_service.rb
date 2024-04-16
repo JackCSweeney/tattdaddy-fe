@@ -9,8 +9,8 @@ class ArtistService
   end
 
   def post_url(uri, attributes)
-    response = connection.post(uri)do |req|
-      req.body = attributes
+    response = connection.post(uri) do |req|
+      req.body = { tattoo: attributes }
     end
     JSON.parse(response.body, symbolize_names: true)
   end
@@ -33,5 +33,12 @@ class ArtistService
 
   def find_tattoo(id)
     get_url("/api/v0/tattoos/#{id}")
+  end
+
+  def update_tattoo(id, attributes)
+    response = connection.patch("/api/v0/tattoos/#{id}") do |req|
+      req.body = { tattoo: attributes }
+    end
+    JSON.parse(response.body, symbolize_names: true)
   end
 end
