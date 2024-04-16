@@ -5,13 +5,7 @@
 </div>
 </center>
 
-<nav>
-  <%= link_to "My Profile", artist_path(id: @artist_id) %><br>
-  <%= link_to 'Appointments', artist_appointments_path(id: @artist_id) %><br>
-  <%= link_to 'Sign Out', sign_out_path, method: :delete %>
-</nav>
-
-<!%= render partial: "shared/nav_artist"%>
+<%= render partial: "shared/nav_artist"%>
 
 <%= form_with url: "/artists/#{@artist_id}/tattoos/#{@tattoo.id}", method: :patch, local: true, data: {turbo: false} do |f|%>
   <%= f.label :price %>
