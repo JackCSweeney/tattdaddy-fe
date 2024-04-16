@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "id": "322458",
+      "type": "artist",
+      "attributes": {
+        "name": "Tattoo artists",
+        "location": "1400 U Street NW",
+        "email": "tatart@gmail.com",
+        "identity": "LGBTQ+ Friendly",
+        "password_digest": "unreadable hash"
+      }
+    },
+    {
+      "id": "322459",
+      "type": "artist",
+      "attributes": {
+        "name": "Tattoo Pot",
+        "location": "54541 Street CO",
+        "email": "tatpot@gmail.com",
+        "identity": "LGBTQ+ Friendly",
+        "password_digest": "unreadable hash"
+      }
+    }
+  ]
+}
