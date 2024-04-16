@@ -30,7 +30,7 @@ class TattoosController < ApplicationController
   def update
     tattoo = ArtistFacade.new.find_tattoo(params[:id])
     
-    tattoo_attributes = {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: tattoo.image_url}
+    tattoo_attributes = {tattoo: {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: tattoo.image_url, id: "2"}}
     
     tattoo = ArtistFacade.new.update_tattoo(tattoo_attributes)
 
