@@ -9,7 +9,7 @@ RSpec.describe "Artist's My Profile Page", type: :feature do
 
       stub_request(:get, "http://localhost:3000/api/v0/artists/5")
         .to_return(status: 200, body: json_response_1)
-      stub_request(:get, "http://localhost:3000/api/v0/artists/25/identities")
+      stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
         .to_return(status: 200, body: json_response_2)
 
       visit artist_path(id: 5)
@@ -24,6 +24,7 @@ RSpec.describe "Artist's My Profile Page", type: :feature do
         expect(page).to have_content("I identify as:")
         expect(page).to have_content("LGBTQ+")
         expect(page).to have_content("Black")
+        expect(page).to_not have_content("Native American")
         expect(page).to_not have_content("None")
       end
     end
@@ -41,7 +42,7 @@ RSpec.describe "Artist's My Profile Page", type: :feature do
         expect(page).to have_link("Dashboard")
         click_on "Dashboard"
 
-        expect(current_path).to eq(artist_dashboard_path(artist_id: 25))
+        expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
       end
     end
     

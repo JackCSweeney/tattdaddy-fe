@@ -8,6 +8,10 @@ class ArtistService
     JSON.parse(response.body, symbolize_names: true)
   end
 
+  def delete_url(uri)
+    connection.delete(uri)
+  end
+
   def find_artists
     get_url("/api/v0/artists")
   end
@@ -18,5 +22,13 @@ class ArtistService
 
   def artist_tattoos(id)
     get_url("/api/v0/artists/#{id}/tattoos")
+  end
+
+  def artist_identities(id)
+    get_url("/api/v0/artists/#{id}/identities")
+  end
+
+  def delete_artist(id)
+    delete_url("/api/v0/artists/#{id}")
   end
 end
