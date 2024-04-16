@@ -35,4 +35,12 @@ class ArtistFacade
       password_digest: artist_json[:attributes][:password_digest],
     }
   end
+
+  def self.create_artist(artist_attributes)
+    ArtistService.new.create_artist(artist_attributes)
+  end
+
+  def self.create_artist_identities(identities, artist_id)
+    ArtistService.new.create_artist_identities(identities, artist_id)
+  end
 end

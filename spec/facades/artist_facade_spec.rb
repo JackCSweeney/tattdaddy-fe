@@ -38,8 +38,13 @@ RSpec.describe ArtistFacade do
 
       stub_request(:get, "http://localhost:3000/api/v0/artists/5")
         .to_return(status: 200, body: json_response_1)
+        
       stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
         .to_return(status: 200, body: json_response_2)
+
+      stub_request(:post, "http://localhost:3000/api/v0/artists")
+        .with(body: {artist: {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009"}})
+        .to_return(status: 200, body: json_response_1)    
     end
 
     it "artist_data returns a hash in the desired format" do
@@ -83,6 +88,44 @@ RSpec.describe ArtistFacade do
 
       expect(tattoos).to be_an(Array)
       tattoos.each { |tattoo| expect(tattoo).to be_a(Tattoo)}
+    end
+  end
+  
+  describe ".create_artist(artist_attributes)" do
+    it "can create an artist" do
+      artist_attributes = {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009"}
+      
+      json_response = File.read("spec/fixtures/artist/artist.json")
+      stub_request(:post, "http://localhost:3000/api/v0/artists")
+      .to_return(status: 200, body: json_response)
+      
+      response = ArtistFacade.create_artist(artist_attributes)
+
+      expect(response).to have_key(:data)
+      expect(response[:data]).to have_key(:attributes)
+
+      attributes = response[:data][:attributes]
+
+      expect(attributes).to have_key(:name)
+      expect(attributes[:name]).to be_a(String)
+
+      expect(attributes).to have_key(:email)
+      expect(attributes[:email]).to be_a(String)
+
+      expect(attributes).to have_key(:location)
+      expect(attributes[:location]).to be_a(String)
+    end
+  end
+
+  describe ".create_artist_identities(identities, artist_id)" do
+    it 'can create artist identity records' do
+      json_response = File.read("spec/fixtures/artist/create_artist_identities.json")
+      stub_request(:post, "http://localhost:3000/api/v0/artist_identities")
+        .to_return(status: 200, body: json_response)
+
+      response = ArtistFacade.create_artist_identities(["None"], 5)
+
+      expect(response.first[:message]).to eq("Identity successfully added to Artist")
     end
   end
 end
