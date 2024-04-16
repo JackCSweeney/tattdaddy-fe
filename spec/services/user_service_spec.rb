@@ -176,4 +176,16 @@ RSpec.describe UserService do
       expect(attributes[:email]).to eq("jesusa@spinka.test")
     end
   end
+
+  describe ".create_user_identities(identities, user_id)" do
+    it "creates user identities for a user" do
+      json_response = File.read("spec/fixtures/user/create_user_identities.json")
+      stub_request(:post, "http://localhost:3000/api/v0/user_identities")
+        .to_return(status: 200, body: json_response)
+
+      response = UserService.create_user_identities(["None"], 25)
+
+      expect(response.first[:message]).to eq("Identity successfully added to User")
+    end
+  end
 end
