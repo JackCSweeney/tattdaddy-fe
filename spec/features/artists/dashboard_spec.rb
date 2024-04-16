@@ -23,6 +23,10 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
       end
 
       it "view 'My Profile'" do
+        json_response = File.read("spec/fixtures/artist/identities.json")
+        stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
+          .to_return(status: 200, body: json_response)
+        
         expect(page).to have_link("My Profile")
         click_on "My Profile"
 
