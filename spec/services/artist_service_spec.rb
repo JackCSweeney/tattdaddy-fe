@@ -98,13 +98,24 @@ RSpec.describe ArtistService do
       expect(parsed_artist_tattoo[:status]).to eq(200)
     end
 
-    it "finds a tattoo given its id" do
+    it "finds a tattoo" do
       json_response_3 = File.read("spec/fixtures/artist/tattoo.json")
       allow_any_instance_of(ArtistService).to receive(:find_tattoo)
         .and_return(status: 200, body: json_response_3)
 
       parsed_tattoo = ArtistService.new.find_tattoo("2")
       expect(parsed_tattoo[:body]).to eq(json_response_3)
+    end
+
+    it "updates a tattoo" do
+      attributes = {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2"}
+
+      json_response_4 = File.read("spec/fixtures/artist/tattoo_2.json")
+      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
+        .and_return(status: 200, body: json_response_4)
+
+      parsed_tattoo = ArtistService.new.update_tattoo("2", attributes)
+      expect(parsed_tattoo[:body]).to eq(json_response_4)
     end
   end
 end
