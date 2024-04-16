@@ -47,7 +47,14 @@ class ArtistFacade
     }
   end
 
-  def find_tattoo(id)
+  def self.create_artist(artist_attributes)
+    ArtistService.new.create_artist(artist_attributes)
+  end
+
+  def self.create_artist_identities(identities, artist_id)
+    ArtistService.new.create_artist_identities(identities, artist_id)
+
+   def find_tattoo(id)
     data = ArtistService.new.find_tattoo(id)
     Tattoo.new(data[:data])
   end
