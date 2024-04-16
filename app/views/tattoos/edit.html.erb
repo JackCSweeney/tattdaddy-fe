@@ -1,0 +1,30 @@
+<center>
+<h1> Edit a Tattoo </h1>
+<div id="tattoo-<%= @tattoo.id %>" class="tattoo_option" >
+  <img src="<%= @tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
+</div>
+</center>
+
+<nav>
+  <%= link_to "My Profile", artist_path(id: @artist_id) %><br>
+  <%= link_to 'Appointments', artist_appointments_path(id: @artist_id) %><br>
+  <%= link_to 'Sign Out', sign_out_path, method: :delete %>
+</nav>
+
+<%= form_with url: "/artists/#{@artist_id}/tattoos/#{@tattoo.id}", method: :patch, local: true, data: {turbo: false} do |f|%>
+  <%= f.label :price %>
+  <%= f.text_field :price, value: @tattoo.price %><br>
+  
+  <%= f.label :time_estimate %>
+  <%= f.text_field :time_estimate, value: @tattoo.time_estimate %> hours<br>
+  
+  <%= f.submit %>
+<% end %>
+
+<style>
+.tattoo_option {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+</style>
