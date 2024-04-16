@@ -37,9 +37,8 @@ class ArtistFacade
   end
 
   def find_tattoo(id)
-    json = ArtistService.new.find_tattoo(id)
-    data = JSON.parse(json[:body], symbolize_names: true)[:data]
-    Tattoo.new(data)
+    data = ArtistService.new.find_tattoo(id)
+    Tattoo.new(data[:data])
   end
 
   def update_tattoo(tattoo_attributes)
