@@ -141,9 +141,19 @@ RSpec.describe UserFacade do
     it "should create a new user" do
       json_response = File.read("spec/fixtures/user/user.json")
 
-      stub_request(:post, "http://localhost:3000/api/v0/users/25")
-        .with(user: {name: "Ruby Gem", location: "9705 Fishers District Dr, Fishers, IN 46037", email: "jesusa@spinka.test", password: "password"})
+      stub_request(:post, "http://localhost:3000/api/v0/users")
         .to_return(status: 200, body: json_response)
+
+      response = UserFacade.create_new_user({name: "Ruby Gem", location: "9705 Fishers District Dr, Fishers, IN 46037", email: "jesusa@spinka.test", password: "password"})
+
+      expect(response).to have_key(:data)
+      expect(response[:data]).to have_key(:attributes)
+      
+      attributes = response[:data][:attributes]
+
+      expect(attributes[:name]).to eq("Ruby Gem")
+      expect(attributes[:location]).to eq("9705 Fishers District Dr, Fishers, IN 46037")
+      expect(attributes[:email]).to eq("jesusa@spinka.test")
     end
   end
 end

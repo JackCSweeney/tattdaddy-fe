@@ -30,6 +30,16 @@ class UsersController < ApplicationController
     redirect_to root_path, alert: "User account successfully deleted"
   end
 
+  def new
+    @identities = IdentityFacade.list_all_identities
+  end
+
+  def create
+    user = UserFacade.create_new_user(user_params)
+    # UserFacade.create_user_identities(user_identities)
+    redirect_to user_dashboard_path(user[:data][:id])
+  end
+
   private
   def user_params
     params.permit(:name, :email, :location, :search_radius)
