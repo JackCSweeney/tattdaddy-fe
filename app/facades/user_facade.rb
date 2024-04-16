@@ -61,4 +61,8 @@ class UserFacade
   def self.create_new_user(user_attributes)
     UserService.create_user(user_attributes)
   end
+
+  def self.create_user_identities(identities, user_id)
+    UserService.create_user_identities(identities, user_id)
+  end
 end
