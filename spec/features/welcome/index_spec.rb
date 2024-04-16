@@ -23,12 +23,12 @@ RSpec.describe 'Welcome Index Page', type: :feature do
       describe "option to sign in as" do
         describe "a user" do
           scenario "valid credentials" do
-            json_resonse = File.read("spec/fixtures/sessions/successful_user_sign_in.json")
+            json_response = File.read("spec/fixtures/sessions/successful_user_sign_in.json")
             json_response_1 = File.read("spec/fixtures/user/user.json")
             json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
 
             stub_request(:post, "http://localhost:3000/api/v0/sign_in")
-              .to_return(status: 200, body: json_resonse)
+              .to_return(status: 200, body: json_response)
               stub_request(:get, "http://localhost:3000/api/v0/users/25")
                 .to_return(status: 200, body: json_response_1)
               stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
