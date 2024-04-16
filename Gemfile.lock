@@ -340,6 +340,7 @@ DEPENDENCIES
   faraday
   importmap-rails
   jbuilder
+  jwt
   launchy
   omniauth
   omniauth-google-oauth2
