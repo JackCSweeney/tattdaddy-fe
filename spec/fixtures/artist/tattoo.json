@@ -3,9 +3,9 @@
     "id": "2",
     "type": "tattoo",
     "attributes": {
-      "image_url": "https://gist.github.com/assets/149989113/e94a0c62-8f4d-4e00-8de5-9c77cafc10c0",
+      "image_url": "app/assets/images/bronto.jpeg",
       "price": 300,
-      "time_estimate": 90,
+      "time_estimate": 2,
       "artist_id": 5
     }
   }
