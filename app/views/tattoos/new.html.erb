@@ -4,7 +4,7 @@
 
 <%= render partial: "shared/nav_artist"%>
 
-<%= form_with url: "/artists/#{@artist_id}/tattoos", method: :post, local: true, data: {turbo: false} do |f|%>
+<%= form_with url: "/artists/#{@artist.id}/tattoos", method: :post, local: true, data: {turbo: false} do |f|%>
   <%= f.label :price %>
   <%= f.text_field :price %><br>
   
