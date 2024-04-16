@@ -43,7 +43,7 @@ class ArtistFacade
   end
 
   def update_tattoo(tattoo_attributes)
-    ArtistService.new.update_tattoo(tattoo_attributes)
+    ArtistService.new.update_tattoo(tattoo_attributes[:tattoo][:id], tattoo_attributes)
     tattoo = find_tattoo(tattoo_attributes[:tattoo][:id])
   end
 end
