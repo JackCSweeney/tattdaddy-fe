@@ -15,6 +15,11 @@
 </center>
 
 <center>
+  <%= button_to "Log in with Google", '/auth/google_oauth2' %>
+  <%= link_to "Login", "https://github.com/login/oauth/authorize?client_id=3d9de5ad70af6b6ec56b&scope=user" %>
+</center>
+
+<center>
 <section>
   <br>
   <%= link_to 'Create User Account', new_user_path %>
