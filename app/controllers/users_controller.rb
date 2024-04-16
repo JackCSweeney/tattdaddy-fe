@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def create
     user = UserFacade.create_new_user(user_params)
-    # UserFacade.create_user_identities(user_identities)
+    UserFacade.create_user_identities(user_identities, user[:data][:id])
     redirect_to user_dashboard_path(user[:data][:id])
   end
 
@@ -64,5 +64,9 @@ class UsersController < ApplicationController
     identity_requests[:post] = @updated_identities - @original_identities
     identity_requests[:delete] = @original_identities - @updated_identities
     identity_requests
+  end
+
+  def user_identities
+    params[:identities]
   end
 end

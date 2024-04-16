@@ -17,6 +17,14 @@ RSpec.describe 'Create User', type: :feature do
       json_response_3 = File.read("spec/fixtures/user/liked_tattoos.json")
       stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
         .to_return(status: 200, body: json_response_3)
+
+      json_response_4 = File.read("spec/fixtures/user/create_user_identities.json")
+      stub_request(:post, "http://localhost:3000/api/v0/user_identities")
+        .to_return(status: 200, body: json_response_4)
+
+      json_response_5 = File.read("spec/fixtures/user/single_user_identity.json")
+      stub_request(:get, "http://localhost:3000/api/v0/users/25/identities")
+        .to_return(status: 200, body: json_response_5)
     end
 
     it 'can vist the page to register a new user account and see the fields to fill in' do
@@ -33,7 +41,7 @@ RSpec.describe 'Create User', type: :feature do
     end
     
     it 'can fill in the fields with valid information, create the account, and be brought to their new dashboard' do
-      visit "users/new"
+      visit "/users/new"
 
       fill_in "name", with: "Ruby Gem"
       fill_in "email", with: "jesusa@spinka.test"
@@ -48,8 +56,15 @@ RSpec.describe 'Create User', type: :feature do
 
       expect(current_path).to eq("/users/25/dashboard")
       expect(page).to have_content("Ruby Gem's Dashboard")
-      expect(page).to have_field("location")
-      expect(page).to have_field("search_radius")
+      expect(page).to have_field("location", with: "9705 Fishers District Dr, Fishers, IN 46037")
+      expect(page).to have_field("search_radius", with: 25)
+
+      visit edit_user_path(25)
+
+      expect(find_field("None")).to be_checked
+      expect(find_field("Female")).to_not be_checked
+      expect(find_field("Asian")).to_not be_checked
+      expect(find_field("LGBTQ+")).to_not be_checked
     end
   end
 end
