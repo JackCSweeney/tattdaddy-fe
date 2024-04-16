@@ -4,16 +4,16 @@ class TattoosController < ApplicationController
   end
 
   def new
-    @artist_id = params[:artist_id]
+    @artist = ArtistFacade.new.find_artist(params[:artist_id])
   end
 
   def create
     blob = ActiveStorage::Blob.create_and_upload!(io: params[:img_file], filename: params[:img_file].original_filename)
     tattoo_attributes = {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: blob.url}
     
-    tattoo = Tattoo.new({id: nil, attributes: tattoo_attributes})
-    if tattoo.valid?
-      ArtistService.new.send_new_artist_tattoo(tattoo_attributes)
+    service = ArtistService.new.send_new_artist_tattoo(tattoo_attributes)
+
+    if service[:status] == 200 
       redirect_to artist_dashboard_path(params[:artist_id])
       flash[:success] = "Tattoo created successfully"
     else
