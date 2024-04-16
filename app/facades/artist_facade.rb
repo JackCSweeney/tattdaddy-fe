@@ -35,4 +35,15 @@ class ArtistFacade
       password_digest: artist_json[:attributes][:password_digest],
     }
   end
+
+  def find_tattoo(id)
+    json = ArtistService.new.find_tattoo(id)
+    data = JSON.parse(json[:body], symbolize_names: true)[:data]
+    Tattoo.new(data)
+  end
+
+  def update_tattoo(tattoo_attributes)
+    ArtistService.new.update_tattoo(tattoo_attributes)
+    tattoo = find_tattoo(tattoo_attributes[:tattoo][:id])
+  end
 end
