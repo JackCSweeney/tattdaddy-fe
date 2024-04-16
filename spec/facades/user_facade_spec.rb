@@ -136,4 +136,36 @@ RSpec.describe UserFacade do
       expect(response.status).to eq(204)
     end
   end
+
+  describe ".create_new_user(user_params)" do
+    it "should create a new user" do
+      json_response = File.read("spec/fixtures/user/user.json")
+
+      stub_request(:post, "http://localhost:3000/api/v0/users")
+        .to_return(status: 200, body: json_response)
+
+      response = UserFacade.create_new_user({name: "Ruby Gem", location: "9705 Fishers District Dr, Fishers, IN 46037", email: "jesusa@spinka.test", password: "password"})
+
+      expect(response).to have_key(:data)
+      expect(response[:data]).to have_key(:attributes)
+      
+      attributes = response[:data][:attributes]
+
+      expect(attributes[:name]).to eq("Ruby Gem")
+      expect(attributes[:location]).to eq("9705 Fishers District Dr, Fishers, IN 46037")
+      expect(attributes[:email]).to eq("jesusa@spinka.test")
+    end
+  end
+
+  describe ".create_user_identities(identities, user_id)" do
+    it "creates new user_identities for the user" do
+      json_response = File.read("spec/fixtures/user/create_user_identities.json")
+      stub_request(:post, "http://localhost:3000/api/v0/user_identities")
+        .to_return(status: 200, body: json_response)
+
+      response = UserFacade.create_user_identities(["None"], 25)
+
+      expect(response.first[:message]).to eq("Identity successfully added to User")
+    end
+  end
 end

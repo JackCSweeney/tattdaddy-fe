@@ -30,6 +30,16 @@ class UsersController < ApplicationController
     redirect_to root_path, alert: "User account successfully deleted"
   end
 
+  def new
+    @identities = IdentityFacade.list_all_identities
+  end
+
+  def create
+    user = UserFacade.create_new_user(new_user_params)
+    UserFacade.create_user_identities(user_identities, user[:data][:id])
+    redirect_to user_dashboard_path(user[:data][:id])
+  end
+
   private
   def user_params
     params.permit(:name, :email, :location, :search_radius)
@@ -54,5 +64,13 @@ class UsersController < ApplicationController
     identity_requests[:post] = @updated_identities - @original_identities
     identity_requests[:delete] = @original_identities - @updated_identities
     identity_requests
+  end
+
+  def user_identities
+    params[:identities]
+  end
+
+  def new_user_params
+    params.permit(:name, :email, :password, :search_radius, :location)
   end
 end

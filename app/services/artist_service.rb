@@ -24,6 +24,20 @@ class ArtistService
     get_url("/api/v0/artists/#{id}/tattoos")
   end
 
+  def post_url(url, params)
+    response = connection.post(url, params)
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
+  def create_artist(artist_attributes)
+    post_url("/api/v0/artists", {artist: artist_attributes})
+  end
+
+  def create_artist_identities(identities, artist_id)
+    identities.map do |identity_id|
+      post_url("/api/v0/artist_identities", {artist_identity: {artist_id: artist_id, identity_id: identity_id}})
+    end
+    
   def artist_identities(id)
     get_url("/api/v0/artists/#{id}/identities")
   end
