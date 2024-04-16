@@ -3,43 +3,21 @@ require 'rails_helper'
 RSpec.describe ArtistFacade do
   describe "Instance method" do
     before do
-      allow_any_instance_of(ArtistService).to receive(:find_artists).and_return(
-        {
-          data: [
-            {
-              id: "322458",
-              type: "artist",
-              attributes: {
-                name: "Tattoo artists",
-                location: "1400 U Street NW",
-                email: "tatart@gmail.com",
-                identity: "LGBTQ+ Friendly",
-                password_digest: "unreadable hash"
-              }
-            },
-            {
-              id: "322459",
-              type: "artist",
-              attributes: {
-                name: "Tattoo Pot",
-                location: "54541 Street CO",
-                email: "tatpot@gmail.com",
-                identity: "LGBTQ+ Friendly",
-                password_digest: "unreadable hash"
-              }
-            }
-          ]
-        }
-      )
-
+      json_response_0 = File.read("spec/fixtures/artist/artists.json")
+      stub_request(:get, "http://localhost:3000/api/v0/artists")
+        .to_return(status: 200, body:json_response_0)
+      
       json_response_1 = File.read("spec/fixtures/artist/artist.json")
-
-      json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
-
       stub_request(:get, "http://localhost:3000/api/v0/artists/5")
         .to_return(status: 200, body: json_response_1)
+
+      json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
       stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
         .to_return(status: 200, body: json_response_2)
+
+      json_response_4 = File.read("spec/fixtures/artist/tattoo_2.json")
+      stub_request(:get, "http://localhost:3000/api/v0/tattoos/2")
+        .to_return(status: 200, body: json_response_4)
     end
 
     it "artist_data returns a hash in the desired format" do
@@ -86,9 +64,6 @@ RSpec.describe ArtistFacade do
     end
 
     it "find_tattoo returns a tattoo object" do
-      json_response_4 = File.read("spec/fixtures/artist/tattoo_2.json")
-      allow_any_instance_of(ArtistService).to receive(:get_url).with("/api/v0/tattoos/2")
-        .and_return(status: 200, body: json_response_4)
 
       tattoo = ArtistFacade.new.find_tattoo("2")
       expect(tattoo).to be_a(Tattoo)
@@ -97,11 +72,7 @@ RSpec.describe ArtistFacade do
     it "update_tattoo returns a tattoo object" do
       attributes = {tattoo: {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2", id: "2"}}
 
-      json_response_4 = File.read("spec/fixtures/artist/tattoo_2.json")
       allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
-
-      allow_any_instance_of(ArtistService).to receive(:get_url).with("/api/v0/tattoos/2")
-        .and_return(status: 200, body: json_response_4)
 
       tattoo = ArtistFacade.new.update_tattoo(attributes)
       expect(tattoo).to be_a(Tattoo)
