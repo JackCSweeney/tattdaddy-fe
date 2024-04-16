@@ -1,0 +1,24 @@
+<center>
+<h1> <%= @artist.name %>'s Profile </h1>
+</center>
+
+<%= render partial: "shared/nav_artist"%>
+
+<%= button_to "Edit Profile", edit_artist_path(id: @artist.id), method: :get %>
+
+<section>
+<p>Name: <%= @artist.name %></p>
+<p>Email: <%= @artist.email %></p>
+<p>Location: <%= @artist.location %></p>
+</section>
+
+<section class="artist_identities">
+  <p>I identify as:</p>
+  <ul>
+  <% @identities.each do |identity| %>
+    <li> <%= identity.label %></li>
+  <% end %>
+  </ul>
+</section>
+
+<%= button_to 'Delete Account', artist_path(id: @artist.id), method: :delete %>

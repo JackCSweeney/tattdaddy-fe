@@ -10,7 +10,6 @@ class ArtistFacade
     end
   end
 
-
   def find_artist(id)
     json = ArtistService.new.find_artist(id)
     data = artist_data(json[:data])
@@ -23,6 +22,18 @@ class ArtistFacade
     json[:data].map do |json_data|
       Tattoo.new(json_data)
     end
+  end
+
+  def find_artist_identities(id)
+    service = ArtistService.new
+    json = service.artist_identities(id)
+    json[:data].map do |json_data|
+      Identity.new(json_data)
+    end
+  end
+
+  def delete_artist(id)
+    ArtistService.new.delete_artist(id)
   end
 
   def artist_data(artist_json)

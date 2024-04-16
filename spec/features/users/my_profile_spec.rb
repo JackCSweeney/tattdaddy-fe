@@ -44,7 +44,9 @@ RSpec.describe "User's My Profile Page", type: :feature do
 
         expect(current_path).to eq(user_dashboard_path(user_id: 25))
       end
+    end
 
+    describe "displays buttons to" do
       it "delete user's account" do
         stub_request(:delete, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 204)
