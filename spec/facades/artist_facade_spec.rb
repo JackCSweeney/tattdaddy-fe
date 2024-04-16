@@ -94,11 +94,13 @@ RSpec.describe ArtistFacade do
       expect(tattoo).to be_a(Tattoo)
     end
 
-    xit "update_tattoo returns a tattoo object" do
-      attributes = {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2"}
+    it "update_tattoo returns a tattoo object" do
+      attributes = {tattoo: {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2", id: "2"}}
 
       json_response_4 = File.read("spec/fixtures/artist/tattoo_2.json")
       allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
+
+      allow_any_instance_of(ArtistService).to receive(:get_url).with("/api/v0/tattoos/2")
         .and_return(status: 200, body: json_response_4)
 
       tattoo = ArtistFacade.new.update_tattoo(attributes)
