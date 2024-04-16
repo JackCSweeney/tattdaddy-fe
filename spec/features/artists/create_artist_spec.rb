@@ -18,6 +18,10 @@ RSpec.describe "Create Artist Account" do
       json_response_3 = File.read("spec/fixtures/artist/artist_tattoos.json")
       stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
         .to_return(status: 200, body: json_response_3)
+
+      json_response_4 = File.read("spec/fixtures/artist/create_artist_identities.json")
+      stub_request(:post, "http://localhost:3000/api/v0/artist_identities")
+        .to_return(status: 200, body: json_response_4)
     end
 
     it 'can visit the page to see the form to create a new artist account' do
