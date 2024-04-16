@@ -16,6 +16,11 @@ RSpec.describe "Dashboard Page", type: :feature do
 
     describe "displays links to" do
       it "view 'My Profile'" do
+        json_response_2 = File.read("spec/fixtures/user/identity_prefs.json")
+
+        stub_request(:get, "http://localhost:3000/api/v0/users/25/identities")
+          .to_return(status: 200, body: json_response_2)
+
         expect(page).to have_link("My Profile")
         click_on "My Profile"
 
@@ -23,6 +28,11 @@ RSpec.describe "Dashboard Page", type: :feature do
       end
 
       it "view 'Liked Tattoos'" do
+        json_response = File.read("spec/fixtures/user/liked_tattoos.json")
+      
+        stub_request(:get, "http://localhost:3000/api/v0/users/25/tattoos")
+          .to_return(status: 200, body: json_response)
+
         expect(page).to have_link("Liked Tattoos")
         click_on "Liked Tattoos"
         
@@ -55,14 +65,24 @@ RSpec.describe "Dashboard Page", type: :feature do
       end
 
       it "with the option to 'dislike' a tattoo" do
+        stub_request(:post, "http://localhost:3000/api/v0/user_tattoos")
+          .to_return(status: 200, body: '{"message": "Tattoo successfully added to User"}')
+
         within ".user_dashboard_tattoos" do
           expect(page).to have_button("Like", count: 15)
+          click_on "Like", match: :first
+          expect(current_path).to eq(user_dashboard_path(user_id: 25))
         end
       end
 
       it "with the option to 'like' a tattoo" do
+        stub_request(:post, "http://localhost:3000/api/v0/user_tattoos")
+          .to_return(status: 200, body: '{"message": "Tattoo successfully added to User"}')
+
         within ".user_dashboard_tattoos" do
           expect(page).to have_button("Dislike", count: 15)
+          click_on "Dislike", match: :first
+          expect(current_path).to eq(user_dashboard_path(user_id: 25))
         end
       end
 

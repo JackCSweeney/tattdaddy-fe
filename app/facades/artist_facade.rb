@@ -32,6 +32,16 @@ class ArtistFacade
     Artist.new(data)
   end
 
+  def find_artist_identities(id)
+    json = artist_service.artist_identities(id)[:data].map do |json_data|
+      Identity.new(json_data)
+    end
+  end
+
+  def delete_artist(id)
+    artist_service.delete_artist(id)
+  end
+
   def artist_data(artist_json)
     {
       id: artist_json[:id],
@@ -45,6 +55,18 @@ class ArtistFacade
 
   def find_tattoo(id)
     data = artist_service.find_tattoo(id)
+  end 
+
+  def self.create_artist(artist_attributes)
+    artist_service.create_artist(artist_attributes)
+  end
+
+  def self.create_artist_identities(identities, artist_id)
+    artist_service.create_artist_identities(identities, artist_id)
+  end
+
+  def find_tattoo(id)
+    data = ArtistService.new.find_tattoo(id)
     Tattoo.new(data[:data])
   end
 

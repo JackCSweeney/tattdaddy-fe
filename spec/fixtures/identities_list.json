@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "LGBTQ+"
+      }
+    },
+    {
+      "id": "2",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Black"
+      }
+    },
+    {
+      "id": "3",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Native American"
+      }
+    },
+    {
+      "id": "4",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Latino"
+      }
+    },
+    {
+      "id": "5",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Female"
+      }
+    },
+    {
+      "id": "6",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Asian"
+      }
+    },
+    {
+      "id": "7",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "None"
+      }
+    }
+  ]
+}
