@@ -56,6 +56,11 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       end
 
       it "handles sad path on form fields and sends back to new form" do
+        json_response_0 = File.read("spec/fixtures/artist/tattoo_incorrect.json")
+        attributes = {:price=>"a", :time_estimate=>"2", :artist_id=>"5", :image_url=>"app/assets/images/bronto.jpeg"}
+        allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+        .and_return(status: 404, body: json_response_0)
+
         fill_in "Price", with: "a"
         fill_in "Time estimate", with: 2
         attach_file "Img file", Rails.root.join('app/assets/images/', 'bronto.jpeg')
