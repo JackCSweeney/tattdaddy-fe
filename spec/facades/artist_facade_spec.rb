@@ -72,8 +72,8 @@ RSpec.describe ArtistFacade do
     it "update_tattoo returns a tattoo object" do
       attributes = {tattoo: {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2", id: "2"}}
 
-      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
-
+      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes).and_return({ data: { id: "2", attributes: attributes[:tattoo] } })
+      
       tattoo = ArtistFacade.new.update_tattoo(attributes)
       expect(tattoo).to be_a(Tattoo)
     end
