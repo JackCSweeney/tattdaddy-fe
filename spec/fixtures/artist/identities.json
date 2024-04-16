@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "LGBTQ+"
+      }
+    },
+    {
+      "id": "2",
+      "type": "identity",
+      "attributes": {
+        "identity_label": "Black"
+      }
+    }
+  ]
+}
