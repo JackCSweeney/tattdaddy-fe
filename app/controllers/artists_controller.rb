@@ -15,6 +15,11 @@ class ArtistsController < ApplicationController
     redirect_to artist_dashboard_path(artist[:data][:id])
   end
 
+  def destroy
+    ArtistFacade.new.delete_artist(params[:id])
+    redirect_to root_path, alert: "Artist account successfully deleted"
+  end
+  
   private
   def new_artist_params
     params.permit(:name, :location, :email, :password)
@@ -22,10 +27,5 @@ class ArtistsController < ApplicationController
 
   def artist_identities
     params[:identities]
-  end
-
-  def destroy
-    ArtistFacade.new.delete_artist(params[:id])
-    redirect_to root_path, alert: "Artist account successfully deleted"
   end
 end
