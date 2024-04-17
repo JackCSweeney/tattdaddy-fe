@@ -17,7 +17,7 @@
   <%= form.submit "Update"%>
 <% end %>
 </section>
-
+<% cache("#{@user.id}/dashboard-tattoos") do %>
 <section class="user_dashboard_tattoos">
   <% @tattoos.each do |tattoo| %>
     <div class="tattoo_option" >
@@ -47,6 +47,7 @@
     </div>
   <% end %>
 </section>
+<% end %>
 
 
 <%= button_to 'Sign Out', sign_out_path, method: :delete %>
