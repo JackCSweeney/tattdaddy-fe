@@ -15,6 +15,7 @@ RSpec.describe ArtistFacade do
 
         json_response_3 = File.read("spec/fixtures/artist/identities.json")
 
+        @json_response_4 = File.read("spec/fixtures/artist/tattoo.json")
 
         stub_request(:get, "http://localhost:3000/api/v0/artists")
         .to_return(status: 200, body:json_response_0)
@@ -24,6 +25,12 @@ RSpec.describe ArtistFacade do
           .to_return(status: 200, body: json_response_2)
         stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
           .to_return(status: 200, body: json_response_3)
+        
+        stub_request(:get, "http://localhost:3000/api/v0/tattoos/2")
+          .to_return(status: 200, body: @json_response_4)
+
+        stub_request(:patch, "http://localhost:3000/api/v0/tattoos/2")
+          .to_return(status: 200, body: @json_response_4)
       end
 
       it "artist_data returns a hash in the desired format" do
@@ -97,7 +104,11 @@ RSpec.describe ArtistFacade do
     it "update_tattoo returns a tattoo object" do
       attributes = {tattoo: {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2", id: "2"}}
 
-      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes).and_return({ data: { id: "2", attributes: attributes[:tattoo] } })
+      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
+        .and_return({ data: { id: "2", attributes: attributes[:tattoo] } })
+      
+      stub_request(:get, "http://localhost:3000/api/v0/tattoos/2")
+        .to_return(status: 200, body: @json_response_4)
       
       tattoo = ArtistFacade.new.update_tattoo(attributes)
       expect(tattoo).to be_a(Tattoo)
