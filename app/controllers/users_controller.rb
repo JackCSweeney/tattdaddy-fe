@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     if user_identities_updated? && user_data_updated?
       UserFacade.update_data_and_identities(@user_id, user_params, identity_changes)
     elsif user_identities_updated? && !user_data_updated?
-      UserFacade.update_user_identities(user_id, identity_changes)
+      UserFacade.update_user_identities(@user_id, identity_changes)
     else
       UserFacade.update_user_data(@user_id, user_params)
     end
@@ -32,17 +32,17 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.permit(:name, :email, :location, :search_radius)
+    params.permit(:name, :email, :location, :search_radius, "name", "email", "location", "search_radius")
   end
 
   def user_data_updated?
     updated = user_params.to_h
     original = JSON.parse(params[:original_user_data])
-
     updated != original
   end
 
   def user_identities_updated?
+    params.permit(:original_user_identities, :identities, "original_user_identities", "identities")
     @original_identities = params[:original_user_identities].split
     @updated_identities = params[:identities]
 
