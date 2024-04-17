@@ -1,35 +1,34 @@
-<center>
-<h1> <%= @artist.name %>'s Dashboard </h1>
-</center>
+<div class="container">
+  <h1 class="text-center"> <%= @artist.name %>'s Dashboard </h1>
 
 <%= render partial: "shared/nav_artist"%>
 
 
 <section class="artist_dashboard_tattoos">
-  <center>
-    <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get %>
-  </center>
+    <%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get, class: "btn btn-primary" %>
   
-  <h3>Your Available Tattoos</h3>
+  <h3 class="text-center">Your Available Tattoos</h3>
   <% @tattoos.each do |tattoo| %>
     <div id="tattoo-<%= tattoo.id %>" class="tattoo_option" >
-      <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
+      <img src="<%= tattoo.image_url %>", class="img-fluid" alt="Tattoo Image"><br>
 
-      <table>
+      <table class="table">
         <tr>
-          <th>Price:</th>
+          <th scope="row">Price:</th>
           <td><%= tattoo.price %></td>
         </tr>
         <tr>
-          <th>Duration:</th>
+          <th scope="row">Duration:</th>
           <td><%= tattoo.time_estimate %> min</td>
         </tr>
-        <tr>
-          <%= link_to 'Edit', edit_artist_tattoo_path(id: @artist.id), method: :patch %>
-        </tr>
-        <tr>
-          <%= link_to 'Delete', artist_tattoo_path(id: @artist.id), method: :delete %>
-        </tr>
+          <div class="btn-group" role="group" aria-label="tattoo_actions">
+            <tr>
+              <%= link_to 'Edit', edit_artist_tattoo_path(id: @artist.id), method: :patch, class: "btn btn-secondary" %>
+            </tr>
+            <tr>
+              <%= link_to 'Delete', artist_tattoo_path(id: @artist.id), method: :delete, class: "btn btn-danger" %>
+            </tr>
+          </div>
       </table>
     </div>
   <% end %>
@@ -38,27 +37,38 @@
 <%= button_to 'Sign Out', sign_out_path, method: :delete %>
 
 <style>
-.artist_dashboard_tattoos{
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+.container {
+  padding: 20px;
+}
+
+.artist_dashboard_tattoos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
 }
 
 .tattoo_option {
-  display: flex; 
-  flex-direction: column; 
-  align-items: center;
+  text-align: center;
 }
 
-.tattoo_option p {
-  margin: 2px;
+.tattoo_option img {
+  max-width: 100%;
+  height: auto;
 }
 
-th {
-  text-align: right;
+.table {
+  margin-bottom: 10px;
 }
 
-td {
-  text-align: left;
+.btn-group {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+@media (max-width: 576px) {
+  .artist_dashboard_tattoos {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
 </style>
