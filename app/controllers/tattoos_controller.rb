@@ -43,7 +43,9 @@ class TattoosController < ApplicationController
     end
   end
 
-  def delete
-
+  def destroy
+    ArtistService.new.delete_tattoo(params[:id])
+    
+    redirect_to artist_dashboard_path(params[:artist_id])
   end
 end
