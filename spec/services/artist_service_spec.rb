@@ -108,6 +108,14 @@ RSpec.describe ArtistService do
         response = ArtistService.new.delete_artist(5)
         expect(response.status).to eq(204)
       end
+
+      it "deletes a tattoo if the given id" do
+        stub_request(:delete, "http://localhost:3000/api/v0/tattoos/5")
+          .to_return(status: 204)
+        
+        response = ArtistService.new.delete_tattoo(5)
+        expect(response.status).to eq(204)
+      end
     end
 
     it "sends the new artist tattoo" do
