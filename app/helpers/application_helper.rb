@@ -1,7 +1,8 @@
 module ApplicationHelper
-  def cache_key_with_version(model_class, label = "")
-    prefix = model_class.to_s.downcase.pluralize
+  def cache_key_with_version(model_class)
+    location = model_class.location
     id = model_class.id
-    [prefix, label, id].join("-")
+    search_radius = model_class.search_radius
+    [location, search_radius, id].join("-")
   end
 end

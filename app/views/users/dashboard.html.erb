@@ -5,19 +5,20 @@
 <%= render partial: "shared/nav_user"%>
 
 <section>
-<%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form|%>
+<%= form_with url: user_path(id: @user.id), method: :patch, data: {turbo: false} do |form|%>
   <%= form.label :location, "Current Location" %>
   <%= form.text_field :location, value: @user.location, size: 50  %>
   <%= form.submit "Update" %>
 <% end %>
 
-<%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form|%>
+<%= form_with url: user_path(id: @user.id), method: :patch, local: true, data: {turbo: false} do |form|%>
   <%= form.label :search_radius, "Search Radius" %>
   <%= form.text_field :search_radius, value: @user.search_radius %>
   <%= form.submit "Update"%>
 <% end %>
 </section>
-<% cache("#{@user.id}/dashboard-tattoos") do %>
+
+<% cache("#{@user.location}-#{@user.search_radius}-#{@user.id}-dashboard-tattoos") do %>
 <section class="user_dashboard_tattoos">
   <% @tattoos.each do |tattoo| %>
     <div class="tattoo_option" >
