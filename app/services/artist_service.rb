@@ -8,6 +8,13 @@ class ArtistService
     JSON.parse(response.body, symbolize_names: true)
   end
 
+  def post_url(uri, attributes)
+    response = connection.post(uri) do |req|
+      req.body = { tattoo: attributes }
+    end
+    JSON.parse(response.body, symbolize_names: true)
+  end 
+
   def delete_url(uri)
     connection.delete(uri)
   end
@@ -23,6 +30,21 @@ class ArtistService
   def artist_tattoos(id)
     get_url("/api/v0/artists/#{id}/tattoos")
   end
+  
+  def send_new_artist_tattoo(attributes)
+    post_url("/api/v0/tattoos", attributes)
+  end
+
+  def find_tattoo(id)
+    get_url("/api/v0/tattoos/#{id}")
+  end
+
+  def update_tattoo(id, attributes)
+    response = connection.patch("/api/v0/tattoos/#{id}") do |req|
+      req.body = { tattoo: attributes }
+    end
+    JSON.parse(response.body, symbolize_names: true)
+  end
 
   def post_url(url, params)
     response = connection.post(url, params)
@@ -37,6 +59,7 @@ class ArtistService
     identities.map do |identity_id|
       post_url("/api/v0/artist_identities", {artist_identity: {artist_id: artist_id, identity_id: identity_id}})
     end
+  end
     
   def artist_identities(id)
     get_url("/api/v0/artists/#{id}/identities")
@@ -44,5 +67,9 @@ class ArtistService
 
   def delete_artist(id)
     delete_url("/api/v0/artists/#{id}")
+  end
+
+  def delete_tattoo(id)
+    delete_url("/api/v0/tattoos/#{id}")
   end
 end

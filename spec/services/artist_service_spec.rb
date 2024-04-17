@@ -108,6 +108,45 @@ RSpec.describe ArtistService do
         response = ArtistService.new.delete_artist(5)
         expect(response.status).to eq(204)
       end
+
+      it "deletes a tattoo if the given id" do
+        stub_request(:delete, "http://localhost:3000/api/v0/tattoos/5")
+          .to_return(status: 204)
+        
+        response = ArtistService.new.delete_tattoo(5)
+        expect(response.status).to eq(204)
+      end
+    end
+
+    it "sends the new artist tattoo" do
+      attributes = {"artist_id"=>"5", "image_url"=>"https://gist.github.com/assets/149989113/fee274f7-0fa9-4606-855b-9c286fcb1661", "price"=>"50", "time_estimate"=>"2"}
+
+      allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+        .and_return(status: 200, body: "")
+        
+      parsed_artist_tattoo = ArtistService.new.send_new_artist_tattoo(attributes)
+      expect(parsed_artist_tattoo[:body]).to eq("")
+      expect(parsed_artist_tattoo[:status]).to eq(200)
+    end
+
+    it "finds a tattoo" do
+      json_response_3 = File.read("spec/fixtures/artist/tattoo.json")
+      allow_any_instance_of(ArtistService).to receive(:find_tattoo)
+        .and_return(status: 200, body: json_response_3)
+
+      parsed_tattoo = ArtistService.new.find_tattoo("2")
+      expect(parsed_tattoo[:body]).to eq(json_response_3)
+    end
+
+    it "updates a tattoo" do
+      attributes = {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2"}
+
+      json_response_4 = File.read("spec/fixtures/artist/tattoo_2.json")
+      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
+        .and_return(status: 200, body: json_response_4)
+
+      parsed_tattoo = ArtistService.new.update_tattoo("2", attributes)
+      expect(parsed_tattoo[:body]).to eq(json_response_4)
     end
   end
   
