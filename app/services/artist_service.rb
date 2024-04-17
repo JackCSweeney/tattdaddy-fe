@@ -37,6 +37,7 @@ class ArtistService
     identities.map do |identity_id|
       post_url("/api/v0/artist_identities", {artist_identity: {artist_id: artist_id, identity_id: identity_id}})
     end
+  end
     
   def artist_identities(id)
     get_url("/api/v0/artists/#{id}/identities")
