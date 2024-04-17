@@ -1,0 +1,7 @@
+{
+  "errors": [
+    {
+      "detail": "Validation failed: Price is not a number"
+    }
+  ]
+}
