@@ -10,7 +10,6 @@ class TattoosController < ApplicationController
   def create
     blob = ActiveStorage::Blob.create_and_upload!(io: params[:img_file], filename: params[:img_file].original_filename)
     tattoo_attributes = {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: blob.url}
-    require 'pry'; binding.pry
     service = ArtistService.new.send_new_artist_tattoo(tattoo_attributes)
 
     if service[:status] == 200 
