@@ -4,9 +4,9 @@
     <%= link_to "My Profile", user_path(id: @user.id) %>
     <%= link_to 'Liked Tattoos', user_tattoos_path(user_id: @user.id) %>
     <%= link_to 'Appointments', user_appointments_path(user_id: @user.id) %>
-    <%= link_to 'Sign Out', sign_out_path, method: :delete %>
   </div>
 </nav>
+
 
 <style>
 nav {
