@@ -10,7 +10,6 @@ class TattoosController < ApplicationController
   def create
     blob = ActiveStorage::Blob.create_and_upload!(io: params[:img_file], filename: params[:img_file].original_filename)
     tattoo_attributes = {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: blob.url}
-    
     service = ArtistService.new.send_new_artist_tattoo(tattoo_attributes)
 
     if service[:status] == 200 
@@ -30,7 +29,25 @@ class TattoosController < ApplicationController
   def update
     tattoo = ArtistFacade.new.find_tattoo(params[:id])
     
-    tattoo_attributes = {tattoo: {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: tattoo.image_url, id: "2"}}
+    if params[:img_file].present?
+      new_blob = ActiveStorage::Blob.create_and_upload!(io: params[:img_file], filename: params[:img_file].original_filename)
+      image_url = new_blob.url
+  
+      old_blob = ActiveStorage::Blob.find_by(key: tattoo.image_url)
+      old_blob.purge if old_blob
+    else
+      image_url = tattoo.image_url
+    end
+  
+    tattoo_attributes = {
+      tattoo: {
+        price: params[:price],
+        time_estimate: params[:time_estimate],
+        artist_id: params[:artist_id],
+        image_url: image_url, 
+        id: params[:id]
+      }
+    }
     
     tattoo = ArtistFacade.new.update_tattoo(tattoo_attributes)
 
@@ -42,10 +59,14 @@ class TattoosController < ApplicationController
       flash[:error] = "Tattoo could not be updated"
     end
   end
-
+  
   def destroy
+    tattoo = ArtistFacade.new.find_tattoo(params[:id])
     ArtistService.new.delete_tattoo(params[:id])
     
+    blob = ActiveStorage::Blob.find_by(key: tattoo.image_url)
+    blob.purge if blob
+
     redirect_to artist_dashboard_path(params[:artist_id])
   end
 end
