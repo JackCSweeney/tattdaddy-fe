@@ -1,0 +1,18 @@
+<center>
+<h1> Create a new Tattoo </h1>
+</center>
+
+<%= render partial: "shared/nav_artist"%>
+
+<%= form_with url: "/artists/#{@artist.id}/tattoos", method: :post, local: true, data: {turbo: false} do |f|%>
+  <%= f.label :price %>
+  <%= f.text_field :price %><br>
+  
+  <%= f.label :time_estimate %>
+  <%= f.text_field :time_estimate %> minutes<br>
+  
+  <%= f.label :img_file %>
+  <%= f.file_field :img_file %><br>
+  
+  <%= f.submit %>
+<% end %>

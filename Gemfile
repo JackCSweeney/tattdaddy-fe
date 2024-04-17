@@ -48,8 +48,8 @@ gem "faraday"
 gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
-gem "dotenv-rails"
 gem "jwt"
+gem 'aws-sdk-s3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -62,6 +62,7 @@ group :development, :test do
   gem "shoulda-matchers"
   gem "factory_bot_rails"
   gem "faker"
+  gem "dotenv-rails"
 end
 
 group :development do

@@ -108,6 +108,83 @@ RSpec.describe ArtistService do
         response = ArtistService.new.delete_artist(5)
         expect(response.status).to eq(204)
       end
+
+      it "deletes a tattoo if the given id" do
+        stub_request(:delete, "http://localhost:3000/api/v0/tattoos/5")
+          .to_return(status: 204)
+        
+        response = ArtistService.new.delete_tattoo(5)
+        expect(response.status).to eq(204)
+      end
+    end
+
+    it "sends the new artist tattoo" do
+      attributes = {"artist_id"=>"5", "image_url"=>"https://gist.github.com/assets/149989113/fee274f7-0fa9-4606-855b-9c286fcb1661", "price"=>"50", "time_estimate"=>"2"}
+
+      allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+        .and_return(status: 200, body: "")
+        
+      parsed_artist_tattoo = ArtistService.new.send_new_artist_tattoo(attributes)
+      expect(parsed_artist_tattoo[:body]).to eq("")
+      expect(parsed_artist_tattoo[:status]).to eq(200)
+    end
+
+    it "finds a tattoo" do
+      json_response_3 = File.read("spec/fixtures/artist/tattoo.json")
+      allow_any_instance_of(ArtistService).to receive(:find_tattoo)
+        .and_return(status: 200, body: json_response_3)
+
+      parsed_tattoo = ArtistService.new.find_tattoo("2")
+      expect(parsed_tattoo[:body]).to eq(json_response_3)
+    end
+
+    it "updates a tattoo" do
+      attributes = {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2"}
+
+      json_response_4 = File.read("spec/fixtures/artist/tattoo_2.json")
+      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
+        .and_return(status: 200, body: json_response_4)
+
+      parsed_tattoo = ArtistService.new.update_tattoo("2", attributes)
+      expect(parsed_tattoo[:body]).to eq(json_response_4)
+    end
+  end
+  
+  describe "create_artist(artist_attributes)" do
+    it "can create an artist" do
+      artist_attributes = {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009"}
+
+      json_response = File.read("spec/fixtures/artist/artist.json")
+      stub_request(:post, "http://localhost:3000/api/v0/artists")
+        .to_return(status: 200, body: json_response)
+
+      response = ArtistService.new.create_artist(artist_attributes)
+
+      expect(response).to have_key(:data)
+      expect(response[:data]).to have_key(:attributes)
+
+      attributes = response[:data][:attributes]
+
+      expect(attributes).to have_key(:name)
+      expect(attributes[:name]).to be_a(String)
+
+      expect(attributes).to have_key(:email)
+      expect(attributes[:email]).to be_a(String)
+
+      expect(attributes).to have_key(:location)
+      expect(attributes[:location]).to be_a(String)
+    end
+  end
+
+  describe "create_artist_identities(identities, artist_id)" do
+    it 'can create artist identities' do
+      json_response = File.read("spec/fixtures/artist/create_artist_identities.json")
+      stub_request(:post, "http://localhost:3000/api/v0/artist_identities")
+        .to_return(status: 200, body: json_response)
+
+      response = ArtistService.new.create_artist_identities(["None"], 5)
+
+      expect(response.first[:message]).to eq("Identity successfully added to Artist")
     end
   end
 end

@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": "6",
+    "type": "artist",
+    "attributes": {
+      "name": "Tattoo artists",
+      "email": "jesusa@spinka.test",
+      "password": null,
+      "location": "1400 U Street NW, Washington, DC 20009"
+    }
+  }
+}
