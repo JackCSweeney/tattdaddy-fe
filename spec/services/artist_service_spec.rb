@@ -116,6 +116,20 @@ RSpec.describe ArtistService do
         response = ArtistService.new.delete_tattoo(5)
         expect(response.status).to eq(204)
       end
+
+      it "deletes artist_identity" do
+        stub_request(:delete, "http://localhost:3000/api/v0/artist_identities")
+          .to_return(status: 204)
+  
+        artist_and_identity_ids = {
+          "artist_identity": {
+            "artist_id": "25", 
+            "identity_id": "2"
+          }
+        }
+        response = ArtistService.delete_artist_identity(artist_and_identity_ids)
+        expect(response.status).to eq(204)
+      end
     end
 
     it "sends the new artist tattoo" do
@@ -185,6 +199,19 @@ RSpec.describe ArtistService do
       response = ArtistService.new.create_artist_identities(["None"], 5)
 
       expect(response.first[:message]).to eq("Identity successfully added to Artist")
+    end
+  end
+
+  describe ".update_artist_data(artist_id, updated_data)" do
+    it "patch request to update a artist's information" do
+      json_response = File.read("spec/fixtures/artist/artist.json")
+      stub_request(:patch, "http://localhost:3000/api/v0/artists/5")
+      .to_return(status: 200, body: json_response)
+
+      updated_artist = ArtistService.update_artist_data("5", {artist: {name: "Ruby Gem"}})
+      expect(updated_artist).to be_a(Hash)
+      expect(updated_artist[:data]).to be_a(Hash)
+      expect(updated_artist[:data][:type]).to eq("artist")
     end
   end
 end
