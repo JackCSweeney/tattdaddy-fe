@@ -40,6 +40,16 @@ class UserService
     delete_url("/api/v0/users/#{user_id}")
   end
 
+  def self.create_user(user_attributes)
+    post_url("/api/v0/users", {user: user_attributes})
+  end
+
+  def self.create_user_identities(identities, user_id)
+    identities.map do |identity|
+      post_url("/api/v0/user_identities", {user_identity: {user_id: user_id, identity_id: identity}})
+    end
+  end
+
   def self.get_url(url)
     response = conn.get(url)
     JSON.parse(response.body, symbolize_names: true)

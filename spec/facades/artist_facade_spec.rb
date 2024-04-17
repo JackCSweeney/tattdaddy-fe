@@ -1,50 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe ArtistFacade do
-  describe "Instance method" do
-    describe "get methods" do
+  describe "get methods" do
       before do
-        allow_any_instance_of(ArtistService).to receive(:find_artists).and_return(
-          {
-            data: [
-              {
-                id: "322458",
-                type: "artist",
-                attributes: {
-                  name: "Tattoo artists",
-                  location: "1400 U Street NW",
-                  email: "tatart@gmail.com",
-                  identity: "LGBTQ+ Friendly",
-                  password_digest: "unreadable hash"
-                }
-              },
-              {
-                id: "322459",
-                type: "artist",
-                attributes: {
-                  name: "Tattoo Pot",
-                  location: "54541 Street CO",
-                  email: "tatpot@gmail.com",
-                  identity: "LGBTQ+ Friendly",
-                  password_digest: "unreadable hash"
-                }
-              }
-            ]
-          }
-        )
-
+        json_response_0 = File.read("spec/fixtures/artist/artists.json")
+      
         json_response_1 = File.read("spec/fixtures/artist/artist.json")
 
         json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
 
+        stub_request(:post, "http://localhost:3000/api/v0/artists")
+          .with(body: {artist: {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009"}})
+          .to_return(status: 200, body: json_response_1)    
+
         json_response_3 = File.read("spec/fixtures/artist/identities.json")
 
+        @json_response_4 = File.read("spec/fixtures/artist/tattoo.json")
+
+        stub_request(:get, "http://localhost:3000/api/v0/artists")
+        .to_return(status: 200, body:json_response_0)
         stub_request(:get, "http://localhost:3000/api/v0/artists/5")
           .to_return(status: 200, body: json_response_1)
         stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
           .to_return(status: 200, body: json_response_2)
         stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
           .to_return(status: 200, body: json_response_3)
+        
+        stub_request(:get, "http://localhost:3000/api/v0/tattoos/2")
+          .to_return(status: 200, body: @json_response_4)
+
+        stub_request(:patch, "http://localhost:3000/api/v0/tattoos/2")
+          .to_return(status: 200, body: @json_response_4)
       end
 
       it "artist_data returns a hash in the desired format" do
@@ -96,6 +82,12 @@ RSpec.describe ArtistFacade do
         expect(identities).to be_an(Array)
         identities.each { |identity| expect(identity).to be_an(Identity)}
       end
+      
+      it "find_tattoo returns a tattoo object" do
+
+        tattoo = ArtistFacade.new.find_tattoo("2")
+        expect(tattoo).to be_a(Tattoo)
+      end
     end
 
     describe "delete methods" do
@@ -106,6 +98,58 @@ RSpec.describe ArtistFacade do
         response = ArtistFacade.new.delete_artist(5)
         expect(response.status).to eq(204)
       end
+    end
+
+  describe "update methods" do
+    it "update_tattoo returns a tattoo object" do
+      attributes = {tattoo: {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2", id: "2"}}
+
+      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
+        .and_return({ data: { id: "2", attributes: attributes[:tattoo] } })
+      
+      stub_request(:get, "http://localhost:3000/api/v0/tattoos/2")
+        .to_return(status: 200, body: @json_response_4)
+      
+      tattoo = ArtistFacade.new.update_tattoo(attributes)
+      expect(tattoo).to be_a(Tattoo)
+    end
+  end
+  
+  describe ".create_artist(artist_attributes)" do
+    it "can create an artist" do
+      artist_attributes = {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009"}
+      
+      json_response = File.read("spec/fixtures/artist/artist.json")
+      stub_request(:post, "http://localhost:3000/api/v0/artists")
+      .to_return(status: 200, body: json_response)
+      
+      response = ArtistFacade.create_artist(artist_attributes)
+
+      expect(response).to have_key(:data)
+      expect(response[:data]).to have_key(:attributes)
+
+      attributes = response[:data][:attributes]
+
+      expect(attributes).to have_key(:name)
+      expect(attributes[:name]).to be_a(String)
+
+      expect(attributes).to have_key(:email)
+      expect(attributes[:email]).to be_a(String)
+
+      expect(attributes).to have_key(:location)
+      expect(attributes[:location]).to be_a(String)
+    end
+  end
+
+  describe ".create_artist_identities(identities, artist_id)" do
+    it 'can create artist identity records' do
+      json_response = File.read("spec/fixtures/artist/create_artist_identities.json")
+      stub_request(:post, "http://localhost:3000/api/v0/artist_identities")
+        .to_return(status: 200, body: json_response)
+
+      response = ArtistFacade.create_artist_identities(["None"], 5)
+
+      expect(response.first[:message]).to eq("Identity successfully added to Artist")
     end
   end
 end

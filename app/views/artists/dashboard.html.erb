@@ -4,11 +4,13 @@
 
 <%= render partial: "shared/nav_artist"%>
 
+
 <section class="artist_dashboard_tattoos">
   <center>
-    <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :new %>
+    <br><%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get %>
   </center>
   
+  <h3>Your Available Tattoos</h3>
   <% @tattoos.each do |tattoo| %>
     <div id="tattoo-<%= tattoo.id %>" class="tattoo_option" >
       <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
