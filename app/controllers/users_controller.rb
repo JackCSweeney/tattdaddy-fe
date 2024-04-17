@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   def create
     user = UserFacade.create_new_user(new_user_params.to_h)
     UserFacade.create_user_identities(user_identities, user[:data][:id])
-    session[:user_id] = user.id
+    session[:user_id] = user[:data][:id]
     redirect_to user_dashboard_path(user[:data][:id])
   end
 
