@@ -34,7 +34,12 @@ class ArtistsController < ApplicationController
     ArtistFacade.create_artist_identities(artist_identities, artist[:data][:id])
     redirect_to artist_dashboard_path(artist[:data][:id])
   end
-
+  
+  def destroy
+    ArtistFacade.new.delete_artist(params[:id])
+    redirect_to root_path, alert: "Artist account successfully deleted"
+  end
+  
   private
   def new_artist_params
     params.permit(:name, :location, :email, :password)
@@ -67,10 +72,5 @@ class ArtistsController < ApplicationController
     identity_requests[:post] = @updated_identities - @original_identities
     identity_requests[:delete] = @original_identities - @updated_identities
     identity_requests
-  end
-
-  def destroy
-    ArtistFacade.new.delete_artist(params[:id])
-    redirect_to root_path, alert: "Artist account successfully deleted"
   end
 end

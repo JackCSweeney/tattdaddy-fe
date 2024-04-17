@@ -64,15 +64,20 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
       it "with the option to 'edit' each tattoo" do
         within ".artist_dashboard_tattoos" do
           within "#tattoo-5" do
-            expect(page).to have_link("Edit")
+            click_on "Edit"
+            expect(current_path).to eq(edit_artist_tattoo_path(artist_id: 5, id: 5))
           end
         end
       end
 
       it "with the option to 'delete' each tattoo" do
+        stub_request(:delete, "http://localhost:3000/api/v0/tattoos/5")
+          .to_return(status: 204)
+          
         within ".artist_dashboard_tattoos" do
           within "#tattoo-5" do
-            expect(page).to have_link("Delete")
+            click_on "Delete"
+            expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
           end
         end
       end
