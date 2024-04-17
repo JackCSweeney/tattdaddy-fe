@@ -12,4 +12,8 @@ class User
     @email = attributes[:attributes][:email]
     @search_radius = attributes[:attributes][:search_radius]
   end
+
+  def attributes
+    [@id, @name, @location, @email, @search_radius]
+  end
 end
