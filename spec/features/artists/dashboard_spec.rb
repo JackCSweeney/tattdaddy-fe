@@ -11,6 +11,13 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
       stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
         .to_return(status: 200, body: json_response_2)
 
+      stub_request(:delete, "http://localhost:3000/api/v0/tattoos/5")
+        .to_return(status: 204)
+      
+      json_response = File.read("spec/fixtures/artist/tat.json")  
+      stub_request(:get, "http://localhost:3000/api/v0/tattoos/5")
+        .to_return(status: 200, body: json_response)
+
       visit artist_dashboard_path(artist_id: 5)
     end
 
@@ -70,14 +77,28 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
         end
       end
 
-      it "with the option to 'delete' each tattoo" do
-        stub_request(:delete, "http://localhost:3000/api/v0/tattoos/5")
-          .to_return(status: 204)
-          
-        within ".artist_dashboard_tattoos" do
-          within "#tattoo-5" do
-            click_on "Delete"
+      describe "with the option to 'delete' each tattoo" do
+        it "when clicked, it redirects to artist dashboard and the deleted tattoo is no longer there" do
+          within ".artist_dashboard_tattoos" do
+            within "#tattoo-5" do
+              click_on "Delete"
+            end
             expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
+
+            expect(page).not_to have_content("#tattoo-5")
+          end
+        end
+
+        it "when clicked, it deletes the file in ws3 too" do
+          tattoo = ArtistFacade.new.find_tattoo("5")
+          
+          within ".artist_dashboard_tattoos" do
+            within "#tattoo-5" do
+              click_on "Delete"
+            end
+            blob = ActiveStorage::Blob.find_by(key: tattoo.image_url)
+
+            expect(blob).to be(nil)
           end
         end
       end
