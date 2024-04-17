@@ -68,4 +68,8 @@ class ArtistService
   def delete_artist(id)
     delete_url("/api/v0/artists/#{id}")
   end
+
+  def delete_tattoo(id)
+    delete_url("/api/v0/tattoos/#{id}")
+  end
 end
