@@ -29,10 +29,18 @@ class ArtistService
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.update_url(url, params)
-    response = conn.patch(url)
+  def update_url(url, params)
+    response = connection.patch(url) do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = params.to_json
+    end
     JSON.parse(response.body, symbolize_names: true)
   end
+
+  def self.update_url(url, params)
+    ArtistService.new.update_url(url, params)
+  end
+
 
   def create_artist(artist_attributes)
     post_url("/api/v0/artists", {artist: artist_attributes})
@@ -62,6 +70,16 @@ class ArtistService
 
   def self.create_artist_identity(artist_and_identity_ids)
     body = JSON.generate(artist_and_identity_ids)
-    post_url("/api/v0/artist_identities", body)
+    new.post_url("/api/v0/artist_identities", body)
   end
+
+  def self.delete_url_with_body(url, body_data)
+    new.delete_url_with_body(url, body_data)
+  end
+
+  def delete_url_with_body(url, body_data)
+    connection.delete(url) do |req|
+      req.body = JSON.generate(body_data)
+    end
+  end 
 end

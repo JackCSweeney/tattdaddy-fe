@@ -56,10 +56,10 @@ class ArtistsController < ApplicationController
   end
 
   def artist_identities_updated?
-    @original_identities = params[:original_artist_identities].split
+    @original_identities = params[:original_artist_identities]&.split || []
     @updated_identities = params[:identities]
 
-    @updated_identities != @original_identities
+    @updated_identities.present? && @original_identities.present? && @updated_identities != @original_identities
   end
 
   def identity_changes

@@ -33,7 +33,7 @@ RSpec.describe "Edit Artist Account Page", type: :feature do
       it "location" do
         expect(page).to have_field("Location", with: "1400 U Street NW, Washington, DC 20009")
       end
-      
+
       it "identity preferences" do
         within "fieldset" do
           expect(page).to have_content("I identify as a member of these group(s):")
@@ -53,15 +53,16 @@ RSpec.describe "Edit Artist Account Page", type: :feature do
           .to_return(status: 204)
 
       end
-      xit "updated info appears on My Profile" do
-        fill_in :name, with: "Going to the Gem"
-        fill_in :email, with: "wonder@wall.com"
+
+      it "updated info appears on My Profile" do
+        fill_in :name, with: "Wicked Tats"
+        fill_in :email, with: "besttatts@comegetat.com"
         fill_in "Location", with: "412 Delaware St, Kansas City, MO 64105"
-        page.check("Latino")
-        page.uncheck("Asian")
+        page.check("Female")
+        page.uncheck("Black")
         click_on "Save Changes"
 
-        expect(current_path).to eq(user_path(id: 25))
+        expect(current_path).to eq(artist_path(id: 5))
         expect(page).to have_content("Profile updated successfully")
       end
 
@@ -69,12 +70,11 @@ RSpec.describe "Edit Artist Account Page", type: :feature do
         fill_in "Name", with: ""
         fill_in "Email", with: ""
         fill_in "Location", with: ""
-        fill_in "Search Radius", with: ""
         uncheck "LGBTQ+"
-        uncheck "Asian"
+        uncheck "Black"
         click_on "Save Changes"
 
-        expect(current_path).to eq(edit_user_path(id: 25))
+        expect(current_path).to eq(edit_artist_path(id: 5))
         expect(page).to have_content("All fields must be completed")
       end
     end
