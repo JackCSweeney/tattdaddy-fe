@@ -28,8 +28,12 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
 
       it "view 'My Profile'" do
         expect(page).to have_link("My Profile")
+        
+        json_response_identities = File.read("spec/fixtures/artist/identities.json")  
+        stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
+        .to_return(status: 200, body: json_response_identities)
+        
         click_on "My Profile"
-
         expect(current_path).to eq(artist_path(id: 5))
       end
     end
