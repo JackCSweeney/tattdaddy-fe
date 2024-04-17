@@ -33,7 +33,8 @@ class SessionsController <ApplicationController
   end
 
   def destroy
-    #SessionService.sign_out#(current_user)
+    session[:user_id] = nil
+    session[:artist_id] = nil
     redirect_to root_path
   end
 
