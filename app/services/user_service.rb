@@ -16,12 +16,11 @@ class UserService
   end
 
   def self.update_user_data(user_id, updated_data)
-    update_url("/api/v0/users/#{user_id}", updated_data)
+    update_url("/api/v0/users/#{user_id}", {user: updated_data.to_h})
   end
 
   def self.create_user_identity(user_and_identity_ids)
-    body = JSON.generate(user_and_identity_ids)
-    post_url("/api/v0/user_identities", body)
+    post_url("/api/v0/user_identities", user_and_identity_ids)
   end
 
   def self.create_user_tattoo(user_tattoo_data)
@@ -57,7 +56,7 @@ class UserService
   end
 
   def self.update_url(url, params)
-    response = conn.patch(url)
+    response = conn.patch(url, params)
     JSON.parse(response.body, symbolize_names: true)
   end
 

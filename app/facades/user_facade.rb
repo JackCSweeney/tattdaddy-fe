@@ -31,7 +31,7 @@ class UserFacade
   end
 
   def self.update_user_data(user_id, user_params)
-    UserService.update_user_data(user_id, { user: user_params })
+    UserService.update_user_data(user_id, user_params)
   end
 
   def self.update_user_identities(user_id, identity_changes)

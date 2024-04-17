@@ -20,4 +20,8 @@ class Artist
   def authenticate(input_password)
     BCrypt::Password.new(password_digest) == input_password
   end
+
+  def attributes
+    [@id, @name, @location, @email]
+  end
 end
