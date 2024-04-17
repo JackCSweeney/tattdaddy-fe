@@ -24,7 +24,7 @@ RSpec.describe 'Tattoos New Page', type: :feature do
 
     describe "displays links to" do
       it "view 'Sign Out'" do
-        expect(page).to have_link("Sign Out")
+        expect(page).to have_button("Sign Out")
         click_on "Sign Out"
 
         expect(current_path).to eq(root_path)

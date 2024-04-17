@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     if user_identities_updated? && user_data_updated?
       UserFacade.update_data_and_identities(@user_id, user_params, identity_changes)
     elsif user_identities_updated? && !user_data_updated?
-      UserFacade.update_user_identities(user_id, identity_changes)
+      UserFacade.update_user_identities(@user_id, identity_changes)
     else
       UserFacade.update_user_data(@user_id, user_params)
     end
@@ -35,8 +35,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = UserFacade.create_new_user(new_user_params)
+    user = UserFacade.create_new_user(new_user_params.to_h)
     UserFacade.create_user_identities(user_identities, user[:data][:id])
+    session[:user_id] = user[:data][:id]
     redirect_to user_dashboard_path(user[:data][:id])
   end
 
@@ -48,11 +49,11 @@ class UsersController < ApplicationController
   def user_data_updated?
     updated = user_params.to_h
     original = JSON.parse(params[:original_user_data])
-
     updated != original
   end
 
   def user_identities_updated?
+    params.permit(:original_user_identities, :identities, "original_user_identities", "identities")
     @original_identities = params[:original_user_identities].split
     @updated_identities = params[:identities]
 

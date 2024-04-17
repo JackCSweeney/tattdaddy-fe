@@ -14,8 +14,13 @@
   <%= f.label :time_estimate %>
   <%= f.text_field :time_estimate, value: @tattoo.time_estimate %> hours<br>
   
+  <%= f.label :image, "Upload New Image" %>
+  <%= f.file_field :img_file %><br>
+  
   <%= f.submit %>
 <% end %>
+
+<%= button_to 'Sign Out', sign_out_path, method: :delete %>
 
 <style>
 .tattoo_option {

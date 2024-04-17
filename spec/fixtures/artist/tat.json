@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": "5",
+    "type": "tattoo",
+    "attributes": {
+      "image_url": "app/assets/images/bronto.jpeg",
+      "price": 300,
+      "time_estimate": 120,
+      "artist_id": 5
+    }
+  }
+}
