@@ -17,7 +17,7 @@ class ArtistFacade
   def update_tattoo(tattoo_attributes)
     begin
       data = artist_service.update_tattoo(tattoo_attributes[:tattoo][:id], tattoo_attributes)
-      find_tattoo(data[:data][:id])
+      Tattoo.new(data[:data])
     rescue StandardError => e
       handle_error(e)
     end
@@ -58,11 +58,11 @@ class ArtistFacade
   end 
 
   def self.create_artist(artist_attributes)
-    artist_service.create_artist(artist_attributes)
+    ArtistService.new.create_artist(artist_attributes)
   end
 
   def self.create_artist_identities(identities, artist_id)
-    artist_service.create_artist_identities(identities, artist_id)
+    ArtistService.new.create_artist_identities(identities, artist_id)
   end
 
   def find_tattoo(id)
