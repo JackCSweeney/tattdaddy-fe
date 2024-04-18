@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   
   root "welcome#index"
 
+  get "/geolocate/:id", to: "geolocation#geolocate"
+
   post "/sign_in", to: "sessions#create"
   delete "/sign_out", to: "sessions#destroy"
   get "/auth/github/callback", to: "sessions#create"
