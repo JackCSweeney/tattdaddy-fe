@@ -16,10 +16,12 @@ RSpec.describe "User's My Profile Page", type: :feature do
     end
 
     it "displays user's current information" do
-      expect(page).to have_content("Name: Ruby Gem")
-      expect(page).to have_content("Email: jesusa@spinka.test")
-      expect(page).to have_content("Location: 9705 Fishers District Dr, Fishers, IN 46037")
-      expect(page).to have_content("Search Radius: 25 miles")
+      within "#user_info" do
+       expect(page).to have_content("Name: Ruby Gem")
+       expect(page).to have_content("Email: jesusa@spinka.test")
+       expect(page).to have_content("Location: 9705 Fishers District Dr, Fishers, IN 46037")
+       expect(page).to have_content("Search Radius: 25 miles")
+      end
 
       within ".identity_pref" do
         expect(page).to have_content("I would like to support artists who are:")
@@ -55,7 +57,9 @@ RSpec.describe "User's My Profile Page", type: :feature do
         click_on "Delete Account"
 
         expect(current_path).to eq(root_path)
-        expect(page).to have_content("User account successfully deleted")
+        within "#mainBody" do
+          expect(page).to have_content("User account successfully deleted")
+        end
       end
     end
 

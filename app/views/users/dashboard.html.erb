@@ -1,6 +1,8 @@
 <div class="container">
-  <h1 class="text-center"><%= @user.name %>'s Dashboard</h1>
-
+  <section id="header">
+    <h1 class="text-center"><%= @user.name %>'s Dashboard</h1>
+  </section>
+  
   <%= render partial: "shared/nav_user" %>
 
 <div data-controller="geolocation">

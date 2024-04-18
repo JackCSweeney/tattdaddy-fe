@@ -55,30 +55,27 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       end
 
       it "when I fill the form correctly, upload an image and submit it takes me to the artist dashboard" do
-        fill_in "Price", with: "50"
-        fill_in "Time estimate", with: "2"
+        fill_in "Price", with: 50
+        fill_in "Time estimate", with: 60
         attach_file "Img file", 'app/assets/images/bronto.jpeg'
         click_button "Save"
 
         expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
-        expect(page).to have_text("Tattoo created successfully")
+        within "#mainBody" do
+          expect(page).to have_text("Tattoo created successfully")
+        end
       end
 
       it "handles sad path on form fields and sends back to new form" do
-        # json_response_0 = File.read("spec/fixtures/artist/tattoo_incorrect.json")
-        # attributes = {:price=>"a", :time_estimate=>"2", :artist_id=>"5", :image_url=>"app/assets/images/bronto.jpeg"}
-
-        # allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
-
-        # .and_return(status: 404, body: json_response_0)
-
         fill_in "Price", with: "a"
         fill_in "Time estimate", with: 2
         attach_file "Img file", Rails.root.join('app/assets/images/', 'bronto.jpeg')
         click_button "Save"
 
         expect(current_path).to eq(new_artist_tattoo_path(artist_id: 5))
-        expect(page).to have_text("Tattoo could not be uploaded")
+        within "#mainBody" do
+          expect(page).to have_text("Tattoo could not be uploaded")
+        end
       end
     end
   end
