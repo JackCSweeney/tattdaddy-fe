@@ -1,5 +1,5 @@
 class ArtistsController < ApplicationController
-  before_action :require_login, only: [:show, :destroy]
+  before_action :require_login, only: [:show, :destroy, :edit,:update]
 
   def show
     artist_id = params[:id]

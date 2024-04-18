@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe "Artist Sign In" do
   describe 'As a Artist' do
     before(:each) do
-      json_response_1 = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+      json_response_1 = File.read("spec/fixtures/sessions/successful_artist_sign_in1.json")
       json_response_2 = File.read("spec/fixtures/artist/artist.json")
       json_response_3 = File.read("spec/fixtures/artist/artist_tattoos.json")
-
+      
       stub_request(:post, "http://localhost:3000/api/v0/sign_in")
         .to_return(status: 200, body: json_response_1)
       stub_request(:get, "http://localhost:3000/api/v0/artists/1")
