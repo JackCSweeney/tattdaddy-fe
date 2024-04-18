@@ -41,7 +41,7 @@ class ArtistService
 
   def update_tattoo(id, attributes)
     response = connection.patch("/api/v0/tattoos/#{id}") do |req|
-      req.body = { tattoo: attributes }
+      req.body = attributes 
     end
     JSON.parse(response.body, symbolize_names: true)
   end

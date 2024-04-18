@@ -14,14 +14,14 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       # stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
       #   .to_return(status: 200, body: json_response_2)
 
-      # attributes = {artist_id: "5", image_url: "app/assets/images/bronto.jpeg", price: "50", time_estimate: "2"}
+      #   attributes = {artist_id: "5", image_url: "app/assets/images/bronto.jpeg", price: "50", time_estimate: "2"}
       
-      # allow_any_instance_of(ActiveStorage::Blob).to receive(:url)
+      #   allow_any_instance_of(ActiveStorage::Blob).to receive(:url)
       #   .and_return("app/assets/images/bronto.jpeg")
 
-      # allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
-      #   .and_return(status: 200, body: "")
-      
+      #   allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
+      #     .and_return(status: 200, body: "")
+
       WebMock.allow_net_connect!
       visit new_artist_tattoo_path(artist_id: 5)
     end
@@ -37,9 +37,9 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       it "view 'My Profile'" do
         expect(page).to have_link("My Profile")
         
-        json_response_identities = File.read("spec/fixtures/artist/identities.json")  
-        stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
-        .to_return(status: 200, body: json_response_identities)
+        # json_response_identities = File.read("spec/fixtures/artist/identities.json")  
+        # stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
+        # .to_return(status: 200, body: json_response_identities)
         
         click_on "My Profile"
 
@@ -67,7 +67,9 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       it "handles sad path on form fields and sends back to new form" do
         # json_response_0 = File.read("spec/fixtures/artist/tattoo_incorrect.json")
         # attributes = {:price=>"a", :time_estimate=>"2", :artist_id=>"5", :image_url=>"app/assets/images/bronto.jpeg"}
-        # allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+
+        # allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
+
         # .and_return(status: 404, body: json_response_0)
 
         fill_in "Price", with: "a"
