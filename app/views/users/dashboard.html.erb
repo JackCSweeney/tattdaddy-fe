@@ -8,6 +8,7 @@
       <div class="form-group">
         <%= form.label :location, "Current Location" %>
         <%= form.text_field :location, value: @user.location, class: "form-control" %>
+
       </div>
       <%= form.submit "Update", class: "btn btn-primary" %>
     <% end %>
@@ -20,7 +21,7 @@
       <%= form.submit "Update", class: "btn btn-primary" %>
     <% end %>
   </section>
-
+<% cache("#{@user.location}-#{@user.search_radius}-#{@user.id}-dashboard-tattoos") do %>
   <section class="user_dashboard_tattoos">
     <% @tattoos.each do |tattoo| %>
       <div class="tattoo_option">
@@ -50,6 +51,6 @@
       </div>
     <% end %>
   </section>
-
+<% end %>
   <%= button_to 'Sign Out', sign_out_path, method: :delete, class: "btn btn-danger" %>
 </div>

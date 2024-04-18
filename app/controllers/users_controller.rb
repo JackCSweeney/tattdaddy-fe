@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 
   def user_identities_updated?
     params.permit(:original_user_identities, :identities, "original_user_identities", "identities")
-    @original_identities = params[:original_user_identities].split
+    @original_identities = params[:original_user_identities].split if params[:original_user_identities]
     @updated_identities = params[:identities]
 
     @updated_identities != @original_identities

@@ -10,7 +10,7 @@ class ArtistsController < ApplicationController
   end
 
   def create
-    artist = ArtistFacade.create_artist(new_artist_params)
+    artist = ArtistFacade.create_artist(new_artist_params.to_h)
     ArtistFacade.create_artist_identities(artist_identities, artist[:data][:id])
     redirect_to artist_dashboard_path(artist[:data][:id])
   end
