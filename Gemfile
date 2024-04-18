@@ -46,7 +46,6 @@ gem "bootsnap", require: false
 
 gem "faraday"
 gem "omniauth"
-gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 gem "jwt"
 gem 'aws-sdk-s3'

@@ -14,8 +14,6 @@ Rails.application.routes.draw do
   post "/sign_in", to: "sessions#create"
   delete "/sign_out", to: "sessions#destroy"
   get "/auth/github/callback", to: "sessions#create"
-  # get '/auth/google_oauth2', to: 'sessions#google_oauth2'
-  # get '/auth/google_oauth2/callback', to: 'sessions#google_oauth2_callback'
   resources :users, except: :index do
     get "/dashboard", to: "users/dashboard#show"
     resources :tattoos, only: [:index, :create, :destroy], controller: "users/tattoos"
