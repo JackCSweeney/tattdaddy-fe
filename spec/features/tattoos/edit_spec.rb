@@ -57,7 +57,9 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
       it "has a price, time and image_file fields" do
         expect(page).to have_field('Price')
         expect(page).to have_field('Time estimate')
-        expect(page).to have_content('Upload New Image')
+        within "#new_img" do
+          expect(page).to have_content('Upload New Image')
+        end
       end
 
       it "successfully updates tattoo's price" do   
@@ -65,7 +67,9 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
         click_button "Save"
         expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
         
-        expect(page).to have_text("Tattoo updated successfully")
+        within "#mainBody" do
+          expect(page).to have_text("Tattoo updated successfully")
+        end
         within ".artist_dashboard_tattoos" do
           within "#tattoo-2" do
             expect(page).to have_content("200")
@@ -78,7 +82,9 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
         click_button "Save"
         expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
         
-        expect(page).to have_text("Tattoo updated successfully")
+        within "#mainBody" do
+          expect(page).to have_text("Tattoo updated successfully")
+        end
         within ".artist_dashboard_tattoos" do
           within "#tattoo-2" do
             expect(page).to have_content("60")
@@ -117,7 +123,9 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
         click_button "Save"
 
         expect(current_path).to eq(edit_artist_tattoo_path(artist_id: 5, id: 5))
-        expect(page).to have_text("Tattoo could not be updated")
+        within "#mainBody" do
+          expect(page).to have_text("Tattoo could not be updated")
+        end
       end
     end
   end
