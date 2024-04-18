@@ -24,6 +24,7 @@
       <%= form.submit "Update", class: "btn btn-primary" %>
     <% end %>
   </section>
+
 <% cache("#{@user.location}-#{@user.search_radius}-#{@user.id}-dashboard-tattoos") do %>
   <section class="user_dashboard_tattoos">
     <% @tattoos.each do |tattoo| %>
@@ -43,10 +44,6 @@
           <tr>
             <th>Duration:</th>
             <td><%= tattoo.time_estimate %> min</td>
-          </tr>
-          <tr>
-            <th>Distance:</th>
-            <td>Later Feature</td>
           </tr>
         </table>
 

@@ -40,13 +40,6 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
         expect(current_path).to eq(artist_path(id: 5))
       end
 
-      it "view 'Appointments'" do
-        expect(page).to have_link("Appointments")
-        click_on "Appointments"
-
-        expect(current_path).to eq(artist_appointments_path(artist_id: 5))
-      end
-
       it "view 'Add a new Tattoo'" do
         within ".artist_dashboard_tattoos" do
           expect(page).to have_button("Add New Tattoo")

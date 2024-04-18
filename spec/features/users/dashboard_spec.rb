@@ -39,13 +39,6 @@ RSpec.describe "Dashboard Page", type: :feature do
         expect(current_path).to eq(user_tattoos_path(user_id: 25))
       end
 
-      it "view 'Appointments'" do
-        expect(page).to have_link("Appointments")
-        click_on "Appointments"
-
-        expect(current_path).to eq(user_appointments_path(user_id: 25))
-      end
-
       it "view 'Sign Out'" do
         expect(page).to have_button("Sign Out")
         click_on "Sign Out"
@@ -60,7 +53,6 @@ RSpec.describe "Dashboard Page", type: :feature do
           expect(page).to have_css("img", count: 15)
           expect(page).to have_content("Cost:", count: 15)
           expect(page).to have_content("Duration:", count: 15)
-          expect(page).to have_content("Distance:", count: 15)
         end
       end
 

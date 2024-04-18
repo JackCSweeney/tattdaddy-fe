@@ -27,6 +27,7 @@
             </tr>
             <tr>
               <%= link_to 'Delete', artist_tattoo_path(id: @artist.id), method: :delete, class: "btn btn-danger" %>
+              <%= link_to 'Schedule', url: tattoo.schedule_link %>
             </tr>
           </div>
       </table>
