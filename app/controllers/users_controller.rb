@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  # before_action :require_login, only: [:show, :edit, :update, :destroy]
+
   def show
     user_id = params[:id]
     @user = UserFacade.user_data(user_id)
@@ -73,5 +75,13 @@ class UsersController < ApplicationController
 
   def new_user_params
     params.permit(:name, :email, :password, :search_radius, :location)
+  end
+
+  def require_login
+    user_id = params[:id]
+    unless session[:user_id].present? && session[:user_id] == user_id.to_i
+      flash[:error] = "You need to login"
+      redirect_to root_path
+    end
   end
 end

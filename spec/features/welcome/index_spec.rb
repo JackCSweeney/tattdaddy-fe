@@ -61,7 +61,7 @@ RSpec.describe 'Welcome Index Page', type: :feature do
 
         describe "an artist" do
           scenario "valid credentials" do
-            json_resonse = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+            json_resonse = File.read("spec/fixtures/sessions/successful_artist_sign_in1.json")
             json_response_1 = File.read("spec/fixtures/artist/artist.json")
             json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
             # any other stubs needed for artist dashboard?

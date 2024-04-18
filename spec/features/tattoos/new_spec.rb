@@ -19,6 +19,16 @@ RSpec.describe 'Tattoos New Page', type: :feature do
         allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
           .and_return(status: 200, body: "")
 
+      json_response = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response)
+
+      visit root_path
+        expect(page).to have_button("Sign In as Artist")
+          fill_in "Email", with: "tatart@gmail.com"
+          fill_in "Password", with: "password"
+          click_on "Sign In as Artist"
+
       visit new_artist_tattoo_path(artist_id: 5)
     end
 

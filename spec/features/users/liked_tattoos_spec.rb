@@ -6,11 +6,29 @@ RSpec.describe "User's Liked Tattoos Page", type: :feature do
     before do
       json_response_1 = File.read("spec/fixtures/user/user.json")
       json_response_2 = File.read("spec/fixtures/user/liked_tattoos.json")
+      json_response_3 = File.read("spec/fixtures/sessions/successful_user_sign_in.json")
+      json_response_4 = File.read("spec/fixtures/user/dashboard_tattoos.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 200, body: json_response_1)
       stub_request(:get, "http://localhost:3000/api/v0/users/25/tattoos")
         .to_return(status: 200, body: json_response_2)
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_3)
+      stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25").
+        with(
+          headers: {
+         'Accept'=>'*/*',
+         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+         'User-Agent'=>'Faraday v2.9.0'
+          }).
+        to_return(status: 200, body: json_response_4, headers: {})
+      
+        visit root_path
+        expect(page).to have_button("Sign In as User")
+        fill_in "Email", with: "jesusa@spinka.test"
+        fill_in "Password", with: "123Password"
+        click_on "Sign In as User"
 
       visit user_tattoos_path(user_id: 25)
     end
