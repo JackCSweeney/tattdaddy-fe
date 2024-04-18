@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  # before_action :require_login, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:show, :edit, :update, :destroy]
 
   def show
     user_id = params[:id]
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
 
   def require_login
     user_id = params[:id]
-    unless session[:user_id].present? && session[:user_id] == user_id.to_i
+    unless session[:user_id].present? && session[:user_id].to_i == user_id.to_i
       flash[:error] = "You need to login"
       redirect_to root_path
     end

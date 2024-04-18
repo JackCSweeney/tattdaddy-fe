@@ -1,5 +1,5 @@
 class ArtistsController < ApplicationController
-  # before_action :require_login, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:show, :destroy]
 
   def show
     artist_id = params[:id]
@@ -34,7 +34,7 @@ class ArtistsController < ApplicationController
 
   def require_login
     artist_id = params[:id]
-    unless session[:artist_id].present? && session[:artist_id] == artist_id.to_i
+    unless session[:artist_id].present? && session[:artist_id].to_i == artist_id.to_i
       flash[:error] = "You need to login"
       redirect_to root_path
     end
