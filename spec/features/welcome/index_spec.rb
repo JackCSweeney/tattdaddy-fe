@@ -8,7 +8,9 @@ RSpec.describe 'Welcome Index Page', type: :feature do
 
     describe "page heading" do
       it "Welcome to TattDaddy" do
-        expect(page).to have_content("Welcome to\nTattDaddy")
+        within "#header" do
+          expect(page).to have_content("Welcome to\nTattDaddy")
+        end
       end
     end
 
@@ -55,7 +57,9 @@ RSpec.describe 'Welcome Index Page', type: :feature do
               end
 
               expect(current_path).to eq(root_path)
-              expect(page).to have_content('Invalid email/password combination')
+              within "#mainBody" do
+                expect(page).to have_content('Invalid email/password combination')
+              end
           end
         end
 
@@ -95,7 +99,9 @@ RSpec.describe 'Welcome Index Page', type: :feature do
               end
 
               expect(current_path).to eq(root_path)
-              expect(page).to have_content('Invalid email/password combination')
+              within "#mainBody" do
+                expect(page).to have_content('Invalid email/password combination')
+              end
           end
         end
       end

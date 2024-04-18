@@ -55,7 +55,9 @@ RSpec.describe 'Create User', type: :feature do
       click_on "Create New Account"
 
       expect(current_path).to eq("/users/25/dashboard")
-      expect(page).to have_content("Ruby Gem's Dashboard")
+      within "#header" do
+        expect(page).to have_content("Ruby Gem's Dashboard")
+      end
       expect(page).to have_field("location", with: "9705 Fishers District Dr, Fishers, IN 46037")
       expect(page).to have_field("search_radius", with: 25)
 
