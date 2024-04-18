@@ -16,7 +16,7 @@ RSpec.describe 'Tattoos New Page', type: :feature do
         allow_any_instance_of(ActiveStorage::Blob).to receive(:url)
         .and_return("app/assets/images/bronto.jpeg")
 
-        allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+        allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
           .and_return(status: 200, body: "")
 
       json_response = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
@@ -73,7 +73,7 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       it "handles sad path on form fields and sends back to new form" do
         json_response_0 = File.read("spec/fixtures/artist/tattoo_incorrect.json")
         attributes = {:price=>"a", :time_estimate=>"2", :artist_id=>"5", :image_url=>"app/assets/images/bronto.jpeg"}
-        allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+        allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
         .and_return(status: 404, body: json_response_0)
 
         fill_in "Price", with: "a"
