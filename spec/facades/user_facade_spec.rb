@@ -87,7 +87,7 @@ RSpec.describe UserFacade do
         .to_return(status: 200, body: '{"message": "Identity successfully added to User"}')
 
       stub_request(:delete, "http://localhost:3000/api/v0/user_identities")
-        .with( body: {"{\"user_identity\":{\"user_id\":\"25\",\"identity_id\":\"1\"}}"=>nil})
+        .with( body: {"user_identity"=>{"identity_id"=>"1", "user_id"=>"25"}})
         .to_return(status: 204)
 
       identity_changes = {post: ["2", "3"], delete: ["1"]}

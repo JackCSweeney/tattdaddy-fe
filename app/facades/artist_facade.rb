@@ -65,6 +65,26 @@ class ArtistFacade
     ArtistService.new.create_artist_identities(identities, artist_id)
   end
 
+  def self.update_data_and_identities(artist_id, updated_artist_data, identity_changes)
+    update_artist_data(artist_id, updated_artist_data)
+    update_artist_identities(artist_id, identity_changes)
+  end
+
+  def self.update_artist_data(artist_id, artist_params)
+    ArtistService.update_artist_data(artist_id, { artist: artist_params })
+  end
+
+  def self.update_artist_identities(artist_id, identity_changes)
+    for key, values in identity_changes
+      values.each do |identity_id|
+        params = { artist_identity: { artist_id: artist_id, identity_id: identity_id }}
+
+        ArtistService.create_artist_identity(params) if key == :post
+        ArtistService.delete_artist_identity(params) if key == :delete
+      end
+    end
+  end
+
   def find_tattoo(id)
     data = ArtistService.new.find_tattoo(id)
     Tattoo.new(data[:data])

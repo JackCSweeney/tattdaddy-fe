@@ -1,0 +1,31 @@
+<center>
+<h1> Edit My Profile </h1>
+</center>
+
+<%= render partial: "shared/nav_artist"%>
+
+<%= form_with url: artist_path(id: @artist.id), method: :patch do |form|%>
+
+  <%= form.hidden_field :original_artist_data, value: {name: @artist.name, email: @artist.email, location: @artist.location}.to_json %>
+  <%= form.hidden_field :original_artist_identities, value: @artist_identities.map {|artist_identity| artist_identity.id} %>
+
+  <%= form.label :name %>
+  <%= form.text_field :name, value: @artist.name%><br>
+
+  <%= form.label :email %>
+  <%= form.email_field :email, value: @artist.email%><br>
+
+  <%= form.label :location %>
+  <%= form.text_field :location, value: @artist.location, size: 50 %><br>
+
+  <fieldset>
+    <legend>I identify as a member of these group(s):</legend>
+
+    <% @identities.each do |identity| %>
+      <%= check_box_tag "identities[]", identity.id, @artist_identities.any? {|artist_identity| artist_identity.id == identity.id}, id: "identity_#{identity.id}", multiple: true %>
+      <%= label_tag "identity_#{identity.id}", identity.label %><br>
+    <% end %>
+  </fieldset>
+
+  <%= form.submit "Save Changes"%>
+<% end %>
