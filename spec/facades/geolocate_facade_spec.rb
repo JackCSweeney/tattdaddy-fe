@@ -6,9 +6,9 @@ RSpec.describe GeolocateFacade do
 
     @json_response_1 = File.read("spec/fixtures/geolocation/geolocate_coords.json")
     @json_response_2 = File.read("spec/fixtures/geolocation/geocode_address.json")
-    stub_request(:post, "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCLnZRm2mUkbaG0xplrrNY-EBeXMVfamnk")
+    stub_request(:post, "https://www.googleapis.com/geolocation/v1/geolocate?key=#{Rails.application.credentials.google_maps_api}")
       .to_return(status: 200, body: @json_response_1)
-    stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCLnZRm2mUkbaG0xplrrNY-EBeXMVfamnk&latlng=34.0393984,-118.4038912")
+    stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?key=#{Rails.application.credentials.google_maps_api}&latlng=34.0393984,-118.4038912")
       .to_return(status: 200, body: @json_response_2)
   end
 
