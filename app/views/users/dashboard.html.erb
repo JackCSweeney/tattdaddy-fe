@@ -3,20 +3,20 @@
 
   <%= render partial: "shared/nav_user" %>
 
+<div data-controller="geolocation">
+  <button data-action="geolocation#search">Use Geolocation</button>
+</div>
   <section>
-    <%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form| %>
+    <%= form_with url: user_path(id: @user.id), method: :patch, data: {turbo: false} do |form| %>
       <div class="form-group">
         <%= form.label :location, "Current Location" %>
         <%= form.text_field :location, value: @user.location, class: "form-control" %>
-        <div data-controller="geolocation">
-          <button data-action="geolocation#search">Use Geolocation</button>
-        </div>
 
       </div>
       <%= form.submit "Update", class: "btn btn-primary" %>
     <% end %>
 
-    <%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form| %>
+    <%= form_with url: user_path(id: @user.id), method: :patch, data: {turbo: false} do |form| %>
       <div class="form-group">
         <%= form.label :search_radius, "Search Radius" %>
         <%= form.text_field :search_radius, value: @user.search_radius, class: "form-control" %>
@@ -26,6 +26,7 @@
   </section>
 
 <% cache("#{@user.location}-#{@user.search_radius}-#{@user.id}-dashboard-tattoos") do %>
+
   <section class="user_dashboard_tattoos">
     <% @tattoos.each do |tattoo| %>
       <div class="tattoo_option">

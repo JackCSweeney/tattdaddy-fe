@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
   </head>
 
   <body>
@@ -17,5 +14,249 @@
       <% end %>
       <%= yield %>  
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity=”sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL” crossorigin=”anonymous”></script>
   </body>
 </html>
+
+
+<style>
+  .container {
+    padding: 20px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .user_dashboard_tattoos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .tattoo_option {
+    text-align: center;
+  }
+
+  .table {
+    margin-bottom: 10px;
+  }
+
+  .like_and_dislike_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .artist_dashboard_tattoos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .tattoo_option {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .tattoo_option img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .table {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  th {
+    text-align: right;
+  }
+
+  td {
+    text-align: left;
+  }
+
+  .btn-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  @media (max-width: 576px) {
+    .artist_dashboard_tattoos {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .tattoo-form {
+      max-width: 100%;
+    }
+  }
+
+  .tattoo-form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .top-nav-bar {
+    background-color: #333;
+    padding: 10px;
+    position: relative; /* Ensure the dropdown menu position is relative to the navbar */
+  }
+
+  /* Hamburger Menu Icon Styles */
+  .nav-toggle {
+    display: none; /* Hide checkbox input */
+  }
+
+  .nav-toggle-label {
+    cursor: pointer;
+    display: block;
+    height: 30px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+  }
+
+  .nav-toggle-label span {
+    background-color: white;
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  /* Styling for active state of hamburger menu */
+  .nav-toggle:checked + .nav-toggle-label span:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .nav-toggle:checked + .nav-toggle-label span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle:checked + .nav-toggle-label span:nth-child(3) {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  /* Dropdown Menu Styles */
+  .top-nav-links {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+  }
+
+  nav a:hover {
+    background-color: #555;
+  }
+
+  /* Media Query for Mobile Devices */
+  @media screen and (max-width: 768px) {
+    .top-nav-links {
+      display: none; /* Hide the navigation links by default */
+      flex-direction: column;
+      position: absolute;
+      top: 50px; /* Adjust top position to ensure it appears below the navbar */
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+
+    .top-nav-links a {
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .nav-toggle:checked + .nav-toggle-label + .top-nav-links {
+      display: flex; /* Display the dropdown menu when checkbox is checked */
+    }
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+  }
+
+  legend {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .checkbox-group label {
+    margin-right: 20px;
+  }
+
+  .identity_pref ul {
+    padding-left: 20px;
+  }
+
+  .sign_in {
+    margin-top: 20px;
+  }
+
+  .sign_in input[type="text"],
+  .sign_in input[type="password"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .btn-primary,
+  .btn-outline-dark,
+  .btn-success {
+    width: 100%;
+  }
+
+  .btn-outline-dark {
+    margin-top: 10px;
+  }
+
+  .btn-success {
+    margin-top: 20px;
+  }
+
+  .bg-black {
+    background-color: black;
+    color: white; /* Set text color to white for better visibility */
+  }
+</style>

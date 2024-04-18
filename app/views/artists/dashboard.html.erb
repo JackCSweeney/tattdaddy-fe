@@ -3,9 +3,8 @@
 
 <%= render partial: "shared/nav_artist"%>
 
-
 <section class="artist_dashboard_tattoos">
-    <%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get, class: "btn btn-primary" %>
+    <%= button_to "Add New Tattoo", new_artist_tattoo_path(id: @artist.id), method: :get, class: "btn btn-primary" %><br>
   
   <h3 class="text-center">Your Available Tattoos</h3>
   <% @tattoos.each do |tattoo| %>
@@ -23,7 +22,7 @@
         </tr>
           <div class="btn-group" role="group" aria-label="tattoo_actions">
             <tr>
-              <%= link_to 'Edit', edit_artist_tattoo_path(id: @artist.id), method: :patch, class: "btn btn-secondary" %>
+              <%= link_to 'Edit', edit_artist_tattoo_path(@artist.id, tattoo.id), method: :patch, class: "btn btn-secondary" %></br>
             </tr>
             <tr>
               <%= link_to 'Delete', artist_tattoo_path(id: @artist.id), method: :delete, class: "btn btn-danger" %>
