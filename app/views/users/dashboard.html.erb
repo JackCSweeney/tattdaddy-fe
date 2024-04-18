@@ -1,85 +1,56 @@
-<center>
-<h1> <%= @user.name %>'s Dashboard </h1>
-</center>
+<div class="container">
+  <h1 class="text-center"><%= @user.name %>'s Dashboard</h1>
 
-<%= render partial: "shared/nav_user"%>
+  <%= render partial: "shared/nav_user" %>
 
-<section>
-<%= form_with url: user_path(id: @user.id), method: :patch, data: {turbo: false} do |form|%>
-  <%= form.label :location, "Current Location" %>
-  <%= form.text_field :location, value: @user.location, size: 50  %>
-  <%= form.submit "Update" %>
-<% end %>
+  <section>
+    <%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form| %>
+      <div class="form-group">
+        <%= form.label :location, "Current Location" %>
+        <%= form.text_field :location, value: @user.location, class: "form-control" %>
 
-<%= form_with url: user_path(id: @user.id), method: :patch, local: true, data: {turbo: false} do |form|%>
-  <%= form.label :search_radius, "Search Radius" %>
-  <%= form.text_field :search_radius, value: @user.search_radius %>
-  <%= form.submit "Update"%>
-<% end %>
-</section>
-
-<% cache("#{@user.location}-#{@user.search_radius}-#{@user.id}-dashboard-tattoos") do %>
-<section class="user_dashboard_tattoos">
-  <% @tattoos.each do |tattoo| %>
-    <div class="tattoo_option" >
-      <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
-
-      <div class="like_and_dislike_buttons">
-      <%= button_to "Dislike", user_tattoos_path(user_id: @user.id), method: :post, params: { type: "dislike", tattoo_id: tattoo.id } %>
-      <%= button_to "Like", user_tattoos_path(user_id: @user.id), method: :post, params: { type: "like", tattoo_id: tattoo.id }  %><br>
       </div>
+      <%= form.submit "Update", class: "btn btn-primary" %>
+    <% end %>
 
-      <table>
-        <tr>
-          <th>Cost:</th>
-          <td><%= tattoo.price %></td>
-        </tr>
-        <tr>
-          <th>Duration:</th>
-          <td><%= tattoo.time_estimate %> min</td>
-        </tr>
-        <tr>
-          <th>Distance:</th>
-          <td>Later Feature</td>
-        </tr>
-      </table>
+    <%= form_with url: user_path(id: @user.id), local: true, data: {turbo: false} do |form| %>
+      <div class="form-group">
+        <%= form.label :search_radius, "Search Radius" %>
+        <%= form.text_field :search_radius, value: @user.search_radius, class: "form-control" %>
+      </div>
+      <%= form.submit "Update", class: "btn btn-primary" %>
+    <% end %>
+  </section>
+<% cache("#{@user.location}-#{@user.search_radius}-#{@user.id}-dashboard-tattoos") do %>
+  <section class="user_dashboard_tattoos">
+    <% @tattoos.each do |tattoo| %>
+      <div class="tattoo_option">
+        <img src="<%= tattoo.image_url %>" style="max-width: 100%; max-height: 350px;"><br>
 
-      <p><%= button_to "Schedule Appointment" %></p>
-    </div>
-  <% end %>
-</section>
+        <div class="like_and_dislike_buttons">
+          <%= button_to "Dislike", user_tattoos_path(user_id: @user.id), method: :post, params: { type: "dislike", tattoo_id: tattoo.id }, class: "btn btn-secondary" %>
+          <%= button_to "Like", user_tattoos_path(user_id: @user.id), method: :post, params: { type: "like", tattoo_id: tattoo.id }, class: "btn btn-primary" %>
+        </div>
+
+        <table class="table">
+          <tr>
+            <th>Cost:</th>
+            <td><%= tattoo.price %></td>
+          </tr>
+          <tr>
+            <th>Duration:</th>
+            <td><%= tattoo.time_estimate %> min</td>
+          </tr>
+          <tr>
+            <th>Distance:</th>
+            <td>Later Feature</td>
+          </tr>
+        </table>
+
+        <p><%= button_to "Schedule Appointment", class: "btn btn-success" %></p>
+      </div>
+    <% end %>
+  </section>
 <% end %>
-
-
-<%= button_to 'Sign Out', sign_out_path, method: :delete %>
-
-<style>
-.user_dashboard_tattoos{
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-  grid-gap: 20px;
-}
-
-.tattoo_option {
-  display: flex; 
-  flex-direction: column; 
-  align-items: center;
-}
-
-.like_and_dislike_buttons {
-  display: flex;
-  gap: 15px;
-}
-
-.tattoo_option p {
-  margin: 2px;
-}
-
-th {
-  text-align: right;
-}
-
-td {
-  text-align: left;
-}
-</style>
+  <%= button_to 'Sign Out', sign_out_path, method: :delete, class: "btn btn-danger" %>
+</div>

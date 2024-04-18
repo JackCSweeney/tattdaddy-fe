@@ -1,25 +1,31 @@
-<center>
-<h1> <%= @artist.name %>'s Profile </h1>
-</center>
+<div class="container">
+  <h1 class="text-center"> <%= @artist.name %>'s Profile </h1>
 
-<%= render partial: "shared/nav_artist"%>
+  <%= render partial: "shared/nav_artist"%>
 
-<%= button_to "Edit Profile", edit_artist_path(id: @artist.id), method: :get %>
+  <%= button_to "Edit Profile", edit_artist_path(id: @artist.id), method: :get, class: "btn btn-primary btn-lg btn-block mt-3" %>
 
-<section>
-<p>Name: <%= @artist.name %></p>
-<p>Email: <%= @artist.email %></p>
-<p>Location: <%= @artist.location %></p>
-</section>
+  <section>
+    <p><strong>Name:</strong> <%= @artist.name %></p>
+    <p><strong>Email:</strong> <%= @artist.email %></p>
+    <p><strong>Location:</strong> <%= @artist.location %></p>
+  </section>
 
-<section class="artist_identities">
-  <p>I identify as:</p>
-  <ul>
-  <% @identities.each do |identity| %>
-    <li> <%= identity.label %></li>
-  <% end %>
-  </ul>
-</section>
+  <section class="artist_identities">
+    <p><strong>I identify as:</strong></p>
+    <ul>
+      <% @identities.each do |identity| %>
+        <li><%= identity.label %></li>
+      <% end %>
+    </ul>
+  </section>
 
-<%= button_to 'Sign Out', sign_out_path, method: :delete %>
-<%= button_to 'Delete Account', artist_path(id: @artist.id), method: :delete %>
+  <div class="row">
+    <div class="col-6">
+      <%= button_to 'Sign Out', sign_out_path, method: :delete %>
+    </div>
+    <div class="col-6">
+      <%= button_to 'Delete Account', artist_path(id: @artist.id), method: :delete %>
+    </div>
+  </div>
+</div>
