@@ -105,7 +105,7 @@ RSpec.describe ArtistFacade do
       attributes = {tattoo: {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2", id: "2"}}
 
       allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
-        .and_return({ data: { id: "2", attributes: attributes[:tattoo] } })
+        .and_return({ data: { id: "2", attributes: attributes } })
       
       stub_request(:get, "http://localhost:3000/api/v0/tattoos/2")
         .to_return(status: 200, body: @json_response_4)
