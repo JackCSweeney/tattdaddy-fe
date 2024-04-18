@@ -32,6 +32,11 @@
       <%= form.text_field :location %>
     </div>
 
+    <div class="form-group">
+    <%= form.label :scheduling_link "Link for Scheduling" %>
+    <%= form.text_field :location, value: @artist.scheduling_link %><br>
+    </div>
+
     <% @identities.each do |identity| %>
         <%= check_box_tag "identities[]", identity.id, id: "identity_#{identity.id}", multiple: true %>
         <%= label_tag "identity_#{identity.id}", identity.label %><br>
