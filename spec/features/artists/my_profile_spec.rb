@@ -6,11 +6,25 @@ RSpec.describe "Artist's My Profile Page", type: :feature do
     before do
       json_response_1 = File.read("spec/fixtures/artist/artist.json")
       json_response_2 = File.read("spec/fixtures/artist/identities.json")
+      json_response_3 = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+      json_response_4 = File.read("spec/fixtures/artist/artist_tattoos.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/artists/5")
         .to_return(status: 200, body: json_response_1)
       stub_request(:get, "http://localhost:3000/api/v0/artists/5/identities")
         .to_return(status: 200, body: json_response_2)
+
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_3)
+
+      stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
+        .to_return(status: 200, body: json_response_4)
+
+        visit root_path
+        expect(page).to have_button("Sign In as Artist")
+          fill_in "Email", with: "tatart@gmail.com"
+          fill_in "Password", with: "password"
+          click_on "Sign In as Artist"
 
       visit artist_path(id: 5)
     end

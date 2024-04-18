@@ -6,11 +6,23 @@ RSpec.describe "User's My Profile Page", type: :feature do
     before do
       json_response_1 = File.read("spec/fixtures/user/user.json")
       json_response_2 = File.read("spec/fixtures/user/identity_prefs.json")
+      json_response_3 = File.read("spec/fixtures/user/dashboard_tattoos.json")
+      json_response_4 = File.read("spec/fixtures/sessions/successful_user_sign_in.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 200, body: json_response_1)
       stub_request(:get, "http://localhost:3000/api/v0/users/25/identities")
         .to_return(status: 200, body: json_response_2)
+      stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
+        .to_return(status: 200, body: json_response_3)
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_4)
+        
+        visit root_path
+          expect(page).to have_button("Sign In as User")
+          fill_in "Email", with: "jesusa@spinka.test"
+          fill_in "Password", with: "123Password"
+          click_on "Sign In as User"
 
       visit user_path(id: 25)
     end
@@ -32,12 +44,11 @@ RSpec.describe "User's My Profile Page", type: :feature do
     describe "displays links to" do
       it "return to dashboard" do
         json_response_1 = File.read("spec/fixtures/user/user.json")
-        json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
-
+       
         stub_request(:get, "http://localhost:3000/api/v0/users/25")
           .to_return(status: 200, body: json_response_1)
-        stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
-          .to_return(status: 200, body: json_response_2)
+        
+        visit user_path(id: 25)
 
         expect(page).to have_link("Dashboard")
         click_on "Dashboard"

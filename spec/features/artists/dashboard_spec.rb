@@ -5,6 +5,7 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
     before do
       json_response_1 = File.read("spec/fixtures/artist/artist.json")
       json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
+      json_response_3 = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/artists/5")
         .to_return(status: 200, body: json_response_1)
@@ -18,6 +19,14 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
       stub_request(:get, "http://localhost:3000/api/v0/tattoos/5")
         .to_return(status: 200, body: json_response)
 
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_3)
+
+        visit root_path
+        expect(page).to have_button("Sign In as Artist")
+          fill_in "Email", with: "tatart@gmail.com"
+          fill_in "Password", with: "password"
+          click_on "Sign In as Artist"
       visit artist_dashboard_path(artist_id: 5)
     end
 

@@ -29,7 +29,17 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
 
       allow_any_instance_of(ActiveStorage::Blob).to receive(:url)
         .and_return("app/assets/images/bronto.jpeg")
-    
+        
+      json_response = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response)
+
+      visit root_path
+        expect(page).to have_button("Sign In as Artist")
+          fill_in "Email", with: "tatart@gmail.com"
+          fill_in "Password", with: "password"
+          click_on "Sign In as Artist"
+
       visit edit_artist_tattoo_path(artist_id: 5, id: 2)
     end
 

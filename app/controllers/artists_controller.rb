@@ -1,4 +1,6 @@
 class ArtistsController < ApplicationController
+  before_action :require_login, only: [:show, :destroy, :edit,:update]
+
   def show
     artist_id = params[:id]
     @artist = ArtistFacade.new.find_artist(artist_id)
@@ -33,6 +35,7 @@ class ArtistsController < ApplicationController
   def create
     artist = ArtistFacade.create_artist(new_artist_params.to_h)
     ArtistFacade.create_artist_identities(artist_identities, artist[:data][:id])
+    session[:artist_id] = artist[:data][:id]
     redirect_to artist_dashboard_path(artist[:data][:id])
   end
   
@@ -73,5 +76,13 @@ class ArtistsController < ApplicationController
     identity_requests[:post] = @updated_identities - @original_identities
     identity_requests[:delete] = @original_identities - @updated_identities
     identity_requests
+  end
+
+  def require_login
+    artist_id = params[:id]
+    unless session[:artist_id].present? && session[:artist_id].to_i == artist_id.to_i
+      flash[:error] = "You need to login"
+      redirect_to root_path
+    end
   end
 end
