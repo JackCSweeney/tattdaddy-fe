@@ -8,6 +8,9 @@
       <div class="form-group">
         <%= form.label :location, "Current Location" %>
         <%= form.text_field :location, value: @user.location, class: "form-control" %>
+        <div data-controller="geolocation">
+          <button data-action="geolocation#search">Use Geolocation</button>
+        </div>
 
       </div>
       <%= form.submit "Update", class: "btn btn-primary" %>
