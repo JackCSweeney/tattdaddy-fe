@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   
   root "welcome#index"
 
-  get "/geolocate/:id", to: "geolocation#geolocate"
+  get "users/:id/geolocation/search", to: "geolocation#geolocate"
 
   post "/sign_in", to: "sessions#create"
   delete "/sign_out", to: "sessions#destroy"
