@@ -1,28 +1,35 @@
-<center>
-<h1>Welcome to</h1>
-<h1>TattDaddy</h1>
-</center>
+<div class="container bg-black">
 
-<center>
-<section class="sign_in">
-  <%= form_with url: sign_in_path, local: true, data: {turbo: false} do |form|%>
-    <%= form.email_field :email, placeholder: "Email", name: "sign_in[email]" %><br>
-    <%= form.password_field :password, placeholder: "Password", name: "sign_in[password]" %><br>
-    <%= form.submit "Sign In as User", name: "sign_in[type]" %>
-    <%= form.submit "Sign In as Artist", name: "sign_in[type]" %>
-  <% end %>
-</section>
-</center>
+  <div class="text-center">
+    <h1>Welcome to</h1>
+    <h1>TattDaddy</h1>
+    <img src="<%= image_path('TattDaddyLogo.png') %>" style="max-width: 100%; height: auto;">
+  </div>
 
-<center>
-  <%= button_to "Log in with Google", '/auth/google_oauth2' %>
-  <%= link_to "Log in as User with GitHub", "https://github.com/login/oauth/authorize?client_id=#{ENV['GITHUB_CLIENT_ID']}&scope=user" %>
-</center>
+  <section class="sign_in">
+    <%= form_with url: sign_in_path, local: true, data: { turbo: false } do |form| %>
+      <%= form.email_field :email, placeholder: "Email", name: "sign_in[email]", class: "form-control" %><br>
+      <%= form.password_field :password, placeholder: "Password", name: "sign_in[password]", class: "form-control" %><br>
+      <%= form.submit "Sign In as User", name: "sign_in[type]", class: "btn btn-primary btn-block" %>
+      <%= form.submit "Sign In as Artist", name: "sign_in[type]", class: "btn btn-primary btn-block" %>
+    <% end %>
+  </section>
 
-<center>
-<section>
-  <br>
-  <%= link_to 'Create User Account', new_user_path %>
-  <%= link_to 'Create Artist Account', new_artist_path %>
-</section>
-</center>
+  <div class="text-center">
+    <%= button_to "Log in with Google", '/auth/google_oauth2', class: "btn btn-outline-dark btn-block" %>
+    <%= link_to "Log in as User with GitHub", "https://github.com/login/oauth/authorize?client_id=#{ENV['GITHUB_CLIENT_ID']}&scope=user", class: "btn btn-outline-dark btn-block" %>
+  </div>
+
+  <section class="text-center">
+    <br>
+    <%= link_to 'Create User Account', new_user_path, class: "btn btn-success btn-block" %>
+    <%= link_to 'Create Artist Account', new_artist_path, class: "btn btn-success btn-block" %>
+  </section>
+</div>
+
+<style>
+  .bg-black {
+    background-color: black;
+    color: white; /* Set text color to white for better visibility */
+  }
+</style>
