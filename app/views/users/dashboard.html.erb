@@ -9,7 +9,9 @@
   <%= form.label :location, "Current Location" %>
   <%= form.text_field :location, value: @user.location, size: 50  %>
   <%= form.submit "Update" %>
-<% end %>
+<% end %><br>
+
+<%= link_to 'Use Geolocation', "/geolocate/#{@user.id}" %>
 
 <%= form_with url: user_path(id: @user.id), method: :patch, local: true, data: {turbo: false} do |form|%>
   <%= form.label :search_radius, "Search Radius" %>
