@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+# can only get tests to pass currently by utilizing actual connection with BE server running
+# issue is coming from blob creating the link with a unique key each time a image is uploaded and not being able to accurately stub that action with a value we set
+
 RSpec.describe 'Tattoos New Page', type: :feature do
   describe 'As a logged-in artist' do
     before do
@@ -18,6 +21,7 @@ RSpec.describe 'Tattoos New Page', type: :feature do
 
       #   allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
       #     .and_return(status: 200, body: "")
+
       WebMock.allow_net_connect!
       visit new_artist_tattoo_path(artist_id: 5)
     end
@@ -63,7 +67,9 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       it "handles sad path on form fields and sends back to new form" do
         # json_response_0 = File.read("spec/fixtures/artist/tattoo_incorrect.json")
         # attributes = {:price=>"a", :time_estimate=>"2", :artist_id=>"5", :image_url=>"app/assets/images/bronto.jpeg"}
+
         # allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
+
         # .and_return(status: 404, body: json_response_0)
 
         fill_in "Price", with: "a"

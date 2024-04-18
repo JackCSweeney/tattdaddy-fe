@@ -24,8 +24,7 @@ class UserService
   end
 
   def self.create_user_tattoo(user_tattoo_data)
-    body = JSON.generate(user_tattoo_data)
-    post_url("/api/v0/user_tattoos", body)
+    post_url("/api/v0/user_tattoos", user_tattoo_data)
   end
 
   def self.delete_user_identity(user_and_identity_ids)
@@ -33,7 +32,7 @@ class UserService
   end
 
   def self.delete_user_tattoo(user_and_tattoo_ids)
-    delete_url_with_body("/api/v0/user_tattoos", user_and_tattoo_ids)
+    delete_url_for_tattoos_with_body("/api/v0/user_tattoos", user_and_tattoo_ids)
   end
 
   def self.delete_user(user_id)
@@ -71,7 +70,13 @@ class UserService
 
   def self.delete_url_with_body(url, body_data)
     conn.delete(url) do |req|
-      req.body = JSON.generate(body_data)
+      req.body = body_data
+    end
+  end
+
+  def self.delete_url_for_tattoos_with_body(url, body_data)
+    conn.delete(url) do |req|
+      req.body = body_data
     end
   end
 
