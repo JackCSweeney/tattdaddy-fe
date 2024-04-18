@@ -43,11 +43,11 @@ class ArtistsController < ApplicationController
   
   private
   def new_artist_params
-    params.permit(:name, :location, :email, :password)
+    params.permit(:name, :location, :email, :password, :scheduling_link)
   end
 
   def artist_params
-    params.permit(:name, :email, :location, identities: [])
+    params.permit(:name, :email, :location, :scheduling_link, identities: [])
   end
 
   def artist_identities

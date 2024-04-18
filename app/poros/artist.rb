@@ -6,7 +6,8 @@ class Artist
               :location,
               :email,
               :identity,
-              :password_digest
+              :password_digest,
+              :scheduling_link
 
   def initialize(data)
     @id = data[:id]
@@ -15,6 +16,7 @@ class Artist
     @email = data[:email]
     @identity = data[:identity]
     @password_digest = BCrypt::Password.create(data[:password_digest])
+    @scheduling_link = data[:scheduling_link]
   end
 
   def authenticate(input_password)
