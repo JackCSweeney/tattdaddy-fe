@@ -9,10 +9,10 @@ class TattoosController < ApplicationController
 
   def create
     blob = ActiveStorage::Blob.create_and_upload!(io: params[:img_file], filename: params[:img_file].original_filename)
-    tattoo_attributes = {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: blob.url}
+    tattoo_attributes = {price: params[:price], time_estimate: params[:time_estimate], artist_id: params[:artist_id], image_url: "https://tattdaddy-artist-images.s3.amazonaws.com/#{blob.key}"}
     service = ArtistService.new.send_new_artist_tattoo(tattoo_attributes)
 
-    if service[:status] == 200 
+    if service[:data]
       redirect_to artist_dashboard_path(params[:artist_id])
       flash[:success] = "Tattoo created successfully"
     else

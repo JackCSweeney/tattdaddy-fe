@@ -68,7 +68,6 @@ class ArtistFacade
   def self.update_data_and_identities(artist_id, updated_artist_data, identity_changes)
     update_artist_data(artist_id, updated_artist_data)
     update_artist_identities(artist_id, identity_changes)
-    # require 'pry'; binding.pry
   end
 
   def self.update_artist_data(artist_id, artist_params)
