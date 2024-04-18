@@ -22,7 +22,7 @@
         </tr>
           <div class="btn-group" role="group" aria-label="tattoo_actions">
             <tr>
-              <%= link_to 'Edit', edit_artist_tattoo_path(@artist.id, tattoo.id), method: :patch, class: "btn btn-secondary" %></br>
+              <%= link_to 'Edit', edit_artist_tattoo_path(@artist.id, tattoo.id), method: :patch, class: "btn btn-secondary" %><br>
             </tr>
             <tr>
               <%= button_to 'Delete', artist_tattoo_path(@artist.id, tattoo.id), method: :delete, class: "btn btn-danger" %>

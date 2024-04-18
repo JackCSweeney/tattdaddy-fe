@@ -30,9 +30,11 @@ RSpec.describe "Artist's My Profile Page", type: :feature do
     end
 
     it "displays artist's current information" do
-      expect(page).to have_content("Name: Tattoo artists")
-      expect(page).to have_content("Email: tatart@gmail.com")
-      expect(page).to have_content("Location: 1400 U Street NW, Washington, DC 20009")
+      within ".artist_info" do
+        expect(page).to have_content("Name: Tattoo artists")
+        expect(page).to have_content("Email: tatart@gmail.com")
+        expect(page).to have_content("Location: 1400 U Street NW, Washington, DC 20009")
+      end
 
       within ".artist_identities" do
         expect(page).to have_content("I identify as:")
@@ -69,7 +71,9 @@ RSpec.describe "Artist's My Profile Page", type: :feature do
         click_on "Delete Account"
 
         expect(current_path).to eq(root_path)
-        expect(page).to have_content("Artist account successfully deleted")
+        within "#mainBody" do
+         expect(page).to have_content("Artist account successfully deleted")
+        end
       end
     end
 
