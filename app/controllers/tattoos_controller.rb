@@ -64,7 +64,10 @@ class TattoosController < ApplicationController
     tattoo = ArtistFacade.new.find_tattoo(params[:id])
     ArtistService.new.delete_tattoo(params[:id])
     
-    blob = ActiveStorage::Blob.find_by(key: tattoo.image_url)
+    # blob = ActiveStorage::Blob.find_by(key: tattoo.image_url)
+    # blob.purge if blob
+    blob = ActiveStorage::Blob.find_by(key: tattoo.image_url.delete("https://tattdaddy-artist-images.s3.amazonaws.com/"))
+    binding.pry
     blob.purge if blob
 
     redirect_to artist_dashboard_path(params[:artist_id])

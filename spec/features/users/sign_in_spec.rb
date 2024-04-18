@@ -49,7 +49,9 @@ RSpec.describe "User Sign In" do
       visit user_dashboard_path(user_id: 25)
       expect(current_path).to eq(root_path)
 
-      expect(page).to have_content("You need to login")
+      within "#mainBody" do
+        expect(page).to have_content("You need to login")
+      end
 
     end
   end

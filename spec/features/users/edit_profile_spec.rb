@@ -68,6 +68,16 @@ RSpec.describe "Edit User Account Page", type: :feature do
           .with( body: {"{\"user_identity\":{\"user_id\":\"25\",\"identity_id\":\"6\"}}"=>nil})
           .to_return(status: 204)
 
+          stub_request(:delete, "http://localhost:3000/api/v0/user_identities").
+          with(
+            body: {"user_identity"=>{"identity_id"=>"6", "user_id"=>"25"}},
+            headers: {
+                  'Accept'=>'*/*',
+                  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                  'Content-Type'=>'application/x-www-form-urlencoded',
+                  'User-Agent'=>'Faraday v2.9.0'
+            }).
+          to_return(status: 200,body: '{"message": "Identity successfully added to User"}', headers: {})  
       end
       it "updated info appears on My Profile" do
         fill_in :name, with: "Going to the Gem"
