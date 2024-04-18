@@ -135,7 +135,7 @@ RSpec.describe ArtistService do
     it "sends the new artist tattoo" do
       attributes = {"artist_id"=>"5", "image_url"=>"https://gist.github.com/assets/149989113/fee274f7-0fa9-4606-855b-9c286fcb1661", "price"=>"50", "time_estimate"=>"2"}
 
-      allow_any_instance_of(ArtistService).to receive(:post_url).with("/api/v0/tattoos", attributes)
+      allow_any_instance_of(ArtistService).to receive(:post_url_tattoos).with("/api/v0/tattoos", attributes)
         .and_return(status: 200, body: "")
         
       parsed_artist_tattoo = ArtistService.new.send_new_artist_tattoo(attributes)

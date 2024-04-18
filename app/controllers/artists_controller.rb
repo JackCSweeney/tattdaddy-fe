@@ -27,6 +27,7 @@ class ArtistsController < ApplicationController
     end
 
     redirect_to artist_path(id: @artist_id), notice: "Profile updated successfully"
+    # require 'pry'; binding.pry
   end
 
   def create
@@ -46,7 +47,7 @@ class ArtistsController < ApplicationController
   end
 
   def artist_params
-    params.permit(:name, :email, :location)
+    params.permit(:name, :email, :location, identities: [])
   end
 
   def artist_identities
@@ -61,9 +62,9 @@ class ArtistsController < ApplicationController
   end
 
   def artist_identities_updated?
-    @original_identities = params[:original_artist_identities]&.split || []
-    @updated_identities = params[:identities]
-
+    @original_identities = (params[:original_artist_identities]&.split || []).map(&:to_i)
+    @updated_identities = params[:identities]&.map(&:to_i)
+    
     @updated_identities.present? && @original_identities.present? && @updated_identities != @original_identities
   end
 

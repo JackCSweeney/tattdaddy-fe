@@ -48,10 +48,20 @@ RSpec.describe "Edit Artist Account Page", type: :feature do
 
     describe "redirects submitted update form to My Profile" do
       before do
+        json_response_1 = File.read("spec/fixtures/artist/artist.json")
+
         stub_request(:delete, "http://localhost:3000/api/v0/artist_identities")
-          .with( body: {"{\"artist_identity\":{\"artist_id\":\"5\",\"identity_id\":\"2\"}}"=>nil})
+          .with( body: {"artist_identity"=>{"artist_id"=>"5", "identity_id"=>"2"}})
           .to_return(status: 204)
 
+        stub_request(:get, "http://localhost:3000/api/v0/artists/5")
+          .to_return(status: 200, body: json_response_1)
+
+        stub_request(:patch, "http://localhost:3000/api/v0/artists/5")
+          .to_return(status: 200, body: json_response_1)
+
+        stub_request(:post, "http://localhost:3000/api/v0/artist_identities")
+          .to_return(status: 200, body: '{"message": "Identity successfully added to Artist"}')
       end
 
       it "updated info appears on My Profile" do

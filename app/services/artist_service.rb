@@ -8,7 +8,7 @@ class ArtistService
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def post_url(uri, attributes)
+  def post_url_tattoos(uri, attributes)
     response = connection.post(uri) do |req|
       req.body = { tattoo: attributes }
     end
@@ -32,7 +32,7 @@ class ArtistService
   end
   
   def send_new_artist_tattoo(attributes)
-    post_url("/api/v0/tattoos", attributes)
+    post_url_tattoos("/api/v0/tattoos", attributes)
   end
 
   def find_tattoo(id)
@@ -63,7 +63,6 @@ class ArtistService
     ArtistService.new.update_url(url, params)
   end
 
-
   def create_artist(artist_attributes)
     post_url("/api/v0/artists", {artist: artist_attributes})
   end
@@ -91,8 +90,7 @@ class ArtistService
   end
 
   def self.create_artist_identity(artist_and_identity_ids)
-    body = JSON.generate(artist_and_identity_ids)
-    new.post_url("/api/v0/artist_identities", body)
+    new.post_url("/api/v0/artist_identities", artist_and_identity_ids)
   end
 
   def self.delete_url_with_body(url, body_data)
@@ -101,7 +99,7 @@ class ArtistService
 
   def delete_url_with_body(url, body_data)
     connection.delete(url) do |req|
-      req.body = JSON.generate(body_data)
+      req.body = (body_data)
     end
   end 
 

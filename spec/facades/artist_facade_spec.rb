@@ -184,7 +184,7 @@ RSpec.describe ArtistFacade do
         .to_return(status: 200, body: '{"message": "Identity successfully added to Artist"}')
 
       stub_request(:delete, "http://localhost:3000/api/v0/artist_identities")
-        .with( body: {"{\"artist_identity\":{\"artist_id\":\"5\",\"identity_id\":\"1\"}}"=>nil})
+        .with( body: {"artist_identity"=>{"artist_id"=>"5", "identity_id"=>"1"}})
         .to_return(status: 204)
 
       identity_changes = {post: ["2", "3"], delete: ["1"]}
