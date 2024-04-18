@@ -1,65 +1,36 @@
-<center>
-<h1> <%= @user.name %>'s Liked Tattoos </h1>
-</center>
+<div class="container">
+  <h1 class="text-center"><%= @user.name %>'s Liked Tattoos</h1>
 
-<%= render partial: "shared/nav_user"%>
+  <%= render partial: "shared/nav_user" %>
 
-<section class="user_liked_tattoos">
-  <% @tattoos.each do |tattoo| %>
-    <div class="liked_tattoo" >
-      <img src="<%= tattoo.image_url %>", style="max-width: 350px; max-height: 350px;"><br>
+  <section class="user-liked-tattoos">
+    <% @tattoos.each do |tattoo| %>
+      <div class="liked-tattoo">
+        <img src="<%= tattoo.image_url %>" style="max-width: 100%; max-height: 350px;"><br>
 
-      <div class="remove_button">
-      <%= button_to "Remove", user_tattoo_path(user_id: @user.id, id: tattoo.id), method: :delete %>
+        <div class="remove-button">
+          <%= button_to "Remove", user_tattoo_path(user_id: @user.id, id: tattoo.id), method: :delete %>
+        </div>
+
+        <table class="table">
+          <tr>
+            <th>Cost:</th>
+            <td><%= tattoo.price %></td>
+          </tr>
+          <tr>
+            <th>Duration:</th>
+            <td><%= tattoo.time_estimate %> min</td>
+          </tr>
+          <tr>
+            <th>Distance:</th>
+            <td>Later Feature</td>
+          </tr>
+        </table>
+
+        <p><%= button_to "Schedule Appointment" %></p>
       </div>
+    <% end %>
+  </section>
 
-      <table>
-        <tr>
-          <th>Cost:</th>
-          <td><%= tattoo.price %></td>
-        </tr>
-        <tr>
-          <th>Duration:</th>
-          <td><%= tattoo.time_estimate %> min</td>
-        </tr>
-        <tr>
-          <th>Distance:</th>
-          <td>Later Feature</td>
-        </tr>
-      </table>
-
-      <p><%= button_to "Schedule Appointment" %></p>
-    </div>
-  <% end %>
-</section>
-
-<style>
-.user_liked_tattoos{
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-  grid-gap: 20px;
-}
-
-.liked_tattoo {
-  display: flex; 
-  flex-direction: column; 
-  align-items: center;
-}
-
-.remove_buttons {
-  display: flex;
-  gap: 15px;
-}
-
-.liked_tattoo p {
-  margin: 2px;
-}
-
-th {
-  text-align: right;
-}
-
-td {
-  text-align: left;
-}
-</style>
+  <%= button_to 'Sign Out', sign_out_path, method: :delete %>
+</div>

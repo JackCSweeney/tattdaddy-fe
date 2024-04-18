@@ -1,32 +1,104 @@
 <nav class="top-nav-bar">
+  <!-- Hamburger Menu Icon -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle">
+  <label for="nav-toggle" class="nav-toggle-label">
+    <span></span>
+  </label>
+  
+  <!-- Dropdown Menu -->
   <div class="top-nav-links">
     <%= link_to "Dashboard",  user_dashboard_path(user_id: @user.id) %>
     <%= link_to "My Profile", user_path(id: @user.id) %>
     <%= link_to 'Liked Tattoos', user_tattoos_path(user_id: @user.id) %>
     <%= link_to 'Appointments', user_appointments_path(user_id: @user.id) %>
-    <%= link_to 'Sign Out', sign_out_path, method: :delete %>
   </div>
 </nav>
 
 <style>
-nav {
+/* Navbar Styles */
+.top-nav-bar {
+  background-color: #333;
+  padding: 10px;
+  position: relative; /* Ensure the dropdown menu position is relative to the navbar */
+}
+
+/* Hamburger Menu Icon Styles */
+.nav-toggle {
+  display: none; /* Hide checkbox input */
+}
+
+.nav-toggle-label {
+  cursor: pointer;
+  display: block;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+}
+
+.nav-toggle-label span {
+  background-color: white;
+  display: block;
+  height: 3px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* Styling for active state of hamburger menu */
+.nav-toggle:checked + .nav-toggle-label span:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nav-toggle:checked + .nav-toggle-label span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle:checked + .nav-toggle-label span:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Dropdown Menu Styles */
+.top-nav-links {
   display: flex;
   justify-content: space-around;
-  background-color: #333;
 }
 
 nav a {
   color: white;
   text-decoration: none;
   padding: 10px 15px;
-  float: left;
-  }
-
-nav a:active {
-  background-color: #04AA6D;
 }
 
 nav a:hover {
   background-color: #555;
+}
+
+/* Media Query for Mobile Devices */
+@media screen and (max-width: 768px) {
+  .top-nav-links {
+    display: none; /* Hide the navigation links by default */
+    flex-direction: column;
+    position: absolute;
+    top: 50px; /* Adjust top position to ensure it appears below the navbar */
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+  .top-nav-links a {
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-toggle:checked + .nav-toggle-label + .top-nav-links {
+    display: flex; /* Display the dropdown menu when checkbox is checked */
+  }
 }
 </style>

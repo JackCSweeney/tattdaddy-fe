@@ -1,18 +1,26 @@
-<center>
-<h1> Create a new Tattoo </h1>
-</center>
+<div class="container">
+  <h1 class="text-center">Create a new Tattoo</h1>
 
-<%= render partial: "shared/nav_artist"%>
+  <%= render partial: "shared/nav_artist" %>
 
-<%= form_with url: "/artists/#{@artist.id}/tattoos", method: :post, local: true, data: {turbo: false} do |f|%>
-  <%= f.label :price %>
-  <%= f.text_field :price %><br>
-  
-  <%= f.label :time_estimate %>
-  <%= f.text_field :time_estimate %> minutes<br>
-  
-  <%= f.label :img_file %>
-  <%= f.file_field :img_file %><br>
-  
-  <%= f.submit %>
-<% end %>
+  <%= form_with url: "/artists/#{@artist.id}/tattoos", method: :post, local: true, data: {turbo: false} do |f| %>
+    <div class="form-group">
+      <%= f.label :price %>
+      <%= f.text_field :price, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :time_estimate %>
+      <%= f.text_field :time_estimate, class: "form-control" %> minutes
+    </div>
+
+    <div class="form-group">
+      <%= f.label :img_file %>
+      <%= f.file_field :img_file, class: "form-control" %>
+    </div>
+
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  <% end %>
+
+  <%= button_to 'Sign Out', sign_out_path, method: :delete, class: "btn btn-secondary" %>
+</div>

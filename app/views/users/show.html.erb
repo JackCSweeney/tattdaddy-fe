@@ -1,24 +1,29 @@
-<center>
-<h1> <%= @user.name %>'s Profile </h1>
-</center>
+<div class="container">
+  <div class="text-center">
+    <h1><%= @user.name %>'s Profile</h1>
+  </div>
 
-<%= render partial: "shared/nav_user"%>
+  <%= render partial: "shared/nav_user" %>
 
-<%= button_to "Edit Profile", edit_user_path(id: @user.id), method: :get %>
-<section>
-<p>Name: <%= @user.name %></p>
-<p>Email: <%= @user.email %></p>
-<p>Location: <%= @user.location %></p>
-<p>Search Radius: <%= @user.search_radius %> miles</p>
-</section>
+  <%= button_to "Edit Profile", edit_user_path(id: @user.id), method: :get, class: "btn btn-primary btn-block" %>
 
-<section class="identity_pref">
-  <p>I would like to support artists who are:</p>
-  <ul>
-  <% @user_identities.each do |identity| %>
-    <li> <%= identity.label %></li>
-  <% end %>
-  </ul>
-</section>
+  <section>
+    <p><strong>Name:</strong> <%= @user.name %></p>
+    <p><strong>Email:</strong> <%= @user.email %></p>
+    <p><strong>Location:</strong> <%= @user.location %></p>
+    <p><strong>Search Radius:</strong> <%= @user.search_radius %> miles</p>
+  </section>
 
-<%= button_to 'Delete Account', user_path(id: @user.id), method: :delete %>
+  <section class="identity_pref">
+    <p><strong>I would like to support artists who are:</strong></p>
+    <ul>
+      <% @user_identities.each do |identity| %>
+        <li><%= identity.label %></li>
+      <% end %>
+    </ul>
+  </section>
+
+  <%= button_to 'Sign Out', sign_out_path, method: :delete, class: "btn btn-danger btn-block" %>
+
+  <%= button_to 'Delete Account', user_path(id: @user.id), method: :delete, class: "btn btn-danger btn-block" %>
+</div>
