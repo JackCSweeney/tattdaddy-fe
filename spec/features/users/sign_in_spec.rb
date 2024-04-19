@@ -45,5 +45,12 @@ RSpec.describe "User Sign In" do
         end
         expect(current_path).to eq(user_dashboard_path(user_id: 25))
     end
+    it 'cannot go to dashboard when not signed in' do
+      visit user_dashboard_path(user_id: 25)
+      expect(current_path).to eq(root_path)
+      within("#mainBody") do
+        expect(page).to have_content("You need to login")
+      end
+    end
   end
 end

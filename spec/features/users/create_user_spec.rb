@@ -53,16 +53,24 @@ RSpec.describe 'Create User', type: :feature do
       check "None"
 
       click_on "Create New Account"
-
+      
       expect(current_path).to eq("/users/25/dashboard")
-      within "#header" do
-        expect(page).to have_content("Ruby Gem's Dashboard")
+      within first(".container") do
+        within first(".text-center") do
+          expect(page).to have_content("Ruby Gem's Dashboard")
+        end
       end
-      expect(page).to have_field("location", with: "9705 Fishers District Dr, Fishers, IN 46037")
-      expect(page).to have_field("search_radius", with: 25)
+
+      within first(".form-group") do
+        expect(page).to have_field("location", with: "9705 Fishers District Dr, Fishers, IN 46037")
+      end
+
+      within("#2") do
+        expect(page).to have_field("search_radius", with: 25)
+      end  
 
       visit edit_user_path(25)
-
+      
       expect(find_field("None")).to be_checked
       expect(find_field("Female")).to_not be_checked
       expect(find_field("Asian")).to_not be_checked

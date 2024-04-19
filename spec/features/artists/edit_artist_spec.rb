@@ -6,6 +6,8 @@ RSpec.describe "Edit Artist Account Page", type: :feature do
       json_response_1 = File.read("spec/fixtures/artist/artist.json")
       json_response_2 = File.read("spec/fixtures/artist/identities.json")
       json_response_3 = File.read("spec/fixtures/identities_list.json")
+      json_response_4 = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+      json_response_5 = File.read("spec/fixtures/artist/artist_tattoos.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/artists/5")
         .to_return(status: 200, body: json_response_1)
@@ -17,8 +19,17 @@ RSpec.describe "Edit Artist Account Page", type: :feature do
         .to_return(status: 200, body: json_response_1)
       stub_request(:post, "http://localhost:3000/api/v0/artist_identities")
         .to_return(status: 200, body: '{"message": "Identity successfully added to Artist"}')
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_4)
+      stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
+        .to_return(status: 200, body: json_response_5)
 
-      visit edit_artist_path(id: 5)
+      visit root_path
+      expect(page).to have_button("Sign In as Artist")
+        fill_in "Email", with: "tatart@gmail.com"
+        fill_in "Password", with: "password"
+        click_on "Sign In as Artist"
+        visit edit_artist_path(id: 5)
     end
 
     describe "shows a update profile form prefilled with artist's" do

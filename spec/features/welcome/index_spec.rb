@@ -8,7 +8,8 @@ RSpec.describe 'Welcome Index Page', type: :feature do
 
     describe "page heading" do
       it "Welcome to TattDaddy" do
-        within "#header" do
+
+        within first(".text-center") do
           expect(page).to have_content("Welcome to\nTattDaddy")
         end
       end
@@ -49,23 +50,23 @@ RSpec.describe 'Welcome Index Page', type: :feature do
             stub_request(:post, "http://localhost:3000/api/v0/sign_in")
               .to_return(status: 422, body: '{"error": "Invalid Parameters for Sign In"}')
 
-              within ".sign_in" do
-                expect(page).to have_button("Sign In as User")
-                fill_in "Email", with: "jesusa@spinka.test"
-                fill_in "Password", with: "wrong_password"
-                click_on "Sign In as User"
-              end
+            within ".sign_in" do
+              expect(page).to have_button("Sign In as User")
+              fill_in "Email", with: "jesusa@spinka.test"
+              fill_in "Password", with: "wrong_password"
+              click_on "Sign In as User"
+            end
 
-              expect(current_path).to eq(root_path)
-              within "#mainBody" do
-                expect(page).to have_content('Invalid email/password combination')
-              end
+            expect(current_path).to eq(root_path)
+            within("#mainBody") do
+              expect(page).to have_content('Invalid email/password combination')
+            end
           end
         end
 
         describe "an artist" do
           scenario "valid credentials" do
-            json_resonse = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+            json_resonse = File.read("spec/fixtures/sessions/successful_artist_sign_in1.json")
             json_response_1 = File.read("spec/fixtures/artist/artist.json")
             json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
             # any other stubs needed for artist dashboard?
@@ -91,17 +92,17 @@ RSpec.describe 'Welcome Index Page', type: :feature do
             stub_request(:post, "http://localhost:3000/api/v0/sign_in")
               .to_return(status: 422, body: '{"error": "Invalid Parameters for Sign In"}')
 
-              within ".sign_in" do
-                expect(page).to have_button("Sign In as Artist")
-                fill_in "Email", with: "darci@waters-mills.example"
-                fill_in "Password", with: "wrong_password"
-                click_on "Sign In as Artist"
-              end
-
-              expect(current_path).to eq(root_path)
-              within "#mainBody" do
-                expect(page).to have_content('Invalid email/password combination')
-              end
+            within ".sign_in" do
+              expect(page).to have_button("Sign In as Artist")
+              fill_in "Email", with: "darci@waters-mills.example"
+              fill_in "Password", with: "wrong_password"
+              click_on "Sign In as Artist"
+            end
+            
+            expect(current_path).to eq(root_path)
+            within("#mainBody") do
+              expect(page).to have_content('Invalid email/password combination')
+            end
           end
         end
       end
