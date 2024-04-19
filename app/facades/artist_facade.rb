@@ -49,7 +49,8 @@ class ArtistFacade
       location: artist_json[:attributes][:location],
       email: artist_json[:attributes][:email],
       identity: artist_json[:attributes][:identity],
-      password_digest: artist_json[:attributes][:password_digest]
+      password_digest: artist_json[:attributes][:password_digest],
+      scheduling_link: artist_json[:attributes][:scheduling_link]
     }
   end
 
