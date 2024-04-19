@@ -24,7 +24,7 @@ RSpec.describe SessionService do
     end
 
     it "returns artist's id if valid sign_in credentials given" do
-      json_response = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
+      json_response = File.read("spec/fixtures/sessions/successful_artist_sign_in1.json")
       sign_in_credentials = {
         sign_in: {
           email: "darci@waters-mills.example",

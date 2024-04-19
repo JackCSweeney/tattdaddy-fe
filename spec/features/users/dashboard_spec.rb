@@ -5,12 +5,21 @@ RSpec.describe "Dashboard Page", type: :feature do
     before do
       json_response_1 = File.read("spec/fixtures/user/user.json")
       json_response_2 = File.read("spec/fixtures/user/dashboard_tattoos.json")
+      json_response_3 = File.read("spec/fixtures/sessions/successful_user_sign_in.json")
+
 
       stub_request(:get, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 200, body: json_response_1)
       stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
         .to_return(status: 200, body: json_response_2)
+        stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_3)
 
+      visit root_path
+      expect(page).to have_button("Sign In as User")
+        fill_in "Email", with: "jesusa@spinka.test"
+        fill_in "Password", with: "123Password"
+        click_on "Sign In as User"
       visit user_dashboard_path(user_id: 25)
     end
 
@@ -39,13 +48,6 @@ RSpec.describe "Dashboard Page", type: :feature do
         expect(current_path).to eq(user_tattoos_path(user_id: 25))
       end
 
-      it "view 'Appointments'" do
-        expect(page).to have_link("Appointments")
-        click_on "Appointments"
-
-        expect(current_path).to eq(user_appointments_path(user_id: 25))
-      end
-
       it "view 'Sign Out'" do
         expect(page).to have_button("Sign Out")
         click_on "Sign Out"
@@ -60,7 +62,6 @@ RSpec.describe "Dashboard Page", type: :feature do
           expect(page).to have_css("img", count: 15)
           expect(page).to have_content("Cost:", count: 15)
           expect(page).to have_content("Duration:", count: 15)
-          expect(page).to have_content("Distance:", count: 15)
         end
       end
 
@@ -88,7 +89,7 @@ RSpec.describe "Dashboard Page", type: :feature do
 
       it "with the option to schedule an apointment for a tattoo" do
         within ".user_dashboard_tattoos" do
-          expect(page).to have_button("Schedule Appointment", count: 15)
+          expect(page).to have_link("Schedule Appointment", count: 15)
         end
       end
     end

@@ -1,6 +1,8 @@
 <div class="container">
-  <h1 class="text-center"><%= @user.name %>'s Dashboard</h1>
-
+  <section id="header">
+    <h1 class="text-center"><%= @user.name %>'s Dashboard</h1>
+  </section>
+  
   <%= render partial: "shared/nav_user" %>
 
 <div data-controller="geolocation">
@@ -17,7 +19,7 @@
     <% end %>
 
     <%= form_with url: user_path(id: @user.id), method: :patch, data: {turbo: false} do |form| %>
-      <div class="form-group">
+      <div class="form-group" id="2">
         <%= form.label :search_radius, "Search Radius" %>
         <%= form.text_field :search_radius, value: @user.search_radius, class: "form-control" %>
       </div>
@@ -46,13 +48,9 @@
             <th>Duration:</th>
             <td><%= tattoo.time_estimate %> min</td>
           </tr>
-          <tr>
-            <th>Distance:</th>
-            <td>Later Feature</td>
-          </tr>
         </table>
 
-        <p><%= button_to "Schedule Appointment", class: "btn btn-success" %></p>
+        <p><%= link_to "Schedule Appointment", "https://#{tattoo.scheduling_link}", target: "_blank", class: "btn btn-success" %></p>
       </div>
     <% end %>
   </section>

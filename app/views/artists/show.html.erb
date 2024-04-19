@@ -5,10 +5,11 @@
 
   <%= button_to "Edit Profile", edit_artist_path(id: @artist.id), method: :get, class: "btn btn-primary btn-lg btn-block mt-3" %>
 
-  <section>
+  <section class="artist_info">
     <p><strong>Name:</strong> <%= @artist.name %></p>
     <p><strong>Email:</strong> <%= @artist.email %></p>
     <p><strong>Location:</strong> <%= @artist.location %></p>
+    <p><strong>Link for Scheduling:</strong> <%= @artist.scheduling_link %></p>
   </section>
 
   <section class="artist_identities">

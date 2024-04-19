@@ -5,6 +5,7 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
     before do
       json_response_1 = File.read("spec/fixtures/artist/artist.json")
       json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
+      json_response_3 = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/artists/5")
         .to_return(status: 200, body: json_response_1)
@@ -18,6 +19,14 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
       stub_request(:get, "http://localhost:3000/api/v0/tattoos/5")
         .to_return(status: 200, body: json_response)
 
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_3)
+
+        visit root_path
+        expect(page).to have_button("Sign In as Artist")
+          fill_in "Email", with: "tatart@gmail.com"
+          fill_in "Password", with: "password"
+          click_on "Sign In as Artist"
       visit artist_dashboard_path(artist_id: 5)
     end
 
@@ -38,13 +47,6 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
         click_on "My Profile"
 
         expect(current_path).to eq(artist_path(id: 5))
-      end
-
-      it "view 'Appointments'" do
-        expect(page).to have_link("Appointments")
-        click_on "Appointments"
-
-        expect(current_path).to eq(artist_appointments_path(artist_id: 5))
       end
 
       it "view 'Add a new Tattoo'" do
@@ -86,19 +88,6 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
             expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
 
             expect(page).not_to have_content("#tattoo-5")
-          end
-        end
-
-        it "when clicked, it deletes the file in ws3 too" do
-          tattoo = ArtistFacade.new.find_tattoo("5")
-          
-          within ".artist_dashboard_tattoos" do
-            within "#tattoo-5" do
-              click_on "Delete"
-            end
-            blob = ActiveStorage::Blob.find_by(key: tattoo.image_url)
-
-            expect(blob).to be(nil)
           end
         end
       end

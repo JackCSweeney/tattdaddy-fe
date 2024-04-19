@@ -10,7 +10,7 @@ RSpec.describe ArtistFacade do
         json_response_2 = File.read("spec/fixtures/artist/artist_tattoos.json")
 
         stub_request(:post, "http://localhost:3000/api/v0/artists")
-          .with(body: {artist: {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009"}})
+          .with(body: {artist: {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009", scheduling_link: "link/path"}})
           .to_return(status: 200, body: json_response_1)    
 
         json_response_3 = File.read("spec/fixtures/artist/identities.json")
@@ -42,7 +42,8 @@ RSpec.describe ArtistFacade do
             location: "1400 U Street NW",
             email: "tatart@gmail.com",
             identity: "LGBTQ+ Friendly",
-            password_digest: "unreadable hash"
+            password_digest: "unreadable hash",
+            scheduling_link: "www.website.com"
           }
         }
 
@@ -54,6 +55,7 @@ RSpec.describe ArtistFacade do
         expect(facade.artist_data(artist_json)[:email]).to be_a(String)
         expect(facade.artist_data(artist_json)[:identity]).to be_a(String)
         expect(facade.artist_data(artist_json)[:password_digest]).to be_a(String)
+        expect(facade.artist_data(artist_json)[:scheduling_link]).to be_a(String)
       end
 
       it "artists returns an array of artist objects" do
@@ -103,14 +105,16 @@ RSpec.describe ArtistFacade do
   describe "update methods" do
     it "update_tattoo returns a tattoo object" do
       attributes = {tattoo: {"artist_id"=>"5", "image_url"=>"app/assets/images/bronto.jpeg", "price"=>"200", "time_estimate"=>"2", id: "2"}}
+      @json_response_4 = File.read("spec/fixtures/artist/tattoo.json")
 
-      allow_any_instance_of(ArtistService).to receive(:update_tattoo).with("2", attributes)
-        .and_return({ data: { id: "2", attributes: attributes } })
+      allow_any_instance_of(ArtistService).to receive(:update_tattoo)
+        .and_return(JSON.parse(@json_response_4, symbolize_names: true))
       
       stub_request(:get, "http://localhost:3000/api/v0/tattoos/2")
         .to_return(status: 200, body: @json_response_4)
       
       tattoo = ArtistFacade.new.update_tattoo(attributes)
+
       expect(tattoo).to be_a(Tattoo)
     end
   end
@@ -142,7 +146,7 @@ RSpec.describe ArtistFacade do
 
   describe ".create_artist(artist_attributes)" do
     it "can create an artist" do
-      artist_attributes = {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009"}
+      artist_attributes = {name: "Tattoo artists", email: "tatart@gmail.com", password: "password", location: "1400 U Street NW, Washington, DC 20009", scheduling_link: "www.website.com"}
       
       json_response = File.read("spec/fixtures/artist/artist.json")
       stub_request(:post, "http://localhost:3000/api/v0/artists")
@@ -163,6 +167,9 @@ RSpec.describe ArtistFacade do
 
       expect(attributes).to have_key(:location)
       expect(attributes[:location]).to be_a(String)
+
+      expect(attributes).to have_key(:scheduling_link)
+      expect(attributes[:scheduling_link]).to be_a(String)
     end
   end
 

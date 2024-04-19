@@ -38,7 +38,6 @@ RSpec.describe "Create Artist Account" do
     
     it 'can create a new account after filling in the form fields with valid info' do
       visit "/artists/new"
-
       fill_in "name", with: "Tattoo artists"
       fill_in "email", with: "tatart@gmail.com"
       fill_in "email_confirmation", with: "tatart@gmail.com"
@@ -48,9 +47,13 @@ RSpec.describe "Create Artist Account" do
       check "None"
 
       click_on "Create New Account"
-
       expect(current_path).to eq("/artists/5/dashboard")
-      expect(page).to have_content("Tattoo artists's Dashboard")
+
+      within first(".container") do
+        within first(".text-center") do
+          expect(page).to have_content("Tattoo artists's Dashboard")
+        end
+      end
     end
   end
 end

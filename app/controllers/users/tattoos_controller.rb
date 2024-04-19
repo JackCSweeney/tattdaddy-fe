@@ -1,9 +1,14 @@
 class Users::TattoosController < ApplicationController
   def index
     user_id = params[:user_id]
-    @user = UserFacade.user_data(user_id)
-    @tattoos = UserFacade.liked_tattoos(user_id)
-    render "users/liked_tattoos"
+    if session[:user_id].present? && session[:user_id] == user_id.to_i
+      @user = UserFacade.user_data(user_id)
+      @tattoos = UserFacade.liked_tattoos(user_id)
+      render "users/liked_tattoos"
+    else
+      flash[:error] = "You need to login"
+      redirect_to root_path
+    end
   end
 
   def create
@@ -20,4 +25,5 @@ class Users::TattoosController < ApplicationController
   def user_tattoo_params
     params.permit(:user_id, :tattoo_id, :type)
   end
+
 end

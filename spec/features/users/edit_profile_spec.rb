@@ -6,6 +6,8 @@ RSpec.describe "Edit User Account Page", type: :feature do
       json_response_1 = File.read("spec/fixtures/user/user.json")
       json_response_2 = File.read("spec/fixtures/user/identity_prefs.json")
       json_response_3 = File.read("spec/fixtures/identities_list.json")
+      json_response_4 = File.read("spec/fixtures/sessions/successful_user_sign_in.json")
+      json_response_5 = File.read("spec/fixtures/user/dashboard_tattoos.json")
 
       stub_request(:get, "http://localhost:3000/api/v0/users/25")
         .to_return(status: 200, body: json_response_1)
@@ -17,8 +19,17 @@ RSpec.describe "Edit User Account Page", type: :feature do
         .to_return(status: 200, body: json_response_1)
       stub_request(:post, "http://localhost:3000/api/v0/user_identities")
         .to_return(status: 200, body: '{"message": "Identity successfully added to User"}')
+      stub_request(:post, "http://localhost:3000/api/v0/sign_in")
+        .to_return(status: 200, body: json_response_4)
+      stub_request(:get, "http://localhost:3000/api/v0/tattoos?user=25")
+        .to_return(status: 200, body: json_response_5)
 
-
+        visit root_path
+      expect(page).to have_button("Sign In as User")
+        fill_in "Email", with: "jesusa@spinka.test"
+        fill_in "Password", with: "123Password"
+        click_on "Sign In as User"
+      
       visit edit_user_path(id: 25)
     end
 
@@ -67,7 +78,10 @@ RSpec.describe "Edit User Account Page", type: :feature do
         click_on "Save Changes"
 
         expect(current_path).to eq(user_path(id: 25))
-        expect(page).to have_content("Profile updated successfully")
+
+        within("#mainBody") do
+          expect(page).to have_content("Profile updated successfully")
+        end
       end
 
       xit "all fields must be completed" do
