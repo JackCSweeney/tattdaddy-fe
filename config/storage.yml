@@ -12,7 +12,7 @@ amazon_dev:
   secret_access_key:
     <%= Rails.application.credentials.aws[:secret_access_key] %>
   region: us-east-1
-  bucket: tatt-daddy-be
+  bucket: tattdaddy-artist-images
 
 amazon_prod:
   service: S3
@@ -20,7 +20,7 @@ amazon_prod:
   secret_access_key:
     <%= Rails.application.credentials.aws[:secret_access_key] %>
   region: us-east-1
-  bucket: tatt-daddy-be
+  bucket: tattdaddy-artist-images
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:

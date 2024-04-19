@@ -5,9 +5,6 @@
   
   <%= render partial: "shared/nav_user" %>
 
-<div data-controller="geolocation">
-  <button data-action="geolocation#search">Use Geolocation</button>
-</div>
   <section>
     <%= form_with url: user_path(id: @user.id), method: :patch, data: {turbo: false} do |form| %>
       <div class="form-group">

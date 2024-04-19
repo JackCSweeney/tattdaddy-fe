@@ -16,7 +16,6 @@
   </section>
 
   <div class="text-center">
-    <%= button_to "Log in with Google", '/auth/google_oauth2', class: "btn btn-outline-dark btn-block" %>
     <%= link_to "Log in as User with GitHub", "https://github.com/login/oauth/authorize?client_id=#{ENV['GITHUB_CLIENT_ID']}&scope=user", class: "btn btn-outline-dark btn-block" %>
   </div>
 
