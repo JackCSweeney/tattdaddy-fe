@@ -7,6 +7,7 @@
 - [Setup](#setup)
 - [Contributors](#contributors)
 - [BE Repo](https://github.com/JackCSweeney/tattdaddy-be)
+- [Deployment (not up to date)](https://tattdaddy-be.onrender.com/)
 
 ## Getting Started
 ### Versions
