@@ -81,6 +81,6 @@ class UserService
   end
 
   def self.conn
-    Faraday.new(url: "http://localhost:3000")
+    Faraday.new(url: "https://tattdaddy-be.onrender.com")
   end
 end

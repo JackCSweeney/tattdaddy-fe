@@ -1,6 +1,6 @@
 class ArtistService
   def connection
-    Faraday.new(url: "http://localhost:3000")
+    Faraday.new(url: "https://tattdaddy-be.onrender.com")
   end
 
   def get_url(uri)
