@@ -33,7 +33,7 @@ RSpec.describe "User's Liked Tattoos Page", type: :feature do
     end
 
     it "has option to 'Schedule Appointment' under each tattoo" do
-      expect(page).to have_button("Schedule Appointment", count: 5)
+      expect(page).to have_link("Schedule Appointment", count: 5)
     end
   end
 end

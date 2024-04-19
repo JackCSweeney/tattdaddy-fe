@@ -22,8 +22,7 @@
             <td><%= tattoo.time_estimate %> min</td>
           </tr>
         </table>
-
-        <p><%= button_to "Schedule Appointment", url: tattoo.scheduling_link %></p>
+        <p><%= link_to "Schedule Appointment", "https://#{tattoo.scheduling_link}", target: "_blank", class: "btn btn-success" %></p>
       </div>
     <% end %>
   </section>

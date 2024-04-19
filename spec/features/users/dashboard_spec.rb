@@ -80,7 +80,7 @@ RSpec.describe "Dashboard Page", type: :feature do
 
       it "with the option to schedule an apointment for a tattoo" do
         within ".user_dashboard_tattoos" do
-          expect(page).to have_button("Schedule Appointment", count: 15)
+          expect(page).to have_link("Schedule Appointment", count: 15)
         end
       end
     end
