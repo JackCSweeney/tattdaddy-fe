@@ -3,9 +3,9 @@
 
   <%= render partial: "shared/nav_user" %>
 
-  <section class="user-liked-tattoos">
+  <section class="user_liked_tattoos">
     <% @tattoos.each do |tattoo| %>
-      <div class="liked-tattoo">
+      <div class="tattoo_option">
         <img src="<%= tattoo.image_url %>" style="max-width: 100%; max-height: 350px;"><br>
 
         <div class="remove-button">
