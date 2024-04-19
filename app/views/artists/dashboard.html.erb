@@ -25,7 +25,7 @@
               <%= link_to 'Edit', edit_artist_tattoo_path(@artist.id, tattoo.id), method: :patch, class: "btn btn-secondary" %><br>
             </tr>
             <tr>
-              <%= button_to 'Delete', artist_tattoo_path(@artist.id, tattoo.id), method: :delete, class: "btn btn-danger" %>
+              <%= link_to 'Delete', artist_tattoo_path(id: @artist.id), method: :delete, class: "btn btn-danger" %>
             </tr>
           </div>
       </table>

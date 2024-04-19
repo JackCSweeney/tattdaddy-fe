@@ -8,7 +8,8 @@ RSpec.describe Artist do
       location: "1400 U Street NW",
       email: "tatart@gmail.com",
       identity: "LGBTQ+ Friendly",
-      password_digest: "12345"
+      password_digest: "12345",
+      scheduling_link: "www.website.com"
     }
 
     @artist = Artist.new(data)
@@ -26,6 +27,7 @@ RSpec.describe Artist do
       expect(@artist.email).to eq("tatart@gmail.com")
       expect(@artist.identity).to eq("LGBTQ+ Friendly")
       expect(@artist.password_digest).to eq("12345")
+      expect(@artist.scheduling_link).to eq("www.website.com")
     end
   end
 

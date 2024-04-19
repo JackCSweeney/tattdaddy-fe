@@ -6,7 +6,8 @@
       "name": "Tattoo artists",
       "email": "tatart@gmail.com",
       "password": null,
-      "location": "1400 U Street NW, Washington, DC 20009"
+      "location": "1400 U Street NW, Washington, DC 20009",
+      "scheduling_link": "link/path"
     }
   }
 }
