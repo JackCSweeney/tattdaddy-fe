@@ -7,7 +7,7 @@
 - [Setup](#setup)
 - [Contributors](#contributors)
 - [BE Repo](https://github.com/JackCSweeney/tattdaddy-be)
-- [Deployment (not up to date)](https://tattdaddy-7a5005cf1213.herokuapp.com/)
+- [Deployment (not fully functional)](https://tattdaddy-fe.onrender.com/)
 
 ## Getting Started
 ### Versions
