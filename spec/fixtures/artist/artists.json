@@ -6,7 +6,8 @@
       "name":"Ronnie Medhurst",
       "email":"aisha@bergnaum-hirthe.example",
       "password":null,
-      "location":"Suite 431 840 Marnie Estates, North Stephnie, WA 82782-8921"
+      "location":"Suite 431 840 Marnie Estates, North Stephnie, WA 82782-8921",
+      "scheduling_link": "link/path"
     }
   },
   {
@@ -16,7 +17,8 @@
       "name":"Malissa Schaefer",
       "email":"mel@morissette-tillman.example",
       "password":null,
-      "location":"511 Collier Summit, Mairaport, DE 39107"
+      "location":"511 Collier Summit, Mairaport, DE 39107",
+      "scheduling_link": "link/path"
     }
   },
   {
@@ -26,7 +28,8 @@
       "name":"Jake Quitzon",
       "email":"bok@kunde-vandervort.test",
       "password":null,
-      "location":"521 Merrill Union, Treutelview, UT 72253"
+      "location":"521 Merrill Union, Treutelview, UT 72253",
+      "scheduling_link": "link/path"
     }
   },
   {
@@ -36,7 +39,8 @@
       "name":"Abdul Moen III",
       "email":"carolee.crist@mcclure-brakus.test",
       "password":null,
-      "location":"9173 Lashawn Court, East Haywoodshire, NC 51851"
+      "location":"9173 Lashawn Court, East Haywoodshire, NC 51851",
+      "scheduling_link": "link/path"
     }
   },
   {
@@ -46,7 +50,8 @@
       "name":"Mrs. Maynard West",
       "email":"cheryle.hagenes@hegmann.example",
       "password":null,
-      "location":"Apt. 264 13947 Kiehn Plain, Trevorbury, OH 95278"
+      "location":"Apt. 264 13947 Kiehn Plain, Trevorbury, OH 95278",
+      "scheduling_link": "link/path"
       }
     }
   ]

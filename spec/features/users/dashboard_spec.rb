@@ -48,13 +48,6 @@ RSpec.describe "Dashboard Page", type: :feature do
         expect(current_path).to eq(user_tattoos_path(user_id: 25))
       end
 
-      it "view 'Appointments'" do
-        expect(page).to have_link("Appointments")
-        click_on "Appointments"
-
-        expect(current_path).to eq(user_appointments_path(user_id: 25))
-      end
-
       it "view 'Sign Out'" do
         expect(page).to have_button("Sign Out")
         click_on "Sign Out"
@@ -69,7 +62,6 @@ RSpec.describe "Dashboard Page", type: :feature do
           expect(page).to have_css("img", count: 15)
           expect(page).to have_content("Cost:", count: 15)
           expect(page).to have_content("Duration:", count: 15)
-          expect(page).to have_content("Distance:", count: 15)
         end
       end
 
@@ -97,7 +89,7 @@ RSpec.describe "Dashboard Page", type: :feature do
 
       it "with the option to schedule an apointment for a tattoo" do
         within ".user_dashboard_tattoos" do
-          expect(page).to have_button("Schedule Appointment", count: 15)
+          expect(page).to have_link("Schedule Appointment", count: 15)
         end
       end
     end

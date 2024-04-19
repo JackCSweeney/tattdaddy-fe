@@ -14,19 +14,15 @@ Rails.application.routes.draw do
   post "/sign_in", to: "sessions#create"
   delete "/sign_out", to: "sessions#destroy"
   get "/auth/github/callback", to: "sessions#create"
-  # get '/auth/google_oauth2', to: 'sessions#google_oauth2'
-  # get '/auth/google_oauth2/callback', to: 'sessions#google_oauth2_callback'
   resources :users, except: :index do
     get "/dashboard", to: "users/dashboard#show"
     resources :tattoos, only: [:index, :create, :destroy], controller: "users/tattoos"
-    resources :appointments, only: [:index], controller: "users/appointments"
   end
 
 
   resources :artists, except: :index do
     get "/dashboard", to: "artists/dashboard#show"
     resources :tattoos, except: [:show, :index]
-    resources :appointments, only: :index
   end
 end
 
@@ -39,7 +35,6 @@ end
   #                    POST   /users/:user_id/tattoos                  users/tattoos#create
   #        user_tattoo DELETE /users/:user_id/tattoos/:id               users/tattoos#destroy
   #       user_tattoos GET    /users/:user_id/tattoos                        tattoos#index
-  #  user_appointments GET    /users/:user_id/appointments        users/appointments#index
   #              users POST   /users                                           users#create
   #           new_user GET    /users/new                                       users#new
   #          edit_user GET    /users/:id/edit                                  users#edit
@@ -57,7 +52,6 @@ end
 #        artist_tattoo PATCH  /artists/:artist_id/tattoos/:id                tattoos#update
 #                      PUT    /artists/:artist_id/tattoos/:id                tattoos#update
 #                      DELETE /artists/:artist_id/tattoos/:id                tattoos#destroy
-#  artist_appointments GET    /artists/:artist_id/appointments          appointments#index
 #              artists POST   /artists                                       artists#create
 #           new_artist GET    /artists/new                                   artists#new
 #          edit_artist GET    /artists/:id/edit                              artists#edit

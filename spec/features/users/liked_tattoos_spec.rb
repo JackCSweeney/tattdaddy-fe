@@ -38,7 +38,6 @@ RSpec.describe "User's Liked Tattoos Page", type: :feature do
         expect(page).to have_css("img", count: 5)
         expect(page).to have_content("Cost:", count: 5)
         expect(page).to have_content("Duration:", count: 5)
-        expect(page).to have_content("Distance:", count: 5)
       end
     end
 
@@ -52,7 +51,7 @@ RSpec.describe "User's Liked Tattoos Page", type: :feature do
     end
 
     it "has option to 'Schedule Appointment' under each tattoo" do
-      expect(page).to have_button("Schedule Appointment", count: 5)
+      expect(page).to have_link("Schedule Appointment", count: 5)
     end
   end
 end

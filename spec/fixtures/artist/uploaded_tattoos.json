@@ -7,7 +7,17 @@
         "image_url": "https://gist.github.com/assets/149989113/ad001d97-fc11-4549-9ce6-585cfe535d3b",
         "price": 190,
         "time_estimate": 176,
-        "artist_id": 1
+        "artist_id": 1,
+        "artist": {
+          "id": 1,
+          "name": "Hugh Jalligator",
+          "email": "hugh@jalligator.com",
+          "password_digest": null,
+          "location": "1453 Swamp Ln, Los Angeles, CA 90032",
+          "created_at": "2024-04-18T23:21:39.436Z",
+          "updated_at": "2024-04-18T23:21:39.436Z",
+          "scheduling_link": "link/path"
+        }
       }
     },
     {
@@ -17,7 +27,17 @@
         "image_url": "https://gist.github.com/assets/149989113/66a957cb-a6ef-4967-b049-dc6694022cf2",
         "price": 322,
         "time_estimate": 62,
-        "artist_id": 1
+        "artist_id": 1,
+        "artist": {
+          "id": 1,
+          "name": "Hugh Jalligator",
+          "email": "hugh@jalligator.com",
+          "password_digest": null,
+          "location": "1453 Swamp Ln, Los Angeles, CA 90032",
+          "created_at": "2024-04-18T23:21:39.436Z",
+          "updated_at": "2024-04-18T23:21:39.436Z",
+          "scheduling_link": "link/path"
+        }
       }
     },
     {
@@ -27,7 +47,17 @@
         "image_url": "https://gist.github.com/assets/149989113/51cbb0a7-7d92-4835-b180-5ed250d2e815",
         "price": 289,
         "time_estimate": 136,
-        "artist_id": 1
+        "artist_id": 1,
+        "artist": {
+          "id": 1,
+          "name": "Hugh Jalligator",
+          "email": "hugh@jalligator.com",
+          "password_digest": null,
+          "location": "1453 Swamp Ln, Los Angeles, CA 90032",
+          "created_at": "2024-04-18T23:21:39.436Z",
+          "updated_at": "2024-04-18T23:21:39.436Z",
+          "scheduling_link": "link/path"
+        }
       }
     }
   ]

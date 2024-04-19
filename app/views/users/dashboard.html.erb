@@ -48,13 +48,9 @@
             <th>Duration:</th>
             <td><%= tattoo.time_estimate %> min</td>
           </tr>
-          <tr>
-            <th>Distance:</th>
-            <td>Later Feature</td>
-          </tr>
         </table>
 
-        <p><%= button_to "Schedule Appointment", class: "btn btn-success" %></p>
+        <p><%= link_to "Schedule Appointment", "https://#{tattoo.scheduling_link}", target: "_blank", class: "btn btn-success" %></p>
       </div>
     <% end %>
   </section>
