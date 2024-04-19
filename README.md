@@ -6,6 +6,7 @@
 - [Learning Goals for Project](#learning-goals-for-project)
 - [Setup](#setup)
 - [Contributors](#contributors)
+- [BE Repo](https://github.com/JackCSweeney/tattdaddy-be)
 
 ## Getting Started
 ### Versions
