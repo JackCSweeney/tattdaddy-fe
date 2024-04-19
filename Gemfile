@@ -79,4 +79,4 @@ group :test do
   gem "webmock"
 end
 
-gem "jsbundling-rails", "~> 1.3"
+gem "jsbundling-rails"
