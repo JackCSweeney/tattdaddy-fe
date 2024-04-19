@@ -64,8 +64,8 @@ RSpec.describe 'Tattoos New Page', type: :feature do
       end
 
       it "when I fill the form correctly, upload an image and submit it takes me to the artist dashboard" do
-        fill_in "Price", with: "50"
-        fill_in "Time estimate", with: "2"
+        fill_in "Price", with: 50
+        fill_in "Time estimate", with: 60
         attach_file "Img file", 'app/assets/images/bronto.jpeg'
         click_button "Save"
 
@@ -87,6 +87,7 @@ RSpec.describe 'Tattoos New Page', type: :feature do
         click_button "Save"
 
         expect(current_path).to eq(new_artist_tattoo_path(artist_id: 5))
+
         within("#mainBody") do
           expect(page).to have_text("Tattoo could not be uploaded")
         end

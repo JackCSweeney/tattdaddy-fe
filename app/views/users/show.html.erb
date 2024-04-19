@@ -7,7 +7,7 @@
 
   <%= button_to "Edit Profile", edit_user_path(id: @user.id), method: :get, class: "btn btn-primary btn-block" %>
 
-  <section>
+  <section id="user_info">
     <p><strong>Name:</strong> <%= @user.name %></p>
     <p><strong>Email:</strong> <%= @user.email %></p>
     <p><strong>Location:</strong> <%= @user.location %></p>

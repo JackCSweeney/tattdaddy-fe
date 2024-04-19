@@ -68,6 +68,7 @@ RSpec.describe "User's My Profile Page", type: :feature do
         click_on "Delete Account"
 
         expect(current_path).to eq(root_path)
+
         within("#mainBody") do
           expect(page).to have_content("User account successfully deleted")
         end

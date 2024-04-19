@@ -78,6 +78,7 @@ RSpec.describe "Edit User Account Page", type: :feature do
         click_on "Save Changes"
 
         expect(current_path).to eq(user_path(id: 25))
+
         within("#mainBody") do
           expect(page).to have_content("Profile updated successfully")
         end
