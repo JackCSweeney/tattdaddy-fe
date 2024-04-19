@@ -7,8 +7,9 @@ RSpec.describe 'Artist authorization', type: :feature do
 
       expect(current_path).to eq(root_path)
 
-      expect(page).to have_content("You need to login")
-
+      within("#mainBody") do
+        expect(page).to have_content("You need to login")
+      end
     end
   end
 end

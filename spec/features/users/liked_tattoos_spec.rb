@@ -34,10 +34,12 @@ RSpec.describe "User's Liked Tattoos Page", type: :feature do
     end
 
     it "displays all tattoos user has 'liked'" do
-      expect(page).to have_css("img", count: 5)
-      expect(page).to have_content("Cost:", count: 5)
-      expect(page).to have_content("Duration:", count: 5)
-      expect(page).to have_content("Distance:", count: 5)
+      within(".user-liked-tattoos") do
+        expect(page).to have_css("img", count: 5)
+        expect(page).to have_content("Cost:", count: 5)
+        expect(page).to have_content("Duration:", count: 5)
+        expect(page).to have_content("Distance:", count: 5)
+      end
     end
 
     it "has option to 'remove' a liked tattoo" do

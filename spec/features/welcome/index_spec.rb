@@ -8,7 +8,9 @@ RSpec.describe 'Welcome Index Page', type: :feature do
 
     describe "page heading" do
       it "Welcome to TattDaddy" do
-        expect(page).to have_content("Welcome to\nTattDaddy")
+        within first(".text-center") do
+          expect(page).to have_content("Welcome to\nTattDaddy")
+        end
       end
     end
 
@@ -47,15 +49,17 @@ RSpec.describe 'Welcome Index Page', type: :feature do
             stub_request(:post, "http://localhost:3000/api/v0/sign_in")
               .to_return(status: 422, body: '{"error": "Invalid Parameters for Sign In"}')
 
-              within ".sign_in" do
-                expect(page).to have_button("Sign In as User")
-                fill_in "Email", with: "jesusa@spinka.test"
-                fill_in "Password", with: "wrong_password"
-                click_on "Sign In as User"
-              end
+            within ".sign_in" do
+              expect(page).to have_button("Sign In as User")
+              fill_in "Email", with: "jesusa@spinka.test"
+              fill_in "Password", with: "wrong_password"
+              click_on "Sign In as User"
+            end
 
-              expect(current_path).to eq(root_path)
+            expect(current_path).to eq(root_path)
+            within("#mainBody") do
               expect(page).to have_content('Invalid email/password combination')
+            end
           end
         end
 
@@ -87,15 +91,17 @@ RSpec.describe 'Welcome Index Page', type: :feature do
             stub_request(:post, "http://localhost:3000/api/v0/sign_in")
               .to_return(status: 422, body: '{"error": "Invalid Parameters for Sign In"}')
 
-              within ".sign_in" do
-                expect(page).to have_button("Sign In as Artist")
-                fill_in "Email", with: "darci@waters-mills.example"
-                fill_in "Password", with: "wrong_password"
-                click_on "Sign In as Artist"
-              end
+            within ".sign_in" do
+              expect(page).to have_button("Sign In as Artist")
+              fill_in "Email", with: "darci@waters-mills.example"
+              fill_in "Password", with: "wrong_password"
+              click_on "Sign In as Artist"
+            end
 
-              expect(current_path).to eq(root_path)
+            expect(current_path).to eq(root_path)
+            within("#mainBody") do
               expect(page).to have_content('Invalid email/password combination')
+            end
           end
         end
       end

@@ -83,8 +83,10 @@ RSpec.describe "Edit Artist Account Page", type: :feature do
         page.uncheck("Black")
         click_on "Save Changes"
 
-        expect(current_path).to eq(artist_path(id: 5))
-        expect(page).to have_content("Profile updated successfully")
+        within("#mainBody") do
+          expect(current_path).to eq(artist_path(id: 5))
+          expect(page).to have_content("Profile updated successfully")
+        end
       end
 
       xit "all fields must be completed" do

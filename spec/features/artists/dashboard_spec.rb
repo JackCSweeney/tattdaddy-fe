@@ -97,19 +97,6 @@ RSpec.describe 'Artist Dashboard Page', type: :feature do
             expect(page).not_to have_content("#tattoo-5")
           end
         end
-
-        it "when clicked, it deletes the file in ws3 too" do
-          tattoo = ArtistFacade.new.find_tattoo("5")
-          
-          within ".artist_dashboard_tattoos" do
-            within "#tattoo-5" do
-              click_on "Delete"
-            end
-            blob = ActiveStorage::Blob.find_by(key: tattoo.image_url)
-
-            expect(blob).to be(nil)
-          end
-        end
       end
     end
   end

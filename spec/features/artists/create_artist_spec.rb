@@ -48,7 +48,11 @@ RSpec.describe "Create Artist Account" do
 
       click_on "Create New Account"
       expect(current_path).to eq("/artists/5/dashboard")
-      expect(page).to have_content("Tattoo artists's Dashboard")
+      within first(".container") do
+        within first(".text-center") do
+          expect(page).to have_content("Tattoo artists's Dashboard")
+        end
+      end
     end
   end
 end

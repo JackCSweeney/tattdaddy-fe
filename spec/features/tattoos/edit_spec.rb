@@ -27,12 +27,14 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
       stub_request(:get, "http://localhost:3000/api/v0/artists/5/tattoos")
         .to_return(status: 200, body: @json_response_1)
 
-      allow_any_instance_of(ActiveStorage::Blob).to receive(:url)
-        .and_return("app/assets/images/bronto.jpeg")
+      # allow_any_instance_of(ActiveStorage::Blob).to receive(:url)
+      #   .and_return("app/assets/images/bronto.jpeg")
         
       json_response = File.read("spec/fixtures/sessions/successful_artist_sign_in.json")
       stub_request(:post, "http://localhost:3000/api/v0/sign_in")
         .to_return(status: 200, body: json_response)
+
+      WebMock.allow_net_connect!
 
       visit root_path
         expect(page).to have_button("Sign In as Artist")
@@ -65,17 +67,22 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
 
     describe "the form to edit a new tattoo " do
       it "has a price, time and image_file fields" do
-        expect(page).to have_field('Price')
-        expect(page).to have_field('Time estimate')
-        expect(page).to have_content('Upload New Image')
+        within first("form") do
+          expect(page).to have_field('Price')
+          expect(page).to have_field('Time estimate')
+          expect(page).to have_content('Upload New Image')
+        end
       end
 
       it "successfully updates tattoo's price" do   
         fill_in "Price", with: "200"
         click_button "Save"
         expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
-        
-        expect(page).to have_text("Tattoo updated successfully")
+
+        within("#mainBody") do
+          expect(page).to have_text("Tattoo updated successfully")
+        end
+
         within ".artist_dashboard_tattoos" do
           within "#tattoo-2" do
             expect(page).to have_content("200")
@@ -88,7 +95,10 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
         click_button "Save"
         expect(current_path).to eq(artist_dashboard_path(artist_id: 5))
         
-        expect(page).to have_text("Tattoo updated successfully")
+        within("#mainBody") do
+          expect(page).to have_text("Tattoo updated successfully")
+        end
+        
         within ".artist_dashboard_tattoos" do
           within "#tattoo-2" do
             expect(page).to have_content("60")
@@ -127,7 +137,9 @@ RSpec.describe 'Tattoos Edit Page', type: :feature do
         click_button "Save"
 
         expect(current_path).to eq(edit_artist_tattoo_path(artist_id: 5, id: 5))
-        expect(page).to have_text("Tattoo could not be updated")
+        within("#mainBody") do
+          expect(page).to have_text("Tattoo could not be updated")
+        end
       end
     end
   end
